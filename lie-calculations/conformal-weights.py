@@ -21,9 +21,9 @@ LM = LM[idx]
 H   = lambda l,m,k: l*(l+1)/(k+2) - m**2/k
 h   = np.array([H(*lm,k) for lm in LM])
 
-print(np.sort(h),len(h))
+print("Coset: ",np.sort(h),len(h))
 
 hi = np.array([ i+j for i in [0,7/16,1/10,3/5,3/80,3/2] for j in [0,7/16,1/10,3/5,3/80,3/2]])
 
-print(np.sort(hi), len(hi))
+print("\nIsing: ",np.sort(hi), len(hi))
 
