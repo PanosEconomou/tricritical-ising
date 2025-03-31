@@ -1,0 +1,69 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      1843,         61]
+NotebookOptionsPosition[      1399,         46]
+NotebookOutlinePosition[      1797,         62]
+CellTagsIndexPosition[      1754,         59]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[{
+ StyleBox["Coset Characters\n",
+  FontWeight->"Bold"],
+ "Here we calculate the characters of the Coset CFT using a bunch of \
+truncated string functions."
+}], "Text",
+ CellChangeTimes->{{3.952447512557129*^9, 
+  3.95244757398013*^9}},ExpressionUUID->"787e2c17-62fd-4bc2-b98e-\
+dc106aaab958"],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"k", "=", "8"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"h", "[", 
+     RowBox[{"l_", ",", "m_"}], "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"\[Sigma]", "[", 
+      RowBox[{"l_", ",", "m_", ",", "q_"}], "]"}], ":="}]}]}]}]], "Input",
+ CellChangeTimes->{{3.952447577804525*^9, 3.952447617425438*^9}, {
+  3.9524485009715757`*^9, 
+  3.9524485092279778`*^9}},ExpressionUUID->"d9c70c10-02eb-4032-8d37-\
+fd85a5d14971"]
+},
+WindowSize->{713.25, 801},
+WindowMargins->{{0, Automatic}, {Automatic, -810}},
+FrontEndVersion->"14.2 for Linux x86 (64-bit) (December 26, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"8bb91e14-d401-46d9-b981-8b939600f9b1"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 307, 8, 55, "Text",ExpressionUUID->"787e2c17-62fd-4bc2-b98e-dc106aaab958"],
+Cell[864, 30, 531, 14, 132, "Input",ExpressionUUID->"d9c70c10-02eb-4032-8d37-fd85a5d14971"]
+}
+]
+*)
+
