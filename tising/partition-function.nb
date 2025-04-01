@@ -451,7 +451,7 @@ Cell[6330, 164, 938, 25, 55, "Text",ExpressionUUID->"374f45fe-8e7a-4c71-b67a-656
 Cell[7271, 191, 752, 24, 95, "DisplayFormula",ExpressionUUID->"b577fee4-116d-4870-b091-10112f2ae5a5"],
 Cell[CellGroupData[{
 Cell[8048, 219, 3441, 74, 215, "Input",ExpressionUUID->"cc8849a8-0310-45a9-906f-41b7d76f2d17"],
-Cell[11492, 295, 2816, 90, 162, "Output",ExpressionUUID->"57ea0d39-f1e1-49f2-bb5e-06006ba940e9"]
+Cell[11492, 295, 2816, 90, 181, "Output",ExpressionUUID->"57ea0d39-f1e1-49f2-bb5e-06006ba940e9"]
 }, Open  ]],
 Cell[14323, 388, 1426, 40, 99, "Text",ExpressionUUID->"a0e42558-53e7-425f-a96f-ebe905fa3a90"]
 }
