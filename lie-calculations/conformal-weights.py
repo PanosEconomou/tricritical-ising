@@ -34,6 +34,7 @@ print(BLD+BGR+"Here are the conformal weights"+RST)
 print(BLD+BCY+"\nCoset: "+RST,np.sort(h),len(h))
 print(BLD+BRD+"\nIsing: "+RST,np.sort(hi), len(hi))
 print()
-[print([float(i),h[np.where((i-h)%1 == 0)[0]].tolist()]) for i in hi]
+print(2*np.sort(h)-7/60);
+# [print([float(i),h[np.where((i-h)%1 == 0)[0]].tolist()]) for i in hi]
 
 
