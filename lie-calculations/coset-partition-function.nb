@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     14998,        415]
-NotebookOptionsPosition[     14140,        394]
-NotebookOutlinePosition[     14533,        410]
-CellTagsIndexPosition[     14490,        407]
+NotebookDataLength[     14970,        414]
+NotebookOptionsPosition[     14109,        393]
+NotebookOutlinePosition[     14504,        409]
+CellTagsIndexPosition[     14461,        406]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -383,8 +383,7 @@ Cell[TextData[{
  "There is another modular invariant we can find in this theory. It is ",
  Cell[BoxData[
   FormBox[
-   SubscriptBox["D", "k"], TraditionalForm]],
-  FormatType->TraditionalForm,ExpressionUUID->
+   SubscriptBox["D", "k"], TraditionalForm]],ExpressionUUID->
   "303e42da-36bb-461c-aa8d-ee08f4113bf4"],
  " modular invariant that is given as follows.\n"
 }], "Text",
@@ -392,7 +391,7 @@ Cell[TextData[{
   3.952456765821722*^9}},ExpressionUUID->"b47f9fe6-5cc7-4419-812f-\
 609772d8c705"]
 },
-WindowSize->{1431, 801},
+WindowSize->{713.25, 801},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"14.2 for Linux x86 (64-bit) (December 26, 2024)",
 StyleDefinitions->"Default.nb",
@@ -409,14 +408,14 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 474, 11, 77, "Text",ExpressionUUID->"787e2c17-62fd-4bc2-b98e-dc106aaab958"],
-Cell[1031, 33, 5902, 155, 436, "Input",ExpressionUUID->"d9c70c10-02eb-4032-8d37-fd85a5d14971"],
-Cell[6936, 190, 503, 13, 77, "Text",ExpressionUUID->"2acc2631-b0b3-4c30-88fc-b81898b8ce67"],
+Cell[554, 20, 474, 11, 120, "Text",ExpressionUUID->"787e2c17-62fd-4bc2-b98e-dc106aaab958"],
+Cell[1031, 33, 5902, 155, 610, "Input",ExpressionUUID->"d9c70c10-02eb-4032-8d37-fd85a5d14971"],
+Cell[6936, 190, 503, 13, 99, "Text",ExpressionUUID->"2acc2631-b0b3-4c30-88fc-b81898b8ce67"],
 Cell[CellGroupData[{
-Cell[7464, 207, 4111, 118, 249, "Input",ExpressionUUID->"74a1e0c2-75c1-45cf-9648-fad0e4f2380c"],
+Cell[7464, 207, 4111, 118, 272, "Input",ExpressionUUID->"74a1e0c2-75c1-45cf-9648-fad0e4f2380c"],
 Cell[11578, 327, 2027, 48, 62, "Output",ExpressionUUID->"3e4d8d12-3a56-472b-8234-664c32e861b9"]
 }, Open  ]],
-Cell[13620, 378, 516, 14, 121, "Text",ExpressionUUID->"b47f9fe6-5cc7-4419-812f-609772d8c705"]
+Cell[13620, 378, 485, 13, 121, "Text",ExpressionUUID->"b47f9fe6-5cc7-4419-812f-609772d8c705"]
 }
 ]
 *)
