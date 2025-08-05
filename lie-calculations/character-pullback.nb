@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[    300058,       7601]
-NotebookOptionsPosition[    292430,       7480]
-NotebookOutlinePosition[    292826,       7496]
-CellTagsIndexPosition[    292783,       7493]
+NotebookDataLength[    366492,       8928]
+NotebookOptionsPosition[    358824,       8807]
+NotebookOutlinePosition[    359220,       8823]
+CellTagsIndexPosition[    359177,       8820]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -530,8 +530,8 @@ Cell[BoxData[
    "EchoLabel"], "  ", 
   FractionBox["7", "10"]}]], "Echo",
  CellChangeTimes->{
-  3.963080382711286*^9},ExpressionUUID->"4c26299e-8469-4747-827d-\
-fb50e83a1199"]
+  3.963412658559182*^9},ExpressionUUID->"37e5b46b-fd42-44b5-8bb7-\
+53335d08defa"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -850,8 +850,8 @@ Cell[BoxData[
    RowBox[{"{", 
     RowBox[{"8", ",", "6"}], "}"}]}], "}"}]], "Output",
  CellChangeTimes->{3.963080058603395*^9, 3.96308019217493*^9, 
-  3.963080382876417*^9},
- CellLabel->"Out[29]=",ExpressionUUID->"3663de0e-bae7-4738-b2cb-4219d9cde764"]
+  3.963080382876417*^9, 3.963412658941593*^9},
+ CellLabel->"Out[29]=",ExpressionUUID->"2e17e37b-ce2a-4b30-a3ee-17c12eff7687"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -955,8 +955,9 @@ Cell[BoxData[
     RowBox[{"8", ",", "4"}], "}"}], ",", 
    RowBox[{"{", 
     RowBox[{"8", ",", "6"}], "}"}]}], "}"}]], "Output",
- CellChangeTimes->{3.963080249878813*^9, 3.963080382907816*^9},
- CellLabel->"Out[30]=",ExpressionUUID->"585b15f5-76d8-4853-9474-760cad20e029"]
+ CellChangeTimes->{3.963080249878813*^9, 3.963080382907816*^9, 
+  3.963412658965732*^9},
+ CellLabel->"Out[30]=",ExpressionUUID->"e74c1121-4094-4d1b-9a91-5dc902f03ba6"]
 }, Open  ]],
 
 Cell[TextData[{
@@ -1026,8 +1027,8 @@ Cell[BoxData[
   3.957370343528964*^9, 3.9573716501145973`*^9, 3.957371921595683*^9, 
   3.957375165922532*^9, 3.96219567581057*^9, 3.9628053382886267`*^9, 
   3.9630783958788223`*^9, 3.9630799958000793`*^9, 3.963080192200831*^9, 
-  3.963080382939067*^9},
- CellLabel->"Out[31]=",ExpressionUUID->"815f6a6a-5211-4dc4-a4b2-4eb240601d45"],
+  3.963080382939067*^9, 3.963412658992964*^9},
+ CellLabel->"Out[31]=",ExpressionUUID->"bdf2c5fa-d3fc-4214-b886-bdf13355d432"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -1073,8 +1074,8 @@ Cell[BoxData[
   3.957370343528964*^9, 3.9573716501145973`*^9, 3.957371921595683*^9, 
   3.957375165922532*^9, 3.96219567581057*^9, 3.9628053382886267`*^9, 
   3.9630783958788223`*^9, 3.9630799958000793`*^9, 3.963080192200831*^9, 
-  3.963080382940084*^9},
- CellLabel->"Out[32]=",ExpressionUUID->"db429d1b-99ac-48a4-8d8c-863f71629b13"]
+  3.963080382939067*^9, 3.9634126589938517`*^9},
+ CellLabel->"Out[32]=",ExpressionUUID->"0ed0b48a-6506-4a30-bad1-a3fb59ea927b"]
 }, Open  ]],
 
 Cell[TextData[{
@@ -1729,8 +1730,9 @@ eam2aXFuGx3wy/NpPdZDTd/GPxjMw/wRQhZiPQdC4Yj/ASAUvr8Bb+N0ZA==
    3.9573533210359*^9, 3.95735597107308*^9, 3.957370347342876*^9, 
    3.957371658626449*^9, 3.9573719292574472`*^9, 3.957375174638002*^9, 
    3.962195683141486*^9, 3.962805345929986*^9, 3.9630784033651752`*^9, 
-   3.963080004094139*^9, 3.963080195467597*^9, 3.9630803913354273`*^9},
- CellLabel->"Out[38]=",ExpressionUUID->"e6122f8c-8086-465d-9d28-233210d09c4b"]
+   3.963080004094139*^9, 3.963080195467597*^9, 3.9630803913354273`*^9, 
+   3.963412666465055*^9},
+ CellLabel->"Out[38]=",ExpressionUUID->"3734b3e1-bb17-4d5c-9c87-82eb62431afc"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1861,15 +1863,14 @@ Cell[BoxData[{
     RowBox[{"{", 
      RowBox[{"GrayLevel", "[", "0", "]"}], "}"}]}]}], "]"}]}], "Input",
  CellChangeTimes->CompressedData["
-1:eJxTTMoPSmViYGAQBWIQPVf+YvDT6reOnXm/w0C00EvtNBC9Qzc8HURvY9D5
+1:eJxTTMoPSmViYGAQA2IQPVf+YvDT6reOnXm/w0C00EvtNBC9Qzc8HURvY9D5
 BaIXMDj9B9ECgabMz4C0ClM9K4je/G6dEIjetHOKCIh2/jh/GYh+KGm/HEQv
 2WX6CETb7zB7AqKn6B54AaIbjhW+BNFpL0LfgWiLzcV/QLR/WTzPcyD9uSgb
 TB8MMRYH0XxTrcA0m8eT1hdA+puY6ioQXXL42k4QrcJgeRhEt9TOPgmiw+Ts
 LoHoHb7HF74E+cv59hIQbd27z/kVyL4IVRcQ/XJ2oxeIPnZG3w9Ehy9+Fgai
-e6vfgen/kzkfsde8dUzx0gXTa96V8HEC6U8FfGIges59rp0gWu7ddDANAI+x
-uOw=
-  "],
- CellLabel->"In[39]:=",ExpressionUUID->"938eae25-6451-415d-a935-a0a3a5e55cd6"],
+e6vfgen/kzkfsde8dUzx0gXTa96V8HEC6U8FfGIges59rp0gWu7ddDAt9Geb
+7Zz2t45fOp/bgWgAbkXCMg==
+  "],ExpressionUUID->"938eae25-6451-415d-a935-a0a3a5e55cd6"],
 
 Cell[BoxData[
  GraphicsBox[{{}, {InsetBox[
@@ -2177,8 +2178,8 @@ h0naB0jeS+dnMkc9ssk6r5K0D5DlqHc+gydDl7TG
    3.957355972728064*^9, 3.957370349594872*^9, 3.957371661307626*^9, 
    3.957371931809251*^9, 3.957375177519658*^9, 3.962195685616047*^9, 
    3.9628053484346952`*^9, 3.9630784059088306`*^9, 3.9630800066254272`*^9, 
-   3.963080197289609*^9, 3.9630803938525352`*^9},
- CellLabel->"Out[43]=",ExpressionUUID->"6e5febdb-f615-46bc-8bd0-8f2fa30729d3"],
+   3.963080197289609*^9, 3.9630803938525352`*^9, 3.963412668914904*^9},
+ CellLabel->"Out[43]=",ExpressionUUID->"f1fdfd14-7de5-473b-a2f6-cc3b287ae843"],
 
 Cell[BoxData[
  GraphicsBox[{{}, {InsetBox[
@@ -2302,8 +2303,8 @@ V/ALF7dR9g==
    3.957355972728064*^9, 3.957370349594872*^9, 3.957371661307626*^9, 
    3.957371931809251*^9, 3.957375177519658*^9, 3.962195685616047*^9, 
    3.9628053484346952`*^9, 3.9630784059088306`*^9, 3.9630800066254272`*^9, 
-   3.963080197289609*^9, 3.9630803939726763`*^9},
- CellLabel->"Out[44]=",ExpressionUUID->"4fe11543-f36a-4d73-b4dd-cb0626d06aed"],
+   3.963080197289609*^9, 3.9630803938525352`*^9, 3.963412669035668*^9},
+ CellLabel->"Out[44]=",ExpressionUUID->"715f880d-e6c7-4d6d-be04-24c4d2a269c4"],
 
 Cell[BoxData[
  GraphicsBox[RasterBox[CompressedData["
@@ -2374,8 +2375,8 @@ ByBJkmSy9qtk+/qPROZYahelvhe76RWSbtz+
    3.957355972728064*^9, 3.957370349594872*^9, 3.957371661307626*^9, 
    3.957371931809251*^9, 3.957375177519658*^9, 3.962195685616047*^9, 
    3.9628053484346952`*^9, 3.9630784059088306`*^9, 3.9630800066254272`*^9, 
-   3.963080197289609*^9, 3.96308039402744*^9},
- CellLabel->"Out[46]=",ExpressionUUID->"e1e3531e-6908-49e5-b4aa-0112be69c930"]
+   3.963080197289609*^9, 3.9630803938525352`*^9, 3.963412669062512*^9},
+ CellLabel->"Out[46]=",ExpressionUUID->"f02290a8-e857-4e65-8e42-bbe8fcbf204b"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -2572,8 +2573,8 @@ Cell[BoxData[
     960, 480],
    Editable->False]}]], "Echo",
  CellChangeTimes->{
-  3.963080397869088*^9},ExpressionUUID->"5b03e9e1-feff-4792-b43d-\
-acb76b1f642d"],
+  3.9634126728109627`*^9},ExpressionUUID->"721484a1-03c0-4c3f-834b-\
+805336279856"],
 
 Cell[BoxData[
  RowBox[{
@@ -2687,8 +2688,8 @@ Cell[BoxData[
      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10.}, -56, 960, 480],
    Editable->False]}]], "Echo",
  CellChangeTimes->{
-  3.963080401131214*^9},ExpressionUUID->"3ec287f3-2b5b-4fc3-bc6f-\
-3d687db120da"]
+  3.963412676001254*^9},ExpressionUUID->"62c98058-d479-471f-8f5c-\
+5ed4495730dd"]
 }, Open  ]]
 }, Open  ]],
 
@@ -2884,8 +2885,8 @@ Cell[BoxData[
   TagBox["\<\"--------------- Chiral Modules ---------------\"\>",
    "EchoLabel"], "  ", "\<\"\"\>"}]], "Echo",
  CellChangeTimes->{
-  3.963080401375022*^9},ExpressionUUID->"58560bb6-428b-4755-ad92-\
-be46741d2de5"],
+  3.9634126761349363`*^9},ExpressionUUID->"9678a4d9-52e3-4f88-b64a-\
+e751c89af033"],
 
 Cell[BoxData[
  RowBox[{
@@ -2929,8 +2930,8 @@ Cell[BoxData[
     FractionBox["21", "10"], ",", 
     FractionBox["11", "5"], ",", "3", ",", "4"}], "}"}]}]], "Echo",
  CellChangeTimes->{
-  3.963080401393394*^9},ExpressionUUID->"d0e40d5c-d928-49f8-9700-\
-ab2f9aca53a3"],
+  3.963412676141203*^9},ExpressionUUID->"c38d929b-f8e1-44d6-be2c-\
+ec11ade64e06"],
 
 Cell[BoxData[
  RowBox[{
@@ -2973,8 +2974,8 @@ Cell[BoxData[
     FractionBox["15", "8"], ",", 
     FractionBox["15", "8"], ",", "2"}], "}"}]}]], "Echo",
  CellChangeTimes->{
-  3.963080401398093*^9},ExpressionUUID->"baba4366-3e7b-45c2-bf57-\
-d4bba6d58419"],
+  3.963412676193153*^9},ExpressionUUID->"93706405-bb00-48ce-8ebc-\
+c09c0f5ec4f1"],
 
 Cell[BoxData[
  RowBox[{
@@ -3009,8 +3010,8 @@ Cell[BoxData[
     FractionBox["7", "8"], ",", 
     FractionBox["15", "16"]}], "}"}]}]], "Echo",
  CellChangeTimes->{
-  3.963080401538834*^9},ExpressionUUID->"92bf58bd-894e-45fd-b037-\
-ed07dedfb30f"],
+  3.963412676207316*^9},ExpressionUUID->"8b900cf5-0ff2-4383-8726-\
+5deed5b01f12"],
 
 Cell[BoxData[
  RowBox[{
@@ -3035,16 +3036,16 @@ Cell[BoxData[
     FractionBox["27", "32"], ",", 
     FractionBox["7", "8"]}], "}"}]}]], "Echo",
  CellChangeTimes->{
-  3.9630804015573053`*^9},ExpressionUUID->"4fb38f20-617d-4554-bec3-\
-10f1f20296c2"],
+  3.963412676221732*^9},ExpressionUUID->"707912a0-fe90-4e8c-b1f2-\
+f96c435aea3a"],
 
 Cell[BoxData[
  RowBox[{
   TagBox["\<\"---------------- Full Modules ----------------\"\>",
    "EchoLabel"], "  ", "\<\"\"\>"}]], "Echo",
  CellChangeTimes->{
-  3.9630804015788813`*^9},ExpressionUUID->"09473301-bd0f-492f-b35d-\
-fb431c86935e"],
+  3.9634126762370443`*^9},ExpressionUUID->"f7758af2-f468-415b-9841-\
+69402b6ed134"],
 
 Cell[BoxData[
  RowBox[{
@@ -3098,8 +3099,8 @@ Cell[BoxData[
     FractionBox["22", "5"], ",", "6", ",", "6", ",", "6", ",", "8"}], 
    "}"}]}]], "Echo",
  CellChangeTimes->{
-  3.9630804016029997`*^9},ExpressionUUID->"eb9df244-0a1d-4b6d-aea5-\
-cdc240824719"],
+  3.963412676253571*^9},ExpressionUUID->"f4fa2724-4a66-4cd0-8653-\
+a96a28dc143b"],
 
 Cell[BoxData[
  RowBox[{
@@ -3146,8 +3147,8 @@ Cell[BoxData[
     FractionBox["21", "10"], ",", 
     FractionBox["11", "5"], ",", "3", ",", "4"}], "}"}]}]], "Echo",
  CellChangeTimes->{
-  3.963080401628804*^9},ExpressionUUID->"712970e5-53a0-4bb6-8a58-\
-0a8a7f4c8981"],
+  3.963412676270074*^9},ExpressionUUID->"de900cdf-55f3-4f5f-8ffd-\
+54968739e2f1"],
 
 Cell[BoxData[
  RowBox[{
@@ -3188,8 +3189,7 @@ Cell[BoxData[
     FractionBox["15", "4"], ",", 
     FractionBox["15", "4"], ",", "4"}], "}"}]}]], "Echo",
  CellChangeTimes->{
-  3.963080401656069*^9},ExpressionUUID->"eeaa1d4f-578d-439f-b5d3-\
-adb001700710"],
+  3.96341267628677*^9},ExpressionUUID->"480babb5-f5a2-4869-9ae1-a16624ca1458"],
 
 Cell[BoxData[
  RowBox[{
@@ -3207,8 +3207,8 @@ Cell[BoxData[
     FractionBox["3", "4"], ",", 
     FractionBox["19", "20"]}], "}"}]}]], "Echo",
  CellChangeTimes->{
-  3.963080401681669*^9},ExpressionUUID->"aaa14e3f-3515-49ae-bb00-\
-3b47bb7d6e1e"],
+  3.963412676303288*^9},ExpressionUUID->"3ff090b0-1d13-4dd8-9853-\
+8d93be50c557"],
 
 Cell[BoxData[
  RowBox[{
@@ -3233,8 +3233,8 @@ Cell[BoxData[
     FractionBox["27", "32"], ",", 
     FractionBox["7", "8"]}], "}"}]}]], "Echo",
  CellChangeTimes->{
-  3.963080401707684*^9},ExpressionUUID->"2ceaa542-f1e9-4fd9-a72e-\
-e1b802b03b4d"],
+  3.9634126763197412`*^9},ExpressionUUID->"e95d7024-a333-4e96-84af-\
+ab828ffb1d07"],
 
 Cell[BoxData[
  RowBox[{
@@ -3252,8 +3252,8 @@ Cell[BoxData[
     FractionBox["3", "4"], ",", 
     FractionBox["19", "20"]}], "}"}]}]], "Echo",
  CellChangeTimes->{
-  3.963080401733549*^9},ExpressionUUID->"0f358ad2-1849-47c8-be30-\
-6beb9139fcf0"]
+  3.963412676336309*^9},ExpressionUUID->"d169b478-8906-44d0-8f30-\
+2bebe9f7879b"]
 }, Open  ]]
 }, Open  ]],
 
@@ -3294,8 +3294,8 @@ Cell[BoxData[
      ",", "1", ",", "1", ",", "1", ",", "2", ",", "2", ",", "3"}], 
    "}"}]}]], "Echo",
  CellChangeTimes->{
-  3.963080401785132*^9},ExpressionUUID->"ac3b54b7-d0d1-4ba2-9bf5-\
-39e76eb9d725"]
+  3.963412676357189*^9},ExpressionUUID->"9227d272-7d66-4210-8348-\
+57c9ae96212e"]
 }, Open  ]],
 
 Cell[TextData[{
@@ -3516,10 +3516,10 @@ Cell[BoxData[
    3.95735598042229*^9, 3.957370353159298*^9, 3.957371669402622*^9, 
    3.957371939864759*^9, 3.95737518535658*^9, 3.962195693267879*^9, 
    3.962805356095727*^9, 3.9630784141393747`*^9, 3.963080014590888*^9, 
-   3.963080201168955*^9, 3.963080401839958*^9},
+   3.963080201168955*^9, 3.963080401839958*^9, 3.963412676381281*^9},
  CellLabel->
-  "Out[69]//MatrixForm=",ExpressionUUID->"3474692e-f067-4342-a271-\
-3fab2eec709a"]
+  "Out[69]//MatrixForm=",ExpressionUUID->"53d5ae73-4a22-4b21-9466-\
+3ab7f983bdf1"]
 }, Open  ]],
 
 Cell["Now let\[CloseCurlyQuote]s check for the partition functions", "Text",
@@ -4408,8 +4408,9 @@ Cell[BoxData[
    3.957360549659651*^9, 3.9573608685668583`*^9, 3.957370356408533*^9, 
    3.957371679886261*^9, 3.9573719502639112`*^9, 3.957375195702866*^9, 
    3.9621957033352823`*^9, 3.9628053660275717`*^9, 3.96307842432444*^9, 
-   3.963080024750657*^9, 3.963080204347726*^9, 3.963080411888098*^9},
- CellLabel->"Out[76]=",ExpressionUUID->"38210643-565e-49ab-95b9-d086df0f0b3f"]
+   3.963080024750657*^9, 3.963080204347726*^9, 3.963080411888098*^9, 
+   3.9634126863574333`*^9},
+ CellLabel->"Out[76]=",ExpressionUUID->"4e11f2dc-cb20-4324-bd15-ea759dc1e4f2"]
 }, Open  ]],
 
 Cell[" ", "Text",
@@ -5702,10 +5703,10 @@ YDQfmL4CpwfafQAb+IKk
    3.9628186552707243`*^9, 3.962818675053586*^9}, {3.962818754921702*^9, 
    3.962818767130085*^9}, {3.962818845285067*^9, 3.962818872313878*^9}, 
    3.9630784290169067`*^9, 3.963080029317338*^9, 3.963080208837322*^9, 
-   3.9630803743956757`*^9, 3.963080416387793*^9},
+   3.9630803743956757`*^9, 3.963080416387793*^9, 3.963412690782526*^9},
  CellLabel->
-  "Out[82]//MatrixForm=",ExpressionUUID->"43f1bfaa-c53b-42a4-84b1-\
-3e5820356abb"]
+  "Out[82]//MatrixForm=",ExpressionUUID->"32a9245e-e624-4802-9be0-\
+64fb867f04e5"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -5866,8 +5867,423 @@ rRPbpHY2u36LT/Lg
  CellChangeTimes->{
   3.962818312367003*^9, {3.962818463682548*^9, 3.962818484948956*^9}, 
    3.963078429206482*^9, 3.963080029556995*^9, 3.963080208908061*^9, 
-   3.963080416620592*^9},
- CellLabel->"Out[83]=",ExpressionUUID->"31ca751b-2ae6-4e44-af3e-dc2f34ec72f0"]
+   3.963080416620592*^9, 3.963412690945038*^9},
+ CellLabel->"Out[83]=",ImageCache->GraphicsData["CompressedBitmap", "\<\
+eJztfXl4lEW2d08v2YEIiCCiTcjG3kLYAoEGkpCEBJolgYQADYFAQgINgbCT
+Zg0QoFUEFMHGBVBQ2wU3lHlHHUXFMTOKo+Po9Cw63rnOmBnvjHfm3u976qtT
+y5uq963uhHG+57t/fHme900g6ao6p6pOnfM7S5UsWb9yef2S9TVVS5zT1i3x
+raypanDmr1mH/8v2A4vlB1/gp8FpseOfkcVien1psfz/n9t/LiVvW7LPZfG8
+7otxo6Nx9PeH6e9nkXdMssfpdBek3ubHT2vNSEfbqiwben55jBWh4wmWmDB+
+h/ATRCcS/OhYAjTjRCfiSEv7aEszydtBWihMu60NPwiekow+FivC7Vls6Ora
+WGiQNsre+1o+CW84+F0IP/71B/7m3XDwr+71zf9BmvZLTetN8mdm5i160385
+4NSbdpC3DX1zbwbCzcKD/w/eNugKumhn1DbaxwzKKGerz8Pbx23D245mDewF
+vZDnH3f3iGXNf3nvaL35GNo8UGDhX6T5rVLzruu15ubLBvfQm/9fR7vy5j87
+mmds3tMYvXmYQkPzNjR/yE2k6e1uuyWOtX3t7qU32ravMLWvqe1Fw5JI2835
+7W2/cfdaY9vOTc3/Ga1tv2rc3uGJpO27ih16248fOS23TRrbITUWLEozDtSB
+6kfFoN1uO3p2QQz6Zm9f9NdDt7EVaENnjjyhWibygKVlkhAqTIWVfTsqH5aC
+akcPRE2T70Qt0+5EZzwZ6InS29Gl8j7o1coeVvSTqljc6OcNcejXjXHo99vw
+951d0H37LltiaVet0buye055cvw7c0doLQWjwocKRsehloLRli6kp0dnp6I9
+c2aiynn7UWn5MVRS+QiavfRJVF57BS3yXUVVjR+gpQ3vo1VNv4X9ZRG5NYe8
+Y2DBez6o8/hapo0JtEwbxbuJJd3Eot1FuWjTjPltq2fVtHrLdgZKFj7qLq58
+JNnjDUrNVdDRuj+sI835DxSMDh4qGGOF9vAE43+6WwqykgNuF/3YLoFgJque
+IO/YZJ8n2VVblOyrKUwOXDme6kcfujzoA5cLXWefHSH+vd27siAZ1RTeRJ5L
+R/rbEbp+p8Uexu8Q+mhEAF0fAR8nnxwqfRJ60D/508czYsknbfAJeUYG059n
+0wG6arMdvppxsYErG7v60fmeXnT+Zjf+7kTnezO22oO1Rd31pn/xzEDadLzY
+tBOP24NH4D9c1xtodOPHiVoZjWlil7ZwbXYsgufS2q4g3h672eLQ8DuIHzKE
+q/VN7qt1TZYS2n2Idw3PH98YyijzYj7A7wkrrfBLvPyP1PWB35K/sMq846wn
+I3LSEdETw+5cOTYO8VFdbUqOI4OKRz/d0IDeWb0TnjB+Qu+s2RV8d80u/9XV
+ZIDJrb4mSz4lqlUYJOxwGKGHjdCNmaOP8KHt/fQROujfafCW5uh2cXg2mCM+
+PAsdmw39/aEUPja8+eFtC+Cx6e3kMmbzcW2ruJmPi0wM/vKK47q47w7juIKm
+tSOPyy2wTR/X304PNI4L+CWPi3e6t+oWvdMYeXCwnvW/u3omzTg488KWB+et
+zTYP7i/3u4yD87xT1z64qXw9CLvwvvV96YqztwnzBHuCjw7vNuPo+OKMNDrY
+cmR02wvi9dF9fU9OJ0aXBKMLNi/spT27tR/68X4n+tmxAeiXD6ejX53PQF88
+PRB9+/pQ9Pdrw2EkrfixUqIibCNPByMN1mbHkJHum5mgj/SrQK5xpM6rvvaR
+FpB3rOedQ07vuwed/ndanNq7h/oH3z2U4nu7xen698uDLGxYrephgQCJNqwQ
+366B0vZhfb5nvjysufSP9U2wpqS7cRNE6CAmuD0vLnyqNAFdXt4FfbYzGf12
+/03oD4HuDtbXp/7Fel8OygKQEXqTVNjF+xtnd4eJCv+42YkwC9DHD6aRyYKJ
++vrlwTBZVFKRMfSnH6bjjndf8yV53vN18V9b3TX4kzVdtffWdEFv13dHr9X1
+R1d8w9GFxcvwsUY6bxU7L6N0A40wv8B/izVw7XAKXnmc//A1mf5dstvpcZ7f
+1Er+9UvaxALyTvDsyy/z7i0o9e8umBvE37V9BaUIf0fHZ3nRg2XL2y5U1gde
+qd74IJ1N59jMgtbxGYVt+EHjMwut6IkN17F4x+8gfvwX13/oeaLxA9cF/L8/
+px0tgZfV2Vww/wxtwz0hswA+S57CERWxpA1bK7z5Fz37uoCq78Iqkrcgra+/
+bFD34KqRttZVWVai8v/xYDzX9UHP96JjicRkuF+Yczvt0seGSx7P6CraZWxQ
+6BJ45MpOK3IHvCHCq4H0o5qoxGPt18Z0eNy7rsPbmeXxyT0zQHUJbjj4n6Bc
+g2kA2uQ9tIeL5O1I9rkt5FS+tzzReBJL41yet52xJvBkIxlnGP83XkzwjkMP
+rnoDfguPyH7vhQ0fuPH3AbTFcGG7ggnaNRl+rEL7tVMNT8NvF7c5jtCBX2Dz
+Jp6iF2u72MhOSQrjdwg91jOAv/vQuZ7u1ubbPPnpQ/256UOC9ePzxBMVhAg9
+UO3B8ZlFOql1RfsYqUACrB7UTqpNJBWPk/xdWFwtZFfZmIXC1Xym6qtopYqz
+PfT7t0pFZeaQRK54wIAqE0vItaOfNvdFeelDyNM4uZjKhhiuPwClXMEBaifR
+xkIThIltmHGEUQt7hW8HSi37hSaS56QLRzT3yIONDt2kxIaHyaQUDRBCsp0d
+xC/s/BHwL/TEho/EJbNPol8/wpjSxOl/eePtOv1NebOSCP127d16XXcC+rPZ
+8uM0w3Ng4eOUPAf05s0WxADekxZGelBBukswk8iz/M44nfSHy2NMpItmElvZ
+aN/Rz2XdUVhyeodMwaKqaZIofwIrRjiI7Hl6aUSMgemb+pkKz0/33cRZ99Sa
+O3TWnZizpJviWBmr4NtdS59hfAPBJMmIeePrLAYhIfINxi3xbcWIGJ1vTyw2
+821fyycGvjlQ4L6fcb6Rp+11D+8TVo6RddPJm5jgHFvRzWTcPWJojSVWgGt2
+Hfp1oLHlO1FoFrGNw9kIzx9P9uCsbJk3QGflmXnVjJWwCvXxjCHveBDsWu7w
+uagsuxZV5W5F20pPopZFF9E9VZfQ6VWvo7O+a8AN4C98QBJMWAYraXWyPSLg
+DPDYFNhRNNY+fu4JibX//mqFRRANatY6JJneMWwld21rBw1CHF9iIlkTd/x3
+D/WMZapQ08w0zmtLMmV0UDRFxpN3gsdXfMjrKzno9xW3aGtLDoXxA9+D+xc+
+5nugRoM/AjnIpToW+rpUdyiIpjxOIngLwBezBt6BKof3R02TktGp6Q702CwH
+endFLPrd5jj0B388+vZAPPrHXQlWRvR3x/oYBL4DPXPhjMTvXz+9mvNb14+M
+/Lazc2Vm5i36ufKXA85YBW7HECRYynpT3E7jfBUNgsrRA42MVdh49lZxx++a
+f4aN2C3KLcqs7iCwPC948zmkAYhGW8u00ejodJeOwgDm82plD3Rl8S3o7JKx
+6KH6YhRYuwYtaXgPVW/+GK3a8Ru+QC+HjkoM++WFTdEYRjftvxSYZPYkWHk2
+sFGAdYR9MQYmlgy6kzMRDiADE+N9U4bN1ha7N4Sr83ag1dP3I/+8B1Fz5Xl0
+ZMnT6Hj1yyAKLFYFaRnknQxAkfdwwSjgLMedAHbioBOqm12Hls3dQvAtwLYW
+1pxDW3c+ho4ffxR9qi20UbMEXbv/hFGXaRNPvN0SJ5UYLAdJO8ZgdfQYvqh5
+GQ/6p7Z7WrzJ+Pmy5Sb07cke6B8P9bQQ3c5KFqYNLRo5QTeFuirs1gI265hr
+sIF9vpIWbI2sKzmMTwH8M2jU5C+Gk3dXHcW7d/aIQGjNYO2VrRltb+5PiWbn
+oreOPhSjsBNkbv3LIOVp5J2AFbhksM/a9hTeju6e2Rc9u6QveqEqFT23fBh6
+rCobbZg0HW3P9VjBYsINHS6pQCfnVqHzC1YRhj1WWYdeq9kWT3lGMC/+RXWt
+RLDevMyCC13YMK31ZO0CtKt8E9oxvwXtLn9YtTq1yAz4l+HeheTtcGOrzb8t
+1xPYN60MLMMw0JlEqLVxCxGo5RayBBJQdTpOXBawKILrSg7Bd9/m2cdB098r
+URAVXb+3pGtkdJ0a5Imud31NsDp9e6bNde3NK01ucnvgF25s4BoNXUCo8NvR
+tndaaSt+QvgJHC5Z4Lu0dD21H/uJg7uJoPUcSa/OykCrxw1GLdMy0bk5OoqO
+rlV3kSD0P+2/Bf1uDzUWsVrKoXQJta+EF7GRqb3gwEqLy1mQmenOTR3iPl9Z
+Rxj7uTiYGGegYKyIXnOh5CBgeCJ6YOYgHeE/NX80Wj+/Fi313k3w9sr614m0
+P7T7J6h578eY0WZ4/zR529u4lgXPS8sbrRQR4fYOnFe+txmgO5KNbGVBMmCi
+gD/6rl/M4PYVxRA4AEPEgOGoah9/LNpaMouA+bWzfa0L5h0MYZnqL1v5IuiH
+FtqSw5WXNgiJ48ObjeNVklbtoF2KXPXiz3JDjeLXDgkWZDC7hcrtGBGh96Hr
+Ljh8YWWfoB3MJ+9YLtqAJu5GcB3MG0VcCQ9ThkLn+oBLh4+h+E48x3fcriEe
+r2uox4+/B3Mys1vxn4Xz0ge3UVmM33Y6AyJaDQuezMDtjDG1RTIlv3hmIANg
+49Hf3s7jJ5ASPNB8Ry13U7KoKWgjXo6TG/oSTI1iV3avyHt8QsTKGngYk4CX
+FbxtaGLmGF3PsSkOlTjZhjZi8LdQorzG6fnjG0M5qgyas0GZjEM/9u1CH9bP
+Cl+vnxX6sH528Hr9bP/P6jzg9oGJOkhpfIzSA5Ov44hH6vpY5XkHnAAENV/L
+zHfhy80YrHOheuzkWFk9RiIX3JmjTFzAH9G50EWBpt/MuhGdP/hhICror0YV
+Gl1dswWohgdzB94OzgGg3vtBPeGAZY9EvrRiHtrej/XQKrouqPlhD+LVKCIA
+se2aq7O56SuJ5ikZLhPNjZOLjTRL6gSj2S9O97aKmznNWAU10fz+6iU6zUnk
+bYNtqDfpl2iVFtLFfXcwf5fopgF2gL8LGO//+rUhur8rjzYRyhWkTjsPQKC4
+XIM87TyIYUTjvzESLekDjGgJxN9bdUusQmuMQjSoi0aiaUCCDXxgnnPVXQBy
+ZPixvKyunkljfhDRLwRbgvhBFJ5KIgdpS62iFD4xZwnlhwPmFYQZ4s/IIdMt
+nCX4z4wskfQHFUvaVyZohEZFGj21/j2dJV0oS2CnG1nCnO9hAcykGi+Wquix
+nrqjkvlKGQvlFRnBBRvR80UZFe8rGTwiuCo7T9vgno525s8m+iLTotClpQ3o
+1RWbLeyMBW74XMPauZc1pFDn3pl51TL3etNBir4QdGHn7Zxdrx2+aGLXcw2v
+yOzareYPOHKpzRrHfaZGvI/L6mmKSTP7dMlWUvl0mXstLIodarfEiZ4KeEDB
+A9UIeoXDkoucsYOm6CLHDm8VzNaLvJM8j/j6eC839eMOrDB4cFRmyH9cHQ2o
+KTNB0AsNzxm3HshYvXnWETsk1O5nm+h+5gq0BGAx81+L7tgDURXN+yyJcKbI
+hsheHF6KxmYtQvljKrARnY+Wj3GjmnFTiVGzeUoJWZ3gCRKtmqe9a7lVw05t
+2TF1G3l3cV5tdnpebhrtO1690L9t7g6AgdrWFu9Gm2YfI2aNAX9Dr6x7BJuW
+hJHah5EY+S93lJPQAkvHjnLNzMLE5EBT2HOo6Uvvwaav/JVzT2iVpSdbK0vv
+R0vm3IVqZu1Bq2duRQ0zGtD2oqVYmyV2hmgykTFjdrLNLs88dRN28dSMtIX9
+E7GoLO6FHi1zoYfnTUKn52SjE55sdLhoLLpv5nj00NyJKFQxFb20eBp6bVkR
+VvAIG0HbicDGf96vb4nV1s7sgY5W90aPb7xN9HGCoW6xfw8XP7cKsAbhCcyp
+9oaWboJdzq1OB+FgHFhq8E/dWsOGKQgCb6BkIVh+6XR9Ax7vAb/gtaUxwZ9U
+xWjvV8Wi55emorvm56M9ZXPQ+tlVaP3MxcTIABAHmHiuzE0YiZmI3qwuxiMn
+jAxEZqToIokWgyDhURRsjSdbRPCfg+8cRFDrh/elhn775MDAf/3ExX3oEQ4e
+v+hDpxYIOTNAKoJpBPYkMX+z2HJqpCGL/uLKhzRsToVLFjzaVlpxb+vyuZu1
+ull1oS0lpRBWBeFV3odL3eTo3K2m+EbiGphXRDoTfnd5sOFMIF/E6E6Ruvyn
+AhRol/EkZOnsulu1y7vuCF893F+S65J3XhUoIY8jtLcwHh2YHo/OL06KHJFQ
+Tv+Ye+YJcVbwyeNt97tQZjKPSphIlzt4nD3j0gvBqePfOT/IXXG/ol1TxSNB
+FScQ/rQpmUB3vznQC/1ifwb6+bbqWMVJx8x4oyOOqgB20fhLDvla6X6MD9QU
+dodjB4I3wpcC/UEAglYoWkGsZaZLJsJigyMaNq0OFwVmLNCPjosLV8PR0arV
+bLEECZMU3l2HAoB1MQrE5YOFdIxgoD23/S1OhZs5kI/TDy9k84FHp6NBbvJ/
+cYAGwDbhaIAv4Fkgum7nsR01VvBTwoPHyzDwRPgD8GNq+P9JWISv+KDKs0ro
+oUCyA4xpyYzFktFC9gLVLmJIA6+sO2u0VwOUolOUHeBe1/LShoDm3UZQAaoX
+NheV6SuSHi0xcLSofNNUL7bDGhQJNMRjgMtG98Q3zDhinCvJDUGjDsz4AyAp
+3FQX8Afdlrmy9gFdobJR05UbrSB/fT+r19mwX2BDnMKUiJcBKpFodnbbja5n
+g9NdCLOwgb8l6upkFLujgRNtr3tMFDNwgtCa0K5CAsWief4AW794unStlpgA
+yYq9ToF4u9FDbHCsQ+yOTh4WBZ0h7waxFxmFYBoyrGW93V0SeXB0q8iLaX2t
+diOoK56acTHeL4714AEzzAz3ixMpx8sAFR0FkUiOl1TGPNEmXje7RzTY4Z01
+64xEArwSgUgRMROJtKOzFXNEHzczRXlgDZiiEFiTjILJFmM8ycRBJaiucK/g
+o+bbORrhrQrCpShgAXr4Z/AWmXARJMNN0C1bOnyM0amEgvOKjeoUiY7iXznk
+3cU9d0IdXpBN4GgGbwJYF7plIThMwLLgETY6NwpHmBarZuZGnH9nRc/W/Yt6
+oTNrbjXpuv+r1aVy55HmuilgB5kdfgE70tmh8LGhIyWjjLqWxA7qGnVjLmAh
+7is6mMzOCBBvnFws3YzkSgE29FBKNGqjxBh+sWksenrXXHSpuRQ92HC37ofi
+8MEz639sRFuSI5MdUpEt4p+c7P1FQ3V9j4UgwFbQm6VCPNaT7yrTCu4sR3PG
+ViPvlI2Sq8yuiIkZxkj1eZp9vmnLUH3OaLR+agHaVlKLdsxsRPtLd6O7K5rR
+qUW7dGNKZdzvFslyaNMHusD3jGYNyULld45DS0ZNBKNn3FSIOmCmtADycKgL
+7ZqWRsh8uCqJk9kqkknVznjuPoOtzRd8CJ59lecC96+4QkItqdqW7P54m9ns
+edPbBb20oBd6et5txBd0dEYWapmeLZk8jFwHpbb1w9UmaqnWEQOnKOj2ohcN
+7DE78wlyrAATi5kAb5tEPNPVUaO7l468MeI1kXiq63TzNNTs867c8ilYLEFs
+rYDVQpJHvGU7icPdN6ua2HCHZk5re2TupPCF+ZNbX1qcH7hWM8PCHIuPkPdN
+RD8NeX3grNL10/tmL9H1U/w79NKyRvgeOF22jFMYumfmwsDFhWu0U6XT9TiE
+q1j35nEILGA4KA6fKp92t3f9NVeaqxQSUOA5QH/LAuzgTHedLF0OOijopdRJ
+Zfcrg8dsAbF9Yp5QSWV5jm4HOCX9989NCIYWJ2pvr6Fu/fAe4tbH4/72ZA8r
+bQhQTWVDL7MpxseNB53r5bvm6+p919fF/buWZBA7E+jwYLQQ3kk05jGDc60B
+gN0StPEDc0AVJepoTfYUlS+HEExHC3EqzpUui6t2lMNdl2X3nCuP4UF0zFFm
++W/aYVh0N4wZnEdxPjvKGThOjMOMjexDgn4pMEBiKCF8Sk/Pa4+hTBBjKOER
+g4t96Hi8+0TLK+Akf0AYno3BjCOHTNdR2omZY3jkhIj6J7UrbDryTy1Mc3jj
+Uld8lPDGODG80ZiPCMG7x+gI/6t9nYleUhtjoOCPEqIRgXG6KU1xKIcYV9Gp
+MMLAoXcNsW72tv33fiY60O6Rxig5RadkuPgYBf8RIN6q+B4nbeH7heIlohOn
+3jSG4mmRLLkWaeySJ3Ryxkgydu7sutzwQNTYGTZ6MewBwvn46H+2MU4efewN
+RrI1S0OV3JV4/ulecpDlK/nRfUd4LJXkpWKjFbMWIa6Lj/bT7e2jtSviuxw3
+GFUmD17yO04YOIELgqwhheLgb1LAQWzcJBOyU7H8cjQVH/e1l7ZK48bKHx33
+QXGgXSTn4KQhbjRqRDlB2nPHVKK5IyajhSPHE6T9qcanyAIBdpPFESFon2+1
+tWNsprUshjLxcV6/skYa51tHH7LEKOLm94vDJngInJAgNvUTcmPJatSIH9+M
+jXgUHr8VcG3cGCDbW6dXo5YZi8UDPk5hlVIh0s1TNTLdXzs6U9s6ydW6J9eF
+7i/JQA/ObA9H5IEzEM8JgTMsnhNilSx82X9zrUii7LXDFzllmoIycrxREDWG
+IB6bpxZ7T5cuF5Flis3HogNF8xE+63Ws6tUVm8HNQdwbmaSJ7jy8w3u21K2H
+rRwvHo7u8oxHezzTCawM8X+LFt0vxdms2vEb5NvzRzJRmARuPLyw80dGyywY
+iYp4urYIFXiSvM1F7aFMLdPnk0l4pHwlGT6oMT+q2QpzQSIRaOBdoj58bKP6
+7/ZkBc9WDdUubhqPntozBb161wT0/kNj0O9eGElQUZsQIS+p0eKgbiI/OohW
+iFkLMVaAspG9R8OvE9wMMvRf2T0s+PSWKdr5TeVtDzRsNsZe2hRR1mJXLNXL
+zTKMQBW2WEmooc17YuVlXW4cED7zP6i2wf+1n2l6MFEh4Ajkj3+pK8Fi9ddm
+WS2OwKosu/8XO+J4hhRRsoaa2wiq1BCVjDRUWgg8GnjMt/7Adzx0P93ctCR5
+uQYh5SKJKoNVjlEnIV8ppkZlMSkc+dvd9k4c+bEgJvXwnmsnjvkurr+uH/G3
+Cd0xIBiAW4gSggcATuLm8iiGIpzfzfl21fltlwQZFs9CVhNoHART7W0aQpIK
+hoMmOBkSRv/1K/NJGKeNlRUQA9jhuX+OQ88QMFefkIeI5WyMIkS/l5lLxlAl
+ASmMF+OVROVK5zygB+72BS2tGKxn6ItR1DlVigYPXxdSfsiDBS4/LojdHJkO
+GQ4TQq5McJhVhqs5as/jrMZRckwqND7WdXKeX24mRzzXmQptzMRRqUwKSjoT
+U6SCdOJo8Bj448XgMRJjNKJ9krTyoQPC3jvTSUBsbXYf3ErtRKDj6oFeCD3Z
+B6GzPRF6sJstYtKhXVK+//Z2HiGsj5kSKZf4SF2faKFAYmxLkiKyIIsJpobi
+W0yeCp4nh94bgtBraejtB/egu/xfot17/4S2NX9rY6MWs3faXveoNKxbzERI
+fiwhnkmhDEBYhJEIya/PiRCbNKLzInNoBHkMOrvpE/TAtjB6fk8Q/eHMZPTN
+kznoi8fmqzQpEwW2yHESShpE106SwqXOaAhHo0EVvCQ6UJjLiADy8P/a2nuA
+d9rlhsdApoiSlLorzbG+uheO7SrSRjRwP0sxnUKYoooVolNE8PnozfY0j9Pk
+VxI9aR35lVTQPI3RNnshsWCQ6X9vda3eUKKC/h70Gyv6AZLAU5jeDx6Llbxt
+Xq8r0Vs7wubdleewWEHz+Aft3HSMtYcnd9qbJAHsjCiT2xHLiKhuR9GPkahg
+lkyjqMSYchMgu4LlgbdyvQgdTyTZoSdaXgEd5i90lFFOSHVEr8LboqLetFSw
+cIm8VFi0FfE1qskVM991cpffGWcodBQvolEiIsXT4Elmzb/T3dLpUxWwj/py
+mezRpI04mOXg9nk3awcX3xK+p7o3emHvHWIYkk2xkFTnm4qVMgdErc6Uw4p1
+ED0Z5cThV4xVmaRcin+j1IciyIqOTuIkBS5P9YoE7rjxXdlFTCztqe2etuf3
+l6HHmrYT84r5wZh5ZY5c7CVQ7AASrQqlRJVIyuiEWTbSqRkEy/c5p2mgTBIU
+hfNvyrYHD05zaidm5YSDZW700PxcdKZ8DnpkYTUKVlSJrgxBvOpNMfHKKowo
+kxRFHfnq2lgyv3GKrE5GaKSz/NXm502EKmJGpbOcBth1BePM80FTH9+InFX+
+i0uHabsWLAzXl63V3R2Hy7CxX1ZMiH1uYR4JV3t35QyrYo3IBCtyCW1iVqa+
+mhUprVJKJiH+RtUAhSojqQEstxnsR09148896a4yT3HlI57qOY1YKB/IH43f
+58rcury6WaJNTHTXaRNq1em0dVSojk5snGdbWQ///bW9g4+u66tdPTog/JsL
+maILWERHVBqOdFKukoaqzNETUjqjJSkSS5h/fUPeCTzW1vvkpjz/6bqyYHDD
+8rbdpQfQwQUnRQlg7aSCII02Ac51f8WwlGDVyHRtWVZGuHbMQLR1Yn+0c3I/
+9MCMm9BHjT0hnTdGod2rEgvp8Lu4TpY6wOfjv7ouLvh0RYp2sdwVfmL+MHSx
+fCR6pnI8emFhlridYYXzyFYpyYGNdh7bPCLCFZw9kQN04YdnpaML89PQpeUD
+0YurhqKDvr3ovqaXSALczn2/IbLsf5M2kp0Br8tTVv2Ct6JW89ct2hb0ztul
+rZi7IezzLEcb5vnQPeUV6MH5M4zDg8FB//V0RIvJOxEc4rzOnG9P7giIrfRt
+LpnrWzhvj29p9UW/d901f/WmjwA/oYpfDFklyU6Xx0bSxiB2baxObx39JsJA
+JLHeYuel6AhEEQo4xRBG9ieShoDFFctx0oQcJ14PBUKjSQu3Si1IuoueOqNX
+EoMxWKykHprNHajrrRdhIk31kJqSglr15BM9KFiIye4ihrUroY4Htk2AIA8I
+fXF53RuIRSygprxLSfswx9FK8cpmuYYNvgPjxWgjZk1x0AagW+4qItFH0CYF
+n1lpU+LbhSoL2u7ieAjtsUJsjxU8rkvpH0gagl6KT49NBQKiRFTb0ekdOeai
+OrEcv4VIUwgOge96naPXSc/EIPCxjCfy3Ovrg6cSs2aESEJ7Ya728IxYEqn0
++e4KY0IIwYFpRKx8VJqzGIBwS+SCa3a0adFkRQ0EDhdr7QFPMWJMm4g0WUmh
+FxuEuerbifq81YaD3bA7/uNqvggRDpLY0qqqVybWELO3e0b04hnssyJrjOXL
+NJEveEGY+FI3Z6q5wI6O0kmhjHctfcaoZEvYEWOGyY7AW0FpR9D1H6uv/6c3
+XBWRL6JYp0hckjKuOJd+vq09k8mhyClhtbGchnxAwihrtMVlR3Ny8nXmnFhx
+2VA4I2KUHGOOaqWYjLdLR/orjTeVfmuIbDVChX0FXvFIk0tru5oqXijyhqR6
+LJRhpDYpSFEIZQsGsR7zzatDwn/WhhL3jl2RaEVUOsLWiKHZVlgwNiFKWEK7
+LkfgEWArnEeipadSjRMVijuzUVjmsZgFpKdTxSkyf2iZ11gSi49NJE/48XTv
+Hy8P8nz7FnF+SEloeEGZttbvf5glxkXHUTbAR6WQ6cIRetEeKa5yEeUG98yA
+ikqe2hE2ixVSe+CMLLYTbwx8UV3YYTSRJcTno0d3RdWsO+SeOvlHkUMlJf+Q
+Gn5YKz7X1M97clNf/3OHncEvnx5EVtSfLuuWN6vIij69NEoRXs2XCpxA+rab
+N77OuO00BRON0R1CBEqCGCHThh8NHY+X4naYW4pZGJ0GS1UAZqLCypL5+0/V
+JV1J3kmwIrl3CRQwCHH0Thla6l/kXh88tvxF7b6Vr4ZP1WgGlZ6vOp8Y2I31
+EyNjJTcuZawcyjE9/VaVh4VHHQnWfxt+NCHyCHhMY7KjA7kq/ooGSaLCMJb5
+q8y5UmQgSXErDeQdA8ILAmVB9+H+H78QLKuoSKXimeTMnJl5iyrUyB7RsRbD
+w0h0xUJruQiqiRXOJVo3L4G4cFmNe3jCtZMSUK07EdVOTkIN05IQ+nEGuCei
+WdwiaJqosLgZX+nRnAghfp6Xq7p4P9uV7P/67u6BtuPdtW+O99DY6QOB6eT7
+V4FcnvopxdhsZu34PAHP8eqXvSdWXvEfq35RtW5hgERz81KGSjU2hXgiMfop
+WjyRMd4F3HyCMNFjCkbR7iRnrb7mE0VnLX1OJlHn1eO9EHq+Hzq9+2P04JbP
+wHuiM1mBkkt5Dr3ElZPgPD/f5Xm8yuN91rvOH/L6gq+u2ATZOWGWDAoFVoC1
+tDqQrIAsUgxeiGHiJWY6imH67LWlkVyi0lon7o1IrmNAf1WuYyvzrG9r/hbt
+2/01OrjrD+jy2nmSFZ+gwBwYl1YwslnJHvL1pTgOsfIVKwGrj8McCGU3hgup
+Kvkx8NxZkNk7ortZDMGMuA7p4ZeA/vz6CHS+/j50Ztn96NGq/eipZVvQU0tW
+oue8Eh+skdlwhbHB57ZA6jg8rBSruQboomFJlog1Xcm4bArNXVVuj/tQjH53
+vMai+t3FRdax393hOlZaC4gGlMVxXfbmkYyB3iLhXSQFj5V848kwxtoMzuBK
+JwSusXwpYFYmESdQoql0SH+0bMRNaGM2jZ0TysGK5aMijVqoxijZSYxTpuKa
+oktfdRZ05NL/r/fHq7q7VWSOXIX34aokaoInos/u6iOW4zHGQUsm+RTeVEE7
+YoRVD+pSSJJAtOfm9w5emn+rplXdEn5vdS/UuqYnen9TCrq+Kx39dn8/9MTB
++2IY+4x1QiOFpDL2mVQ6fSlHkPyqwIFOuOD7SuyTqvpiK1RV1bd67GSaRBjb
+Go2LFJTroqoaFRGoguBn4AVltRyRVze7Lrhufq3WsPJguGnLKbRv50nUvP8p
+dM+JyxDua+EbWWFBSYlszKHuN0acQKh7tNPCvCXsUpgx3g6qEnwyf6WqwULV
+ZLH0bePk4mRzDStSO+ddX1NEZ267HmkXnbkw2VbAHyx2PZZI8x0F1lIux+rJ
+2F9cGeT/xfnRweuPTtJ+en5m+ML2g/jIwkqJKi2OsjGB3DQ0e5BTW+xKhQdt
+GH8b2jslGTVPSUB3YY3h19vjIEw1cuVhuxTvjHeFKsyCcZFWXonh1xtxmxH+
+7Z4/JNkKORP0lOxUkeGmvFk9aVIsLy/hcQ31BFh5MX/2oIkQEe5lKR0WK4Th
+W2wun7tIHxhLnDCBQt9dGx4lDiFRtJrgAYtJxDxg1QPmQcQ/K3rMU5082Gb0
+ris5bPU+XH91giCUmqa6vF5Xmv9i2e3BJ0pv1y4tSUUvrUhHodXj0VONhWjj
+lpd5qC1nvaga4o3DWB+MyHpVAcJYvYQiiywMC1amxQp2JoluwHLuxUC7QlxJ
+qZIqGAvzJFYwPjFnSU8ZwAiKVbSyB040VNFKEDPnosn6O5jYi1BMSxVsIQa+
+UJeLXUSsIBd7O2k13hnE6ixgAk9uT/PvrlumHd80T3tgfwN69vga9FxwB/rV
+lbm8vILKyS0pnPI0dBhrwYMPmNQyBh3wq7lILXtW7ioszoRQS1qobwxJJj1l
+ACTUUSU7sZ6ZoZIdT0CHpDOYjd5cSAoAmeAf76icm8o/TvPzqNnVVHbKe37T
+w/5HNjVrBxdeBLOr7d7lL5nMrn4SqzsZ59Hx3VP8Ng6BzcpSxzfLWTxSqUBV
+kTxF7TQJ5+vFBaIAnAnRgarYEgVXJcyB3jgnG2DyAv2XxYZQrjlAMfE3uuOC
+hz0J2n8Ge4b/fqaHqcaxwD2OH7V1VG5PUWZNyp9i3ItUZq2TleckZOGiwKl/
+JqYkJPKH+o/ioW6n5/XGqd4/Hhvrv7J6UPDdrcO1l3x3hr2jJpLSVXgbct7A
+VpNLEUasmmYA4hgzJAyr3c0pwVditrfk7mfUs7Ix3yvMhOKuibxuKWSLeo56
+vKQM2rHZ3uD5Bas0/ISfWLSakAVluRKpagVl0XgpQrn0XrICvKF0x0N5Gs/r
+pwZ4T9b29r95LCX47y8OFt0GAInrAl2FOSlSwiULV+aNsrq1WCc8ep11KShl
+FaMAk+1eNtYNbPIfLq7wn62oDT5f1aD9cOXmMGeRVc5SgpKr+hYSsslo+TgV
+u+ipmuDaW3HWE2yo8p7dFAwdLN8fPuk9gILLjqCzq55Ep5Y/js6sugIOoG6K
+WDuZE4r4FfmuRaFiekchLOvJOw4WDCQ9cyAUND8QtSQbbdTgaTFCbbw20d9G
+Nb5EEoiEeyQJ5V/tHBZ4tnyodmFxsXZ58QQUXLwYPb10LgEzflw7n8WKy7F0
+ohSwxEFIKFHe6kYPCs4bnKKtzLojfCCvD9ale8ENh7EKI1lFHb2MMYnUCSPl
+1+pf9N+97O7gArdXq5y0ILx2Shk6Na+W5kFRNA3mPEHhWKRpUQkk5IiXxto7
+vzpweuGC4KOLK0KvLJ+jveItgOM2rC0tfIp+iioT8brp9tstY/1/2psaDG/v
+rn2yrXf424O3o3f2L4ewEl7rWYqA2cPYe5XWqfY+u3QdSeS617M4dLa8BvZz
+a2ixL/xC1Ya2H9VuAyKUNeK+ot9onAmpPEziTJ7YfNRbv+srf+2O38D+IOF5
+R+kiI0WQQl4f+RcNdLK8yn4F0Rb8C7WvAvp76iSLAcVRZdWSKAHyIbovLK+Q
+t1xTVldz4sRr1iAIBLQh0E95ZjDxI9j8JIjE++xhp1579ZrUumSRtB/3vNyh
+4N1LEL178LQJ6Dsh5MsrWaRoBqkUIqMV1IaUT4SrZ9Ko/zS2VWxFa7kopQm/
+Lo1XXXVWry0olXEUq4dyb6ToVCscUWFthzp4gIOFRThIFZlI9AYP1lPcZCeJ
+cXadl+7Rv9RwmTuoLVZYXpclkjqIBpLuRTRX+bSj9x8fY/YTJnArnBfWglo3
+wYWTGoxp2DQAwxzJ/7vLg+VIdtG9bCfv2EgueCLAnpGIlNRKc5xSh0FDzx/N
+1olc5F5vqDUl+exE/5OQEabj1axO+Q3XmlLEXkoe4iclgiVNsD1Kitfp84uz
+eulI/6hRUu0Xe3GTG67XURLsUIDzqYqtI0SNq6xXRTBmFFoj3E7Y6XirPSvd
+imu9uF0rlU5TFBKT8HdV/akObENFKKfkmZZodZBiiHC3ZIOnh/b7Hw4hsR9s
+2fBKqDcUhtUebsQnTQo3UpQWkySTqu7UjZttkjHMCH6NvOPgCHCzW2FJCjL+
+mRdgBHnO6WRJlBKd3oLczoZVdVS/kNEJrA83zOlBDqPvaWAxOt8l7wQozS/S
+GPzbm8O1/3x7ePgPPxra9jd2gcqcnPwOBgzGbvSQKCpx4yW+/vXqUP9fXhui
+9/nXqwWk3kBsZFIkBykj5UM2ZWMzC9zzJ9RBhKL/dO1rIPOD7IgDUcju6SKO
+fHZLIHmmDJ1tUUUkUUUjzvOIt8x7ecuzfm3HQ4HT1ee0F9fcpZ1a8RR6bftD
+6Kdr53VVmHFsYJ+Rd6x4hSYMEsQYHE7hBRPXWgwynXyNY7zKdM33HCiv8n7Q
+VOp/vG598MLSBdrTyxaEX6guR8/WVGPzr9riUFhKrPsvaPfQNU99J5WggC9n
+6t8kBz7NHIiBrlwVtRrApNypAPAqvXyn8xnl3ciP5DId8IoK0yP+PlZyRHuH
+J4ZXjbSF6rJsoYfnxVBQFDNUzDh/V2ijK/kRjFTZnSkWvlE4Gwnwet+RVwhA
+YCX2n40jfUTJfs3ch2hkmorXiICEIyJgEyspi6D1Xt77oq7mvWzq027M9o1Y
+zsWiykxXXFWIDSwhp4S7PbjiB6vgknkUkoNSSEoXy7QISek2MQ03mpUvrfNn
+zf1Knj0hPkZVZsUcH2MTnXoW8aLGYAf9KsvSqO4Zi3QdnHCzoQRNK/qSYoCE
+Ei2q2gPX75lr6tpYSkbwNUsakNg13Xhx7rqxmcSarhiaDAUe4FJcbU+uPfyP
+u24GnIB3a77x1BwpI/hoJWVE7JZmAAOy4nG1HXQCHgD7GnZ4UDu4Udu+/9/C
+DTt/Tgxe7ko3RpkIFX6kxHuxH1onJk43xw8eu+7/0ztFsOdg/5GTBR+WKpey
+2Aw9pGKkunlMWsLCfV74039VDQ6KPdlBwQJtxs/uPiJ2scWWLN5Evdb8MWNA
+IjUtHZKl/dEjO4moJzFiBuJXdtCk4O4R8Utb+3EZeqnhaQJ/W8nRbOPOOWIN
+LTE3LxnDgo6qStMWbQ9Huz4OahsYYLxL/Voa+Jpv7JLbr4qrIjqbcy6Bb2VC
+B7XkR7MZCVHvkhmp0LYlvEvRqMmHLYbSqxKSTQpuublRk/knhlerzD9FjJpk
+Es1Tc4PYCng5QwpC+J2H06NmaCsyqSVTROyDAlBxsC9IlKuouoZD67iuJ6Yp
+S1q+2NYWNl6+259ddwUWFF3Nmk6rPrZYhTYttkfdaTq6Ry7zgva0FXno4uJx
+6KVlk9FbKwvJohXnhpYq66oKfQe0ScKJeDDIh4/sdofq6pJRINljasrhV8SV
+sClIEo0jrgzoKUih9W/4zy+a7dEaGtxfNQ0BHW6auXlTmLkIIqjCzEUUxSZs
+5LdWzgpd83n1jXy21K3LjonmfqOGX6sSoRXghVRlNtvUhyyfhBrOHUV3k+Zp
+kWFWACghXDvMEl4x1KItH2IJVQ2yBBcPsvgXZVq8aK/FjXZb3G1Nqc6rvhM0
+5yIGFN1ATZbdXz3C6v1ibxxXfsno4hSjE6SnSpApYqOlrTteGKwD4bFauqHt
+4yzo4lwLemqeBZ2cbkH73Ba0Y2JiW83IbuGS9FtC+anO4PiUof4JKUP8b6w+
+6m0u8rhfrLzNGV7pZPc+2iFHQXRQ0YJPiejrA/HoJxviwj/bFKe91dAl9M7m
+XsFDK+f4iyuCosM92RdoY+U7zYUmILWqs0UyVJKEkUy9sTYnarYA3YR2O3lj
+9XmiBeH5gQcUzb3wf9/5Leh3GyzoV5sgJOHN1ccsCWjT1Aq0Ins68o6agGYN
+zgxP7t8jlJNyR8id0jOQm5Lom+KMd10o7TuZMsW3KsuqMwVr8qqISytT4yEK
+pbLuNbBTAvX+L/5OeWE6DsQKDarjQCwwnqiQhDIvXECzkReB3HZexDBe/H7r
+ZOAA4UIMecejJzdcRWc3foKeaHwNvbA+iNaWbA01zA4EVhQ2ebz525JdTreF
+lYAFpVMMwY0YemrwdNOfOp9fFuVskZz1MhfcK4eYuQD7wciFX25caOACNj0a
+f0q4gB/cPbxtYXjLwsYOdq7Oge/uSlBFlarqIzAOmOqfiCe46XTtqjiyZJJ9
+NcPMJF8qN5P88YbqzpDcKpLcm220gsw4IiLgi/p5bBpngXi3riJKRPJpMx6Y
+TkoxzUmVSKcoiCHhNTJL/LUKllxdZmbJe2t36SxxMJa8seZ+nSUxlCXBsxt/
+YWBJF9/01ERUnJaEpqcmoZz0EeHs9DFaTmomyJDg+AHp/uyUdG+gYJC7ucDj
+fqPuKJwTrG6BDdAS0628ilAIycfNWGc6usHjES2/TlFjQ8KaZNYFa4cbWBcf
+hVea72EjrwLnzMsnOD2N8go/WEqOG1hk6Y4mZwwn/zdveBp621eNWtfMRC3T
+MtCmif3RslFpqDqrf7h06IDWif0zQhNShpJTKzvF5ds+94DnXOPP3Y9s+hgr
+fh+Ta1i4AS4UcY4WYiL5lOloyTWnbhYLzZhx4+rKS+suRrUSZF4HVhmXaRzj
+9X/viTdt1Su+c0Ze+x9p/NjI61BxKuEzKkrryXgNlZQHc/6jn9ePi0Wf16VY
+uqC3ayp4N+Q5X9mA1k0sRCuz89CiUZNRyZDh4YkptwbdKTf7J6b0duc64yx2
+0g1JXNSF4BOLY6JEakh1Kyi3uxqPgfBHT2YSNfnPbw8Phl8c5P8olOm9+nAa
+Se6Hi33eWD8BuqR+atlzI/iEOqXjqeeEqnx2KDXjqRlqgblpxTNiFaflrztv
+M03Ly2ufMk4LLE/jtGic/dPS+7JpsaH89DvI/y0a1g33AXNiQx/Uz5X7sJNf
+xKPrK/uH3156R1Bb2M//fAXR2OhgR9r8zy2LCaITCdjoQcfjAT0QE5nw8+W9
+oy1xinAEOhvmI0m0NoQjCb2w+ZXwD7c/ru1f8EDomPd0sHneXv/dRS7v63t9
+7qPLXNB2LOWjpOcKIISqOI6p2BqzHCgmFOvBOqwfa9vwBPFEaGifJYy/t8Gk
+WNnU/LkpzTQ1L6571jg1IDWMUxPm0ikvfYA+NXiayP+tGJGsT8379bUmCfj2
+6mb4LfmLGPp33s9qB+h9xLBlhc08ElPz26PjQFlm8DXoBxoLYKXq4y/pjJgO
+SLFImtkbmCSqSeR5fVkRes63MfxSoz/0eHl+8F5Pnv9Afpb3/Mp6tK7w1ijX
+b3bWFJH0cqocWgaSdyLo5WAbed6qO+59s/4YWBrBN9ccC+FHe6v+eJgLnGfW
+a5i7ZGZAlsszYyXHRQzKzciASSEPFmpkWnxjbuKz8l79WtOsvLO6yTgrns/q
+2mflj5TLUc1g1VkqXjGbyGKkMadDr9TnSEAGRy05azmKpDBvJJWesZFmHxCW
+gCzxnsWssRJhT1QRDR+xREujyUF2EAW6eHdnjCRrmHLPhlpyexlZQRatkWWw
+uA1/p2t87Swz4ZXRqpgpNA9Jj43RyaSR/4BBsygW4vZ7b80KYu+qYnQZpyjs
+FuP6tLadA5Myx5C1Mj5zyo0yobW+qjNM0DqBsEap/CVprvREc0jJQDKGZRcx
+LGDgRIl20M0DJWlJrUD7xMxsQntO5kRO+/lZt+o0ORjtn9a5TNLyZ/ULjH8X
+/nxVij7QP1Ha/1n4V6V6kiqvViCdkUSLNjg84wYW+t2ZI/RD883aGZZYNvZP
+6saaxv5Rfb5x7K2/qmsf+x/o2MEnRpKq60YP8m7KGcqR5fvW9/2XIMsME7yJ
+rWt3poto/fBFc2piksM+p/uXdU6QRnBO+H9ZlxLEXLZqv6rrjxn+SX22ibiP
+6yYZiSN/bSBOckqVZPShOjFWK8fHoot1XUkSM3rZaYXscdwqKW9rEE8dgdwS
+fQ5fbsYIlJs+Ek1OuxO5U11YVcT6EujqlhiOMXnvKejt/thH0DI4FdgdfMma
+L+B603eMHxBWOCHwDofz4dO6UWTd0f3nCP3a5/SeLnXA9UYudCwRTlIW/iin
+Qwu+RnNJ5Rj0zX2DUNO+P+uZyVDS98T231ghqRtOkW2NMumV0lwGp2I6c+mD
+DyZ4d0PFg8ah9ZPnI3/BErRm4lysMk9DJYOzUW5qCpqe1geVZiS2LRpoCeMn
+tHigjh66vIN4YKwDpIu0Hv6wrTezZpLQhUUxCFOtg27vNsSFXlgRGzw5r4v/
+hDfFe/DgT8CS4f7vzxVMmTuoZ7SkVLNfNA59+VYZWRj/uDoKygITmwY2Mmhp
+eIFYAZfCf2xQOIiglnkWyhV4Zod3LIPezlZuIwAMM8fRo7Ms6K58AlaGtmVb
+fAsHEibR+j62ALa0Q0WpScFpAxLx+TDFCbEFmFfANyKd2VXZoAmLuGUsSxLi
+IdO+PV+j6k0/B2gOzat+obVs+aXg8o3XfTVbP7d83C6FI2b1qtJSO8o7x8oz
+3VzEbOJxuvDIvAqL68vG3rC+jMLgp+s2G1GMQBsNiwbLDz6FpX48KkxNRBPw
+vpyQmolyUu5AE1P6tk1K6QOmHCCbyW6nfp1gJGjTTJuc8fMR5ZkpZ7xiSDdL
+NK9/xCR1hcYlxfMs6phllSPzzPJzQ7WJZYgWWQDVn7HMRnRLpmcyLMwOgGib
+z3MkuHHeKd/62ce/JwbKOGYqBy8mP6s4dvkuf4f56h89usuiytBlTKNqhg0E
+r7wncfPLxk43Me1Xm+YamQZeD/hqo+yib7CTONPiOomZChxTYKaagmOmbPv2
+m7vUUReqDH/jJU9wgY8qG1fmGBxTJo6B1Ddy7Lebi4wc8+BlxpVznWPYyjRy
+TAG5xnuL0hJb8fIkkm/KgH74NL3d705J5pIPVF6qQFlsOndvBIoVtm+gMK0f
+JAK2GSOkTDdYWFQ5zg4pEx/Jdw4pauhw1rpzU7NMrN2Wt8jE2j/tGG5kLSgT
+XOvXWcstRfewOZy1Cug2Todu4cFWAvnMhPSxaHKqE00acIcVpCXmavaAgYEx
+qS63K9XNYC8b3D7qbl72HLFWuzJB9M+guZ+SdwycWeBv8weK7YDgAH4D6I1d
+0QxntjFwSSji4hdDbA3rOC9tFBeZOrOPzfF1ltluhivqzMaGJmFcydjlnNkq
+7NfP8ch27NemY7/wf1Sl7Y5+UT9UuzCnT+DxuX3dL86/LcRN/uzMyWhqaj+Y
+nPDEASna+AFpMDPBsQMG+8emjPDuKloJaiTH2G3Q6w3iwYDI6OP+LR03z4Ai
+v6NwjUOEa0je8Y+f32eJcp+TFMzFpqN7+3SAAq3lpjGFMp7x/++7euj8d1D+
+tzHJCwsXt035z83cuRPqOf87iQfbRDyYoVt2sEJaOc+x+Uin2Y5KB3ZBm8f3
+wPpZL7Q9p4cV1WQlY/1i7uDeaFL/vninpCKs8Yexvo+mZzrRHPz/ewq6hUWO
+f3esT9SsLlrLmEYWG8NcWaAjHGkEH/DSj9CURZsHL2gOLmFr+a3643g7Cog2
+dfYy+LaVcRFWpM5FbjAvyW/iXPwe8K098Hl9SphzEbftgD/giMP1lf3Rtao7
+AGphXmgHtx1C9Tlz/E0FXu+FpVMsVg/hG5Sv8//paCZxIlo1XQEz+JtlRJfE
+GrAQKprpHQtnPuwMT2tDI5xIcI5zLBUQ430gw9iKI/+ienespzi9C/BKM4rK
+ldP3c159DzzVDieZDuxhicCnBLPTBNYooNdWePMvBiVB7AHEIJDlRVixgP5+
+OFsv4wYWBrMHFYU3lp36nsCj3fcT3zz913hD8eFjCk3DV2CUZLFKs7aM/kzB
+Pwhh/Bi4ywFA2NtwmHUG89vl7mkYgt3rc+foo8UTw0cLW7sTyBjZYKrRzmWj
+FYfTKQDO7l+a7dZHhLeSPeKfKkcUeGuNmn+s3gNZvXgHanjKo8Nhjjb89sGf
+CZOtC4h7C24xwWe/rBtoPDYBxVAOp0IYDmymN7z9AN5g6AagVC68IP1jM4uI
+9J2elqx3/XRZX1PXCvQLTj9l11666EWMwWKFXWdvH5OOHOKHI+oAOBn60HEs
+Yx91bON5nMnQB/F9WAHVwqclJhOAKiAXWIyu15fgTRe9vUa2vPHvIwFEfOOQ
+j1ULTfxPuJHv/8HPtPRmDKkNtmJsbHj5mNjWu+YlhrYVJgQXj4yx+hdhjd7u
+XTgizl2ZFeee4Mx0up2ZpIUh5KN230JXqvdwwSgeurdMbFguahrDKo59eugm
+9Ob27qh1WzHaPW0uWjuxEHc8WasbnxcqGz4mmJOS7s1xZia7nU7hnmlayi8J
+zci4GS0cloDKhySGSwd10TyZXUIzM7oFS9KT/QWpPaHKjJ6UGZzvKpfGoywC
++s3xMcayyJA8TWpK6QxjNxpHqXLXU4fJWLQbemNNLDq/oh86tbgv8s2chCZP
+qkbFhd5w/qQizT1qaKi2LD0Y3NrPv7e6t786d4d3b8VZnhwCOVUl0tD1sk0N
+k+P0oX8VyDXWL5XqDZChO+nQo94k1xFAxfQFchkpxKhhq41lesSjr18fih5s
+uBvtqzyHmuadDm+afSzU6LnHv6PsAc/RqhdILZRpEi1SLXhOyxct0ztNi8mo
+F2EQVY0ycw04c925V5uf58aQpH3nSWPvsGC7Q1EaQVxCpvp1Yn01FYSjAiTO
+PPRSJENOyseQxx4W6v9FG7tU7YCGdtrc5yvr9PmgZrn54s/ld8ZZpOwZVVUz
+gxGqSu8Qh80rml+s7dKZiuZSrQM69jhSmGNq2mBsCA5Ck1Iywzn9MzT8hHJS
+MkDcWP0TnOlYzrH6V7wG1juUSuUdpNEQJLPlLZdy4zcVGvIxGNEMkoYqnpGq
+lUtV2wvo/IC4MtXwmYLpdQ8YiE2tTPwvTDHmRX76UOTNykGHiiu4+A35cqb5
+dxbMhXt4Hby5vclQ2pf8ixZ7kMvtCtlpoqkcjQdi7hJHt+noLfmU1Z6acTFB
+bUsyFA/WWPVO2AeRio0HFIwQr4SnhWtwC81FZfyz8FiBcktvtGXqDKCf8AH/
+3IaPIFgKcPx4cpzpcNiR7QtzgM9HhM9HdHJxUvhQaaJ2b3kSPyf9Fa4Ef1Hm
+rXwBwVzAAqIFASL6msTysNIlr2K2VXvdPwnQpgxjZWDsMFNQ1dTz7amBMAgr
+KUIWA+sE9oNeKhg/8GvqSrOJF9BbYhRln1hJIKh+FH60vAa1FI8hrNheEM+2
+4E3o6/t7oFe29EVZA6eikRkTUVbqWPyMaRs1ICs8NsUVGj1gZCg7ZShsM2Ct
+L8eZQdiExQlnk+UsGQ6r1SvW8eE1sTgcYHY6yT6T9kp9moJZj1CyxcvsLVEK
+PKFnlizVJT2t+ZaEPrnbKVZGQpPThqOJaS40LnUEKhg6EY1KHQXkozED7kTj
+UwY7yKaLbfMMGQk6Dmw0ruPAAiMVaE/RtW9yIIkFdFUeOHOVZpkZ1+4/oSpb
+KDMjmJduYAarW4TOVszRzwpe8e7agVSd+lGDp1nJp3qg0uG6BoXeXNMM99Kj
+Z7AVAEx9rLKOby+y1UD0zBg8Qt92Ia+PfO7FZY1+/FgeoNwwKVo3oq1EcnRE
+wpZlloRy04eoWRKcV6zfQsJZ8ui64TpLxg6aYmXrSSiziFcNETlQQQrii3bq
+UuskpTWqNiMm3d6INiPccC9pMzKtrXmRaD1SMoofPUpaxw1yc1rFQobdFJXi
+tsHLGpqWepslNpQ74NZg3oBefrezN+jpJGWwpWAsCRag9879azQko8smkoYk
+8wPKmfL5x41Q+oTlbenK2LO/aCgvzKmzZ8eCbJ09OQPHcfaIZQi7KWrHEfZY
+ukunBBeCy++0oyXDY9D6iYmoIScRrRidhGZmdA3PyEhunZTWPzQ6dUgwe8AA
+4KZ/hqunXlWp/SIg8kUxLnNpX/2i9mj6msFDY7gMR2TiuXYmBvLThoaxbLGo
+NgRnYqO7F2Eitgh1Jq6dM1Fn4sTMMVbFsdRNcVMDYSI/QsQCaMwzbaHXSPdE
+fwu0G2gPrZsO7nxUXHEG5ZfsRUu9DWj5Ii/aUjMVHd0wAF08MCB8/5ZMbd/K
+waHGyqLg9FGL/VmpbigVrJWOzEMFaXfwmmu8giNzpXF+ijUBVPpvBFWQ8fNx
+8raDRgOHlrY2pwCOcUZ/aNvUfm2sJKnOvqIJhTr73JmjrIrjrZvCuKJhANGD
+GFSSqKMgBqy90HzhOFJM9MiSEDpQ+RDaN+9ucITreSBCgfWOFMe21z2EY1S1
+t9AiFV2AGFAnSGU0LHugcCroQKABQTFVrgG1MSYQ64yC1fGgPLnQ2Zs96Fwv
+KA/vQ+d6Qqn4ICsdH54xqYCV+bOLlTLR5YYHboLGdlDmmY6sjnzzNxDN0EVS
+/vAXuQhRyKiHO4NFL2Bbu8dE1ifbq3FLTTIDnZb8gUTJ9rVB78KzQVFIn2uY
+R8tLG6LvajjpDbuaV0cUZJsZe9AlOp/2ZwKBDo+0SHEKJI+D1uPjCD643uBq
+RED19bIznz3RAEchjRO1i/4hrX1B0WJxdpBhsID4IrISu9LGtej2or1WOM3Z
+CjAdXGJZEpWlqHKIR4k1kPQ4hrTR/wDUk5gefANQC8DGLQDyR3RKzadAR257
+sxDrvNuejZIAIAvpUMnVoHgM3JzkW+T+OZ0xIzvvxBa7pls9CQCLtvzUvuG8
+AbeG8gfcEpqackvQnXIrnJ8+t7MPRHYCcgi1X0AWsivkwNUOoU4QLBG+sIhm
+rMSy4Rgrcjyz9V2l4mUeTncJWeCH1ooRNlQ32oF258eimjGJaLErAc0ZmAjH
+PpqS3q8tK3VoeOyADG1CWmrIPdAZnD2qh9Vf6e5qsfObAiA5Huo6F9PdAe5o
+CH/kRTmJyGDOQUg05W7ptnagzx760XMHNZZ/Hv7H+zmqWh9mgmSEQKhuIq4q
+mhPcSzqI71tbrh/E0+YeR7kl+9HK5TVoU10ZOrN/Cnr9dCp66qATPbp7CNq/
+akR41aw8rXLS2lDRyMrgyAFT4FD2jhjghmJLM6m0AmFA0onJv8g7FpBIVUEk
+cvRWm6mRNDIszFWhATdaNMXOhDo7DcP3VD0PyNePjL3bmF7BS5fD83B5TOTg
+J4fx0hqxdoqkXPxQ6OsHVCSYzn0A8lT1lFSCK1L/ILg62b/p6BRFkmj78v4D
+h96V+7dHjqOXLrnQTJ3bjebXjRZdEo6paNWPWjsYBtRbgGiqVgNKJMLZ37vq
+ktgvdeU5kj1OJxdupsuRzGWWzKL/v94fb1FVWhL7YiUMQBRBaQMuhmi5Lxq+
+9NnRPC6JWE/hc2efFnNhItZZEnvqyXoSlAH4mRIbxwvA8aQRLgKgORALYh0w
+0V9GkwwSNHxshfLxM3XArdK5AR4nbMXyc+O08FFaFyLeVLKsYkg3VOWKQQuH
+xaH5g4mMx9OIpbwlHhWn34Ty024hcn78gP6hnJR+wWmZvcDEA1FPSmqq7LyA
+qV+1Vkq3VjddJ+GymIWME8/V6SX90JqFy9GUGS0oe3IDmjB5DXLnzECLZ41E
+LevAsMMSGetAh9cMDm9ePKy1bk4hyONQVuoULpPd+NlvHpJSG4ymgKjs+23N
+b0urEAphsSp/RLgeq34JPFKhh+vfJh6oveZxmHAXUeqohLxKXevs7UW7zf1H
+uZxSAQ5H0IaMniBd6u8zdSgXOhMKu6kkfGc0L0E1laTbHnPXN3L3oRj0xYWO
+6D8x6JtaB13DNOvd/xO3BBoVPMFPGIzUtZvOsKdsYA/J0BVlq+qWPdWNhCq1
+WuyLOoziPeHdCZEsQu2De+aHBYtQ+7e3Z7UKklVVQU7sgipVklCFh/qKTEUm
+AR8BoUogInEZ/g+KfOjMz5Yf/B/zkaA+\
+\>", "ImageResolution" -> \
+96.],ExpressionUUID->"a9dd364a-cf8b-437a-9986-ff5f6606d7a8"]
 }, Open  ]],
 
 Cell[BoxData[""], "Input",
@@ -5906,155 +6322,278 @@ Cell[BoxData[{
           RowBox[{"Mod", "[", 
            RowBox[{"#", ",", "1"}], "]"}]}], "]"}]}]}], "}"}], "&"}], "/@", 
     "hc"}]}], ";"}], "\[IndentingNewLine]", 
- RowBox[{"chiralCandidates", " ", "//", "MatrixForm"}]}], "Input",
+ RowBox[{"Row", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"chiralCandidates", " ", "//", "MatrixForm"}], ",", 
+    RowBox[{
+     RowBox[{"Array", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"chiralCandidates", "[", 
+           RowBox[{"[", 
+            RowBox[{"#", ",", "1"}], "]"}], "]"}], ",", 
+          RowBox[{"hg", "[", 
+           RowBox[{"[", 
+            RowBox[{"chiralCandidates", "[", 
+             RowBox[{"[", 
+              RowBox[{"#", ",", "2"}], "]"}], "]"}], "]"}], "]"}]}], "}"}], 
+        "&"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"Length", "[", "chiralCandidates", "]"}], "}"}]}], "]"}], "//",
+      "MatrixForm"}]}], "}"}], "]"}]}], "Input",
  CellChangeTimes->{
   3.957346031107733*^9, {3.957347737525506*^9, 3.957347758550846*^9}, {
    3.9573477950369062`*^9, 3.957348007567182*^9}, {3.9573480398532057`*^9, 
    3.957348071496951*^9}, {3.957348216306334*^9, 3.957348222969355*^9}, {
    3.957365868399376*^9, 3.95736587246878*^9}, 3.962819806726472*^9, 
    3.963078611633333*^9, 3.963078669962204*^9, {3.963078716390746*^9, 
-   3.963078725204034*^9}},
- CellLabel->"In[85]:=",ExpressionUUID->"5970b30d-0380-4e42-a88c-73371a66a2f0"],
+   3.963078725204034*^9}, {3.963414124645282*^9, 3.9634141333613157`*^9}},
+ CellLabel->
+  "In[101]:=",ExpressionUUID->"5970b30d-0380-4e42-a88c-73371a66a2f0"],
 
 Cell[BoxData[
- TagBox[
-  RowBox[{"(", "\[NoBreak]", GridBox[{
-     {
-      FractionBox["7", "160"], 
-      RowBox[{"{", "28", "}"}]},
-     {
-      FractionBox["3", "40"], 
-      RowBox[{"{", 
-       RowBox[{"24", ",", "25"}], "}"}]},
-     {
-      FractionBox["1", "5"], 
-      RowBox[{"{", 
-       RowBox[{"18", ",", "19", ",", "20", ",", "21"}], "}"}]},
-     {
-      FractionBox["3", "32"], 
-      RowBox[{"{", "30", "}"}]},
-     {
-      FractionBox["11", "32"], 
-      RowBox[{"{", "32", "}"}]},
-     {
-      FractionBox["11", "32"], 
-      RowBox[{"{", "32", "}"}]},
-     {
-      FractionBox["1", "10"], 
-      RowBox[{"{", 
-       RowBox[{"1", ",", "10"}], "}"}]},
-     {
-      FractionBox["19", "40"], 
-      RowBox[{"{", "15", "}"}]},
-     {
-      FractionBox["3", "5"], 
-      RowBox[{"{", 
-       RowBox[{"2", ",", "7"}], "}"}]},
-     {
-      FractionBox["19", "40"], 
-      RowBox[{"{", "15", "}"}]},
-     {
-      FractionBox["3", "32"], 
-      RowBox[{"{", "30", "}"}]},
-     {
-      FractionBox["19", "32"], 
-      RowBox[{"{", "31", "}"}]},
-     {
-      FractionBox["27", "32"], 
-      RowBox[{"{", "33", "}"}]},
-     {
-      FractionBox["27", "32"], 
-      RowBox[{"{", "33", "}"}]},
-     {
-      FractionBox["19", "32"], 
-      RowBox[{"{", "31", "}"}]},
-     {
-      FractionBox["3", "40"], 
-      RowBox[{"{", 
-       RowBox[{"24", ",", "25"}], "}"}]},
-     {
-      FractionBox["7", "10"], 
-      RowBox[{"{", "6", "}"}]},
-     {
-      FractionBox["43", "40"], 
-      RowBox[{"{", 
-       RowBox[{"24", ",", "25"}], "}"}]},
-     {
-      FractionBox["6", "5"], 
-      RowBox[{"{", 
-       RowBox[{"18", ",", "19", ",", "20", ",", "21"}], "}"}]},
-     {
-      FractionBox["43", "40"], 
-      RowBox[{"{", 
-       RowBox[{"24", ",", "25"}], "}"}]},
-     {
-      FractionBox["7", "10"], 
-      RowBox[{"{", "6", "}"}]},
-     {
-      FractionBox["7", "160"], 
-      RowBox[{"{", "28", "}"}]},
-     {
-      FractionBox["127", "160"], 
-      RowBox[{"{", "34", "}"}]},
-     {
-      FractionBox["207", "160"], 
-      RowBox[{"{", "35", "}"}]},
-     {
-      FractionBox["247", "160"], 
-      RowBox[{"{", "29", "}"}]},
-     {
-      FractionBox["247", "160"], 
-      RowBox[{"{", "29", "}"}]},
-     {
-      FractionBox["207", "160"], 
-      RowBox[{"{", "35", "}"}]},
-     {
-      FractionBox["127", "160"], 
-      RowBox[{"{", "34", "}"}]},
-     {"0", 
-      RowBox[{"{", 
-       RowBox[{"16", ",", "17", ",", "22", ",", "23"}], "}"}]},
-     {
-      FractionBox["7", "8"], 
-      RowBox[{"{", 
-       RowBox[{"26", ",", "27"}], "}"}]},
-     {
-      FractionBox["3", "2"], 
-      RowBox[{"{", "3", "}"}]},
-     {
-      FractionBox["15", "8"], 
-      RowBox[{"{", 
-       RowBox[{"26", ",", "27"}], "}"}]},
-     {"2", 
-      RowBox[{"{", 
-       RowBox[{"16", ",", "17", ",", "22", ",", "23"}], "}"}]},
-     {
-      FractionBox["15", "8"], 
-      RowBox[{"{", 
-       RowBox[{"26", ",", "27"}], "}"}]},
-     {
-      FractionBox["3", "2"], 
-      RowBox[{"{", "3", "}"}]},
-     {
-      FractionBox["7", "8"], 
-      RowBox[{"{", 
-       RowBox[{"26", ",", "27"}], "}"}]}
-    },
-    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
-    GridBoxSpacings->{"Columns" -> {
-        Offset[0.27999999999999997`], {
-         Offset[0.7]}, 
-        Offset[0.27999999999999997`]}, "Rows" -> {
-        Offset[0.2], {
-         Offset[0.4]}, 
-        Offset[0.2]}}], "\[NoBreak]", ")"}],
-  Function[BoxForm`e$, 
-   MatrixForm[BoxForm`e$]]]], "Output",
+ TemplateBox[{
+   TagBox[
+    RowBox[{"(", "\[NoBreak]", 
+      GridBox[{{
+         FractionBox["7", "160"], 
+         RowBox[{"{", "28", "}"}]}, {
+         FractionBox["3", "40"], 
+         RowBox[{"{", 
+           RowBox[{"24", ",", "25"}], "}"}]}, {
+         FractionBox["1", "5"], 
+         RowBox[{"{", 
+           RowBox[{"18", ",", "19", ",", "20", ",", "21"}], "}"}]}, {
+         FractionBox["3", "32"], 
+         RowBox[{"{", "30", "}"}]}, {
+         FractionBox["11", "32"], 
+         RowBox[{"{", "32", "}"}]}, {
+         FractionBox["11", "32"], 
+         RowBox[{"{", "32", "}"}]}, {
+         FractionBox["1", "10"], 
+         RowBox[{"{", 
+           RowBox[{"1", ",", "10"}], "}"}]}, {
+         FractionBox["19", "40"], 
+         RowBox[{"{", "15", "}"}]}, {
+         FractionBox["3", "5"], 
+         RowBox[{"{", 
+           RowBox[{"2", ",", "7"}], "}"}]}, {
+         FractionBox["19", "40"], 
+         RowBox[{"{", "15", "}"}]}, {
+         FractionBox["3", "32"], 
+         RowBox[{"{", "30", "}"}]}, {
+         FractionBox["19", "32"], 
+         RowBox[{"{", "31", "}"}]}, {
+         FractionBox["27", "32"], 
+         RowBox[{"{", "33", "}"}]}, {
+         FractionBox["27", "32"], 
+         RowBox[{"{", "33", "}"}]}, {
+         FractionBox["19", "32"], 
+         RowBox[{"{", "31", "}"}]}, {
+         FractionBox["3", "40"], 
+         RowBox[{"{", 
+           RowBox[{"24", ",", "25"}], "}"}]}, {
+         FractionBox["7", "10"], 
+         RowBox[{"{", "6", "}"}]}, {
+         FractionBox["43", "40"], 
+         RowBox[{"{", 
+           RowBox[{"24", ",", "25"}], "}"}]}, {
+         FractionBox["6", "5"], 
+         RowBox[{"{", 
+           RowBox[{"18", ",", "19", ",", "20", ",", "21"}], "}"}]}, {
+         FractionBox["43", "40"], 
+         RowBox[{"{", 
+           RowBox[{"24", ",", "25"}], "}"}]}, {
+         FractionBox["7", "10"], 
+         RowBox[{"{", "6", "}"}]}, {
+         FractionBox["7", "160"], 
+         RowBox[{"{", "28", "}"}]}, {
+         FractionBox["127", "160"], 
+         RowBox[{"{", "34", "}"}]}, {
+         FractionBox["207", "160"], 
+         RowBox[{"{", "35", "}"}]}, {
+         FractionBox["247", "160"], 
+         RowBox[{"{", "29", "}"}]}, {
+         FractionBox["247", "160"], 
+         RowBox[{"{", "29", "}"}]}, {
+         FractionBox["207", "160"], 
+         RowBox[{"{", "35", "}"}]}, {
+         FractionBox["127", "160"], 
+         RowBox[{"{", "34", "}"}]}, {"0", 
+         RowBox[{"{", 
+           RowBox[{"16", ",", "17", ",", "22", ",", "23"}], "}"}]}, {
+         FractionBox["7", "8"], 
+         RowBox[{"{", 
+           RowBox[{"26", ",", "27"}], "}"}]}, {
+         FractionBox["3", "2"], 
+         RowBox[{"{", "3", "}"}]}, {
+         FractionBox["15", "8"], 
+         RowBox[{"{", 
+           RowBox[{"26", ",", "27"}], "}"}]}, {"2", 
+         RowBox[{"{", 
+           RowBox[{"16", ",", "17", ",", "22", ",", "23"}], "}"}]}, {
+         FractionBox["15", "8"], 
+         RowBox[{"{", 
+           RowBox[{"26", ",", "27"}], "}"}]}, {
+         FractionBox["3", "2"], 
+         RowBox[{"{", "3", "}"}]}, {
+         FractionBox["7", "8"], 
+         RowBox[{"{", 
+           RowBox[{"26", ",", "27"}], "}"}]}}, RowSpacings -> 1, 
+       ColumnSpacings -> 1, RowAlignments -> Baseline, ColumnAlignments -> 
+       Center], "\[NoBreak]", ")"}], 
+    Function[BoxForm`e$, 
+     MatrixForm[BoxForm`e$]]], 
+   TagBox[
+    RowBox[{"(", "\[NoBreak]", 
+      GridBox[{{
+         FractionBox["7", "160"], 
+         RowBox[{"{", 
+           FractionBox["7", "160"], "}"}]}, {
+         FractionBox["3", "40"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["3", "40"], ",", 
+             FractionBox["43", "40"]}], "}"}]}, {
+         FractionBox["1", "5"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["1", "5"], ",", 
+             FractionBox["6", "5"], ",", 
+             FractionBox["6", "5"], ",", 
+             FractionBox["11", "5"]}], "}"}]}, {
+         FractionBox["3", "32"], 
+         RowBox[{"{", 
+           FractionBox["3", "32"], "}"}]}, {
+         FractionBox["11", "32"], 
+         RowBox[{"{", 
+           FractionBox["11", "32"], "}"}]}, {
+         FractionBox["11", "32"], 
+         RowBox[{"{", 
+           FractionBox["11", "32"], "}"}]}, {
+         FractionBox["1", "10"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["1", "10"], ",", 
+             FractionBox["21", "10"]}], "}"}]}, {
+         FractionBox["19", "40"], 
+         RowBox[{"{", 
+           FractionBox["19", "40"], "}"}]}, {
+         FractionBox["3", "5"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["3", "5"], ",", 
+             FractionBox["8", "5"]}], "}"}]}, {
+         FractionBox["19", "40"], 
+         RowBox[{"{", 
+           FractionBox["19", "40"], "}"}]}, {
+         FractionBox["3", "32"], 
+         RowBox[{"{", 
+           FractionBox["3", "32"], "}"}]}, {
+         FractionBox["19", "32"], 
+         RowBox[{"{", 
+           FractionBox["19", "32"], "}"}]}, {
+         FractionBox["27", "32"], 
+         RowBox[{"{", 
+           FractionBox["27", "32"], "}"}]}, {
+         FractionBox["27", "32"], 
+         RowBox[{"{", 
+           FractionBox["27", "32"], "}"}]}, {
+         FractionBox["19", "32"], 
+         RowBox[{"{", 
+           FractionBox["19", "32"], "}"}]}, {
+         FractionBox["3", "40"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["3", "40"], ",", 
+             FractionBox["43", "40"]}], "}"}]}, {
+         FractionBox["7", "10"], 
+         RowBox[{"{", 
+           FractionBox["7", "10"], "}"}]}, {
+         FractionBox["43", "40"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["3", "40"], ",", 
+             FractionBox["43", "40"]}], "}"}]}, {
+         FractionBox["6", "5"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["1", "5"], ",", 
+             FractionBox["6", "5"], ",", 
+             FractionBox["6", "5"], ",", 
+             FractionBox["11", "5"]}], "}"}]}, {
+         FractionBox["43", "40"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["3", "40"], ",", 
+             FractionBox["43", "40"]}], "}"}]}, {
+         FractionBox["7", "10"], 
+         RowBox[{"{", 
+           FractionBox["7", "10"], "}"}]}, {
+         FractionBox["7", "160"], 
+         RowBox[{"{", 
+           FractionBox["7", "160"], "}"}]}, {
+         FractionBox["127", "160"], 
+         RowBox[{"{", 
+           FractionBox["127", "160"], "}"}]}, {
+         FractionBox["207", "160"], 
+         RowBox[{"{", 
+           FractionBox["207", "160"], "}"}]}, {
+         FractionBox["247", "160"], 
+         RowBox[{"{", 
+           FractionBox["247", "160"], "}"}]}, {
+         FractionBox["247", "160"], 
+         RowBox[{"{", 
+           FractionBox["247", "160"], "}"}]}, {
+         FractionBox["207", "160"], 
+         RowBox[{"{", 
+           FractionBox["207", "160"], "}"}]}, {
+         FractionBox["127", "160"], 
+         RowBox[{"{", 
+           FractionBox["127", "160"], "}"}]}, {"0", 
+         RowBox[{"{", 
+           RowBox[{"0", ",", "2", ",", "3", ",", "4"}], "}"}]}, {
+         FractionBox["7", "8"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["7", "8"], ",", 
+             FractionBox["15", "8"]}], "}"}]}, {
+         FractionBox["3", "2"], 
+         RowBox[{"{", 
+           FractionBox["3", "2"], "}"}]}, {
+         FractionBox["15", "8"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["7", "8"], ",", 
+             FractionBox["15", "8"]}], "}"}]}, {"2", 
+         RowBox[{"{", 
+           RowBox[{"0", ",", "2", ",", "3", ",", "4"}], "}"}]}, {
+         FractionBox["15", "8"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["7", "8"], ",", 
+             FractionBox["15", "8"]}], "}"}]}, {
+         FractionBox["3", "2"], 
+         RowBox[{"{", 
+           FractionBox["3", "2"], "}"}]}, {
+         FractionBox["7", "8"], 
+         RowBox[{"{", 
+           RowBox[{
+             FractionBox["7", "8"], ",", 
+             FractionBox["15", "8"]}], "}"}]}}, RowSpacings -> 1, 
+       ColumnSpacings -> 1, RowAlignments -> Baseline, ColumnAlignments -> 
+       Center], "\[NoBreak]", ")"}], 
+    Function[BoxForm`e$, 
+     MatrixForm[BoxForm`e$]]]},
+  "RowDefault"]], "Output",
  CellChangeTimes->{3.9630789462113047`*^9, 3.9630800296010227`*^9, 
-  3.963080208948256*^9, 3.963080416670691*^9},
+  3.963080208948256*^9, 3.963080416670691*^9, 3.963412690958646*^9, 
+  3.963414133689385*^9},
  CellLabel->
-  "Out[86]//MatrixForm=",ExpressionUUID->"f977bdcb-ab94-45b4-89c0-\
-07ef5031dc16"]
+  "Out[102]=",ExpressionUUID->"3d55805b-69fc-4822-b937-a2246fa07b15"]
 }, Open  ]],
 
 Cell[BoxData[{
@@ -6086,12 +6625,12 @@ Cell[BoxData[{
           RowBox[{"n", "-", 
            RowBox[{"hw", "@@", "#"}], "+", 
            FractionBox["cw", "24"], "+", "5"}], "]"}]}], "]"}]}], "&"}], "/@",
-      "W"}]}], ";"}], "\[IndentingNewLine]", 
+      "W"}]}], ";"}], "\[LineSeparator]", 
   RowBox[{"(*", " ", 
    RowBox[{
    "It", " ", "is", " ", "now", " ", "time", " ", "to", " ", "create", " ", 
     "the", " ", "previous", " ", "list", " ", "but", " ", "with", " ", "the", 
-    " ", "partition", " ", "function"}], " ", "*)"}]}], "\[LineSeparator]", 
+    " ", "partition", " ", "function"}], " ", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"chiralCandidateCharacters", "=", 
    RowBox[{"Array", "[", 
@@ -6192,10 +6731,42 @@ Cell[BoxData[{
     RowBox[{"and", " ", "finally", " ", "sum", " ", 
      RowBox[{"them", "."}]}]}], "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
+  RowBox[{"chiralSolve", "=", 
+   RowBox[{
+    RowBox[{"With", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"ns", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"NullSpace", "[", "#1", "]"}], " ", "/.", " ", 
+          RowBox[{
+           RowBox[{"{", "}"}], ":>", 
+           RowBox[{"{", 
+            RowBox[{"ConstantArray", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{
+               RowBox[{"Dimensions", "[", "#1", "]"}], "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}], "]"}], "}"}]}]}]}], ",", 
+        RowBox[{"ls", "=", 
+         RowBox[{"LeastSquares", "[", 
+          RowBox[{"#1", ",", "#2"}], "]"}]}]}], "}"}], ",", 
+      RowBox[{"With", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"length", "=", 
+          RowBox[{"Length", "[", "ns", "]"}]}], "}"}], ",", 
+        RowBox[{"Normalize", " ", "/@", " ", 
+         RowBox[{"(", 
+          RowBox[{"ns", "+", 
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{"ls", ",", "length"}], "]"}]}], ")"}]}]}], "]"}]}], "]"}],
+     "&"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
   RowBox[{
    RowBox[{"chiralSolns", "=", 
     RowBox[{"MapThread", "[", 
-     RowBox[{"solve", ",", 
+     RowBox[{"chiralSolve", ",", 
       RowBox[{"{", 
        RowBox[{"chiralMats", ",", "chiralVecs"}], "}"}]}], "]"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
@@ -6237,13 +6808,15 @@ Cell[BoxData[{
        RowBox[{"chiralSolns", ",", "chiralCandidates"}], "}"}]}], "]"}]}], 
    ";"}]}]}], "Input",
  CellChangeTimes->{{3.963079034882214*^9, 3.9630791200337677`*^9}, {
-  3.963079658172986*^9, 3.9630796906041517`*^9}, {3.963079755807925*^9, 
-  3.963079757222321*^9}, {3.963080507083843*^9, 3.963080531359263*^9}, {
-  3.963080653761944*^9, 3.96308074509762*^9}, {3.963080776666263*^9, 
-  3.963080800953965*^9}, {3.963080863275515*^9, 3.963080972898979*^9}, {
-  3.963081127823365*^9, 3.96308113241151*^9}},
+   3.963079658172986*^9, 3.9630796906041517`*^9}, {3.963079755807925*^9, 
+   3.963079757222321*^9}, {3.963080507083843*^9, 3.963080531359263*^9}, {
+   3.963080653761944*^9, 3.96308074509762*^9}, {3.963080776666263*^9, 
+   3.963080800953965*^9}, {3.963080863275515*^9, 3.963080972898979*^9}, {
+   3.963081127823365*^9, 3.96308113241151*^9}, {3.963414617828896*^9, 
+   3.963414618071741*^9}, {3.963414870019388*^9, 3.96341490667826*^9}, {
+   3.963414964557341*^9, 3.963414968227827*^9}, 3.963414999716981*^9},
  CellLabel->
-  "In[134]:=",ExpressionUUID->"a5fa38b7-ab93-460d-b41d-23e55eaf2119"],
+  "In[176]:=",ExpressionUUID->"a5fa38b7-ab93-460d-b41d-23e55eaf2119"],
 
 Cell[CellGroupData[{
 
@@ -6271,7 +6844,7 @@ Cell[BoxData[
   "MatrixForm"}]], "Input",
  CellChangeTimes->{{3.9630809980662107`*^9, 3.963081007185298*^9}},
  CellLabel->
-  "In[142]:=",ExpressionUUID->"c0abdf1b-dd09-47c0-8c18-12dd07c560f6"],
+  "In[166]:=",ExpressionUUID->"c0abdf1b-dd09-47c0-8c18-12dd07c560f6"],
 
 Cell[BoxData[
  TagBox[
@@ -6282,9 +6855,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[7, 160]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"3\\\", \
@@ -6292,9 +6886,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[3, 40]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"1\\\", \
@@ -6302,9 +6917,29 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[1, 5]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmViYGBgBGIzID5jXZ82b8Ez+4GmGaAAF3+UhtAAgYLh7w==
+        "], {{0, 0}, {54, 1}}, {0, 0.7071067811865475}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"3\\\", \
@@ -6312,9 +6947,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[3, 32]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"11\\\", \\\"32\\\"]\
@@ -6322,9 +6978,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[11, 32]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"11\\\", \\\"32\\\"]\
@@ -6332,9 +7009,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[11, 32]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"1\\\", \
@@ -6342,9 +7040,29 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[1, 10]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmViYGBgBGIzBgQ4Y12fNm/BM3tyaWqZM0rjpwHenuHv
+        "], {{0, 0}, {54, 1}}, {0, 0.7071067811865475}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"19\\\", \\\"40\\\"]\
@@ -6352,9 +7070,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[19, 40]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"3\\\", \
@@ -6362,9 +7101,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[3, 5]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmViYGBgBGIzID5jXZ82b8EzewYogPFx0cSqG6VpQwMAma7h7w==
+
+        "], {{0, 0}, {54, 1}}, {0, 0.7071067811865475}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"19\\\", \\\"40\\\"]\
@@ -6372,9 +7132,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[19, 40]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"3\\\", \
@@ -6382,9 +7163,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[3, 32]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"19\\\", \\\"32\\\"]\
@@ -6392,9 +7194,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[19, 32]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"27\\\", \\\"32\\\"]\
@@ -6402,9 +7225,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[27, 32]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"27\\\", \\\"32\\\"]\
@@ -6412,9 +7256,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[27, 32]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"19\\\", \\\"32\\\"]\
@@ -6422,9 +7287,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[19, 32]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"3\\\", \
@@ -6432,9 +7318,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[3, 40]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"7\\\", \
@@ -6442,9 +7349,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[7, 10]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"43\\\", \\\"40\\\"]\
@@ -6452,9 +7380,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[43, 40]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"6\\\", \
@@ -6462,9 +7411,29 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[6, 5]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmViYGBgBGIzID5jXZ82b8Ez+8FCM0ABLv5IpwHGcuHv
+        "], {{0, 0}, {54, 1}}, {0, 0.7071067811865475}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"43\\\", \\\"40\\\"]\
@@ -6472,9 +7441,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[43, 40]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"7\\\", \
@@ -6482,9 +7472,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[7, 10]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"7\\\", \\\"160\\\"]\
@@ -6492,9 +7503,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[7, 160]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"127\\\", \
@@ -6502,9 +7534,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[127, 160]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"207\\\", \
@@ -6512,9 +7565,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[207, 160]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"247\\\", \
@@ -6522,9 +7596,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[247, 160]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"247\\\", \
@@ -6532,9 +7627,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[247, 160]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"207\\\", \
@@ -6542,9 +7658,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[207, 160]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"127\\\", \
@@ -6552,17 +7689,58 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[127, 160]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
        StringForm["h = ``", 0],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmViYGBgBGIzID5jXZ82b8Eze3rTDFBAK/XDlQYAgYLh7w==
+        "], {{0, 0}, {54, 1}}, {0, 0.7071067811865475}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"7\\\", \
@@ -6570,9 +7748,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[7, 8]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"3\\\", \
@@ -6580,9 +7779,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[3, 2]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"15\\\", \
@@ -6590,17 +7810,58 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[15, 8]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
        StringForm["h = ``", 2],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmViYGBgBGIzID5jXZ82b8Ez+4GiGaCAVuqHGw0AxnLh7w==
+        "], {{0, 0}, {54, 1}}, {0, 0.7071067811865475}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"15\\\", \
@@ -6608,9 +7869,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[15, 8]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"3\\\", \
@@ -6618,9 +7900,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[3, 2]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]},
      {
       InterpretationBox["\<\"h = \\!\\(\\*FractionBox[\\\"7\\\", \
@@ -6628,9 +7931,30 @@ Cell[BoxData[
        StringForm["h = ``", 
         Rational[7, 8]],
        Editable->False], 
-      GraphicsBox[{}], 
-      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"0\\\"}]\\)\"\>",
-       StringForm["chiralSolns: ``", 0],
+      GraphicsBox[
+       RasterBox[{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}, {{0, 0}, {54, 1}}, {0, 1}],
+       Axes->True,
+       Frame->False,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "GridLinesInFront" -> True, "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic},
+       PlotRangePadding->None,
+       Ticks->None], 
+      InterpretationBox["\<\"chiralSolns: \\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+       StringForm["chiralSolns: ``", 1],
        Editable->False]}
     },
     GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
@@ -6643,10 +7967,11 @@ Cell[BoxData[
         Offset[0.2]}}], "\[NoBreak]", ")"}],
   Function[BoxForm`e$, 
    MatrixForm[BoxForm`e$]]]], "Output",
- CellChangeTimes->{3.963081007925138*^9},
+ CellChangeTimes->{3.963081007925138*^9, 3.963412695530326*^9, 
+  3.963414973850113*^9},
  CellLabel->
-  "Out[142]//MatrixForm=",ExpressionUUID->"12140cb2-5b62-4693-b4fb-\
-ae635b84a73d"]
+  "Out[166]//MatrixForm=",ExpressionUUID->"5768dc99-eaa2-4861-ae61-\
+04ea6676367d"]
 }, Open  ]],
 
 Cell[" ", "Text",
@@ -6738,7 +8063,7 @@ Cell[BoxData[{
  CellChangeTimes->{{3.957364653319552*^9, 3.957364690091793*^9}, {
   3.957365178696409*^9, 3.95736518643876*^9}, {3.962196057015583*^9, 
   3.962196069115679*^9}},
- CellLabel->"In[92]:=",ExpressionUUID->"54f278c2-a5d1-4598-a321-deb34f46de26"],
+ CellLabel->"In[96]:=",ExpressionUUID->"54f278c2-a5d1-4598-a321-deb34f46de26"],
 
 Cell[BoxData[
  TemplateBox[{
@@ -7119,8 +8444,9 @@ Xhj+3XcnLK9yVo+eE2BlWYJKGq8HVX/t22BshYBZnCrAHi1/y4gnPZj3144F
    3.957370356705152*^9, 3.957371680316073*^9, 3.957371950673752*^9, 
    3.957375196132213*^9, 3.96219570371467*^9, 3.962196070060885*^9, 
    3.962805366675364*^9, 3.9630784294167624`*^9, 3.963080029794318*^9, 
-   3.963080087867054*^9, 3.963080209134117*^9, 3.963080417355447*^9},
- CellLabel->"Out[93]=",ExpressionUUID->"e9280156-dd8d-46c5-b833-3bfeb50765b6"]
+   3.963080087867054*^9, 3.963080209134117*^9, 3.963080417355447*^9, 
+   3.963412696058936*^9},
+ CellLabel->"Out[97]=",ExpressionUUID->"2d17cab9-58f0-4530-89cb-1ee6a477f92d"]
 }, Open  ]],
 
 Cell["\<\
@@ -7151,7 +8477,7 @@ Cell[BoxData[
   3.962196167654776*^9}, {3.962196204518177*^9, 3.962196281941086*^9}, {
   3.962198871053382*^9, 3.962198919076632*^9}, {3.962812609732143*^9, 
   3.9628126099047832`*^9}},
- CellLabel->"In[94]:=",ExpressionUUID->"650f7283-3aae-4366-94fe-4471c262d14b"],
+ CellLabel->"In[98]:=",ExpressionUUID->"650f7283-3aae-4366-94fe-4471c262d14b"],
 
 Cell[BoxData[
  GraphicsBox[RasterBox[CompressedData["
@@ -7214,8 +8540,9 @@ kErjikdc6YTW6YdUewHp9+Hj
    3.962196229620235*^9}, {3.962196262425214*^9, 3.9621962823545103`*^9}, {
    3.962198875088852*^9, 3.96219891953225*^9}, 3.962805366725092*^9, 
    3.962805549409933*^9, 3.9628126106104717`*^9, 3.963078429465716*^9, 
-   3.963080029829756*^9, 3.9630802091705313`*^9, 3.963080417486314*^9},
- CellLabel->"Out[94]=",ExpressionUUID->"562005bf-faba-42c1-9624-4202e1e8a857"]
+   3.963080029829756*^9, 3.9630802091705313`*^9, 3.963080417486314*^9, 
+   3.963412696107237*^9},
+ CellLabel->"Out[98]=",ExpressionUUID->"bd8b03d1-eac3-4a80-bfe8-fceec603887f"]
 }, Open  ]],
 
 Cell[TextData[{
@@ -7498,110 +8825,110 @@ Notebook[{
 Cell[554, 20, 529, 13, 55, "Text",ExpressionUUID->"8faa4261-d8b2-435f-879a-2dfa765ef1ec"],
 Cell[CellGroupData[{
 Cell[1108, 37, 17212, 487, 1055, "Input",ExpressionUUID->"2f904d01-8623-4d6c-a15a-c409cd56a0b2"],
-Cell[18323, 526, 211, 7, 35, "Echo",ExpressionUUID->"4c26299e-8469-4747-827d-fb50e83a1199"]
+Cell[18323, 526, 211, 7, 35, "Echo",ExpressionUUID->"37e5b46b-fd42-44b5-8bb7-53335d08defa"]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[18571, 538, 7584, 216, 424, "Input",ExpressionUUID->"b8c56bcc-7646-4505-baa8-2000786ca732"],
-Cell[26158, 756, 2764, 97, 53, "Output",ExpressionUUID->"3663de0e-bae7-4738-b2cb-4219d9cde764"]
+Cell[26158, 756, 2786, 97, 53, "Output",ExpressionUUID->"2e17e37b-ce2a-4b30-a3ee-17c12eff7687"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[28959, 858, 148, 2, 29, "Input",ExpressionUUID->"3d8ea69a-31bd-4b5a-9b4b-9c5b1c730ffb"],
-Cell[29110, 862, 2740, 96, 53, "Output",ExpressionUUID->"585b15f5-76d8-4853-9474-760cad20e029"]
+Cell[28981, 858, 148, 2, 29, "Input",ExpressionUUID->"3d8ea69a-31bd-4b5a-9b4b-9c5b1c730ffb"],
+Cell[29132, 862, 2765, 97, 53, "Output",ExpressionUUID->"e74c1121-4094-4d1b-9a91-5dc902f03ba6"]
 }, Open  ]],
-Cell[31865, 961, 237, 7, 55, "Text",ExpressionUUID->"092209c1-8ac2-4797-bb6a-94ade33a4427"],
+Cell[31912, 962, 237, 7, 55, "Text",ExpressionUUID->"092209c1-8ac2-4797-bb6a-94ade33a4427"],
 Cell[CellGroupData[{
-Cell[32127, 972, 575, 10, 51, "Input",ExpressionUUID->"9b9badf3-b46a-4c84-a8c9-a1b6d209b2ef"],
-Cell[32705, 984, 1800, 45, 45, "Output",ExpressionUUID->"815f6a6a-5211-4dc4-a4b2-4eb240601d45"],
-Cell[34508, 1031, 1814, 45, 45, "Output",ExpressionUUID->"db429d1b-99ac-48a4-8d8c-863f71629b13"]
+Cell[32174, 973, 575, 10, 51, "Input",ExpressionUUID->"9b9badf3-b46a-4c84-a8c9-a1b6d209b2ef"],
+Cell[32752, 985, 1822, 45, 45, "Output",ExpressionUUID->"bdf2c5fa-d3fc-4214-b886-bdf13355d432"],
+Cell[34577, 1032, 1838, 45, 45, "Output",ExpressionUUID->"0ed0b48a-6506-4a30-bad1-a3fb59ea927b"]
 }, Open  ]],
-Cell[36337, 1079, 522, 16, 33, "Text",ExpressionUUID->"9013712f-e60b-4a7c-a930-702b7aec38b4"],
-Cell[36862, 1097, 12948, 364, 442, "Input",ExpressionUUID->"329518a4-1e97-4064-a938-da4ea2a80577"],
-Cell[49813, 1463, 172, 2, 29, "Input",ExpressionUUID->"cdacd996-d8a1-44f3-97d6-81a2ffaa20fd"],
+Cell[36430, 1080, 522, 16, 33, "Text",ExpressionUUID->"9013712f-e60b-4a7c-a930-702b7aec38b4"],
+Cell[36955, 1098, 12948, 364, 442, "Input",ExpressionUUID->"329518a4-1e97-4064-a938-da4ea2a80577"],
+Cell[49906, 1464, 172, 2, 29, "Input",ExpressionUUID->"cdacd996-d8a1-44f3-97d6-81a2ffaa20fd"],
 Cell[CellGroupData[{
-Cell[50010, 1469, 1641, 38, 53, "Input",ExpressionUUID->"a191da77-4dc3-4a31-a308-7cab1db6d286"],
-Cell[51654, 1509, 11708, 223, 346, "Output",ExpressionUUID->"e6122f8c-8086-465d-9d28-233210d09c4b"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[63399, 1737, 4882, 134, 348, "Input",ExpressionUUID->"938eae25-6451-415d-a935-a0a3a5e55cd6"],
-Cell[68284, 1873, 15431, 307, 444, "Output",ExpressionUUID->"6e5febdb-f615-46bc-8bd0-8f2fa30729d3"],
-Cell[83718, 2182, 6447, 123, 329, "Output",ExpressionUUID->"4fe11543-f36a-4d73-b4dd-cb0626d06aed"],
-Cell[90168, 2307, 3682, 70, 388, "Output",ExpressionUUID->"e1e3531e-6908-49e5-b4aa-0112be69c930"]
+Cell[50103, 1470, 1641, 38, 53, "Input",ExpressionUUID->"a191da77-4dc3-4a31-a308-7cab1db6d286"],
+Cell[51747, 1510, 11734, 224, 346, "Output",ExpressionUUID->"3734b3e1-bb17-4d5c-9c87-82eb62431afc"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[93887, 2382, 2181, 53, 206, "Input",ExpressionUUID->"d49390d4-3e92-4b4c-b55c-47c4bf2a2778"],
+Cell[63518, 1739, 4878, 133, 348, "Input",ExpressionUUID->"938eae25-6451-415d-a935-a0a3a5e55cd6"],
+Cell[68399, 1874, 15453, 307, 444, "Output",ExpressionUUID->"f1fdfd14-7de5-473b-a2f6-cc3b287ae843"],
+Cell[83855, 2183, 6469, 123, 329, "Output",ExpressionUUID->"715f880d-e6c7-4d6d-be04-24c4d2a269c4"],
+Cell[90327, 2308, 3707, 70, 388, "Output",ExpressionUUID->"f02290a8-e857-4e65-8e42-bbe8fcbf204b"]
+}, Open  ]],
 Cell[CellGroupData[{
-Cell[96093, 2439, 6252, 136, 80, "Echo",ExpressionUUID->"5b03e9e1-feff-4792-b43d-acb76b1f642d"],
-Cell[102348, 2577, 5502, 113, 57, "Echo",ExpressionUUID->"3ec287f3-2b5b-4fc3-bc6f-3d687db120da"]
+Cell[94071, 2383, 2181, 53, 206, "Input",ExpressionUUID->"d49390d4-3e92-4b4c-b55c-47c4bf2a2778"],
+Cell[CellGroupData[{
+Cell[96277, 2440, 6254, 136, 80, "Echo",ExpressionUUID->"721484a1-03c0-4c3f-834b-805336279856"],
+Cell[102534, 2578, 5502, 113, 57, "Echo",ExpressionUUID->"62c98058-d479-471f-8f5c-5ed4495730dd"]
 }, Open  ]]
 }, Open  ]],
-Cell[107877, 2694, 312, 6, 55, "Text",ExpressionUUID->"6b57e1bb-b0f3-4647-8846-8a604bd16152"],
-Cell[108192, 2702, 244, 4, 33, "Text",ExpressionUUID->"9e98d908-82eb-498b-ab78-43936d6b5619"],
+Cell[108063, 2695, 312, 6, 55, "Text",ExpressionUUID->"6b57e1bb-b0f3-4647-8846-8a604bd16152"],
+Cell[108378, 2703, 244, 4, 33, "Text",ExpressionUUID->"9e98d908-82eb-498b-ab78-43936d6b5619"],
 Cell[CellGroupData[{
-Cell[108461, 2710, 6058, 167, 457, "Input",ExpressionUUID->"949d0a33-9f99-4db5-a831-9a6b06234a53"],
+Cell[108647, 2711, 6058, 167, 457, "Input",ExpressionUUID->"949d0a33-9f99-4db5-a831-9a6b06234a53"],
 Cell[CellGroupData[{
-Cell[114544, 2881, 238, 6, 23, "Echo",ExpressionUUID->"58560bb6-428b-4755-ad92-be46741d2de5"],
-Cell[114785, 2889, 1483, 43, 36, "Echo",ExpressionUUID->"d0e40d5c-d928-49f8-9700-ab2f9aca53a3"],
-Cell[116271, 2934, 1433, 42, 36, "Echo",ExpressionUUID->"baba4366-3e7b-45c2-bf57-d4bba6d58419"],
-Cell[117707, 2978, 1144, 34, 36, "Echo",ExpressionUUID->"92bf58bd-894e-45fd-b037-ed07dedfb30f"],
-Cell[118854, 3014, 799, 24, 36, "Echo",ExpressionUUID->"4fb38f20-617d-4554-bec3-10f1f20296c2"],
-Cell[119656, 3040, 240, 6, 23, "Echo",ExpressionUUID->"09473301-bd0f-492f-b35d-fb431c86935e"],
-Cell[119899, 3048, 1850, 53, 71, "Echo",ExpressionUUID->"eb9df244-0a1d-4b6d-aea5-cdc240824719"],
-Cell[121752, 3103, 1598, 46, 56, "Echo",ExpressionUUID->"712970e5-53a0-4bb6-8a58-0a8a7f4c8981"],
-Cell[123353, 3151, 1377, 40, 36, "Echo",ExpressionUUID->"eeaa1d4f-578d-439f-b5d3-adb001700710"],
-Cell[124733, 3193, 559, 17, 36, "Echo",ExpressionUUID->"aaa14e3f-3515-49ae-bb00-3b47bb7d6e1e"],
-Cell[125295, 3212, 814, 24, 36, "Echo",ExpressionUUID->"2ceaa542-f1e9-4fd9-a72e-e1b802b03b4d"],
-Cell[126112, 3238, 558, 17, 36, "Echo",ExpressionUUID->"0f358ad2-1849-47c8-be30-6beb9139fcf0"]
+Cell[114730, 2882, 240, 6, 23, "Echo",ExpressionUUID->"9678a4d9-52e3-4f88-b64a-e751c89af033"],
+Cell[114973, 2890, 1483, 43, 36, "Echo",ExpressionUUID->"c38d929b-f8e1-44d6-be2c-ec11ade64e06"],
+Cell[116459, 2935, 1433, 42, 36, "Echo",ExpressionUUID->"93706405-bb00-48ce-8ebc-c09c0f5ec4f1"],
+Cell[117895, 2979, 1144, 34, 36, "Echo",ExpressionUUID->"8b900cf5-0ff2-4383-8726-5deed5b01f12"],
+Cell[119042, 3015, 797, 24, 36, "Echo",ExpressionUUID->"707912a0-fe90-4e8c-b1f2-f96c435aea3a"],
+Cell[119842, 3041, 240, 6, 23, "Echo",ExpressionUUID->"f7758af2-f468-415b-9841-69402b6ed134"],
+Cell[120085, 3049, 1848, 53, 71, "Echo",ExpressionUUID->"f4fa2724-4a66-4cd0-8653-a96a28dc143b"],
+Cell[121936, 3104, 1598, 46, 56, "Echo",ExpressionUUID->"de900cdf-55f3-4f5f-8ffd-54968739e2f1"],
+Cell[123537, 3152, 1374, 39, 36, "Echo",ExpressionUUID->"480babb5-f5a2-4869-9ae1-a16624ca1458"],
+Cell[124914, 3193, 559, 17, 36, "Echo",ExpressionUUID->"3ff090b0-1d13-4dd8-9853-8d93be50c557"],
+Cell[125476, 3212, 816, 24, 36, "Echo",ExpressionUUID->"e95d7024-a333-4e96-84af-ab828ffb1d07"],
+Cell[126295, 3238, 558, 17, 36, "Echo",ExpressionUUID->"d169b478-8906-44d0-8f30-2bebe9f7879b"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[126719, 3261, 552, 13, 51, "Input",ExpressionUUID->"057fec81-6b83-4297-b0ed-ae19d5167377"],
-Cell[127274, 3276, 927, 21, 23, "Echo",ExpressionUUID->"ac3b54b7-d0d1-4ba2-9bf5-39e76eb9d725"]
+Cell[126902, 3261, 552, 13, 51, "Input",ExpressionUUID->"057fec81-6b83-4297-b0ed-ae19d5167377"],
+Cell[127457, 3276, 927, 21, 23, "Echo",ExpressionUUID->"9227d272-7d66-4210-8348-57c9ae96212e"]
 }, Open  ]],
-Cell[128216, 3300, 614, 11, 99, "Text",ExpressionUUID->"b3aebbf8-5714-42a9-96dc-e543fa63c056"],
+Cell[128399, 3300, 614, 11, 99, "Text",ExpressionUUID->"b3aebbf8-5714-42a9-96dc-e543fa63c056"],
 Cell[CellGroupData[{
-Cell[128855, 3315, 893, 21, 49, "Input",ExpressionUUID->"5545caf1-bc2b-4995-9280-aabfd275b32e"],
-Cell[129751, 3338, 6035, 183, 876, "Output",ExpressionUUID->"3474692e-f067-4342-a271-3fab2eec709a"]
+Cell[129038, 3315, 893, 21, 49, "Input",ExpressionUUID->"5545caf1-bc2b-4995-9280-aabfd275b32e"],
+Cell[129934, 3338, 6057, 183, 876, "Output",ExpressionUUID->"53d5ae73-4a22-4b21-9466-3ab7f983bdf1"]
 }, Open  ]],
-Cell[135801, 3524, 202, 3, 33, "Text",ExpressionUUID->"75ff72c8-5292-43bc-b18b-a8e5652ae868"],
+Cell[136006, 3524, 202, 3, 33, "Text",ExpressionUUID->"75ff72c8-5292-43bc-b18b-a8e5652ae868"],
 Cell[CellGroupData[{
-Cell[136028, 3531, 9164, 240, 290, "Input",ExpressionUUID->"224bcbf5-8cab-4778-84c8-489cda73a482"],
-Cell[145195, 3773, 24345, 638, 863, "Output",ExpressionUUID->"38210643-565e-49ab-95b9-d086df0f0b3f"]
+Cell[136233, 3531, 9164, 240, 290, "Input",ExpressionUUID->"224bcbf5-8cab-4778-84c8-489cda73a482"],
+Cell[145400, 3773, 24373, 639, 863, "Output",ExpressionUUID->"4e11f2dc-cb20-4324-bd15-ea759dc1e4f2"]
 }, Open  ]],
-Cell[169555, 4414, 329, 10, 10, "Text",ExpressionUUID->"a486e748-7b1e-4987-a083-cfb72623daeb"],
-Cell[169887, 4426, 4339, 115, 231, "Input",ExpressionUUID->"a5877b14-1ca7-4fde-b22c-e6e7e3a41a8f"],
+Cell[169788, 4415, 329, 10, 10, "Text",ExpressionUUID->"a486e748-7b1e-4987-a083-cfb72623daeb"],
+Cell[170120, 4427, 4339, 115, 231, "Input",ExpressionUUID->"a5877b14-1ca7-4fde-b22c-e6e7e3a41a8f"],
 Cell[CellGroupData[{
-Cell[174251, 4545, 1339, 29, 30, "Input",ExpressionUUID->"27f66e62-95b0-42b2-8f3c-3672368dedda"],
-Cell[175593, 4576, 45282, 1131, 923, "Output",ExpressionUUID->"43f1bfaa-c53b-42a4-84b1-3e5820356abb"]
+Cell[174484, 4546, 1339, 29, 30, "Input",ExpressionUUID->"27f66e62-95b0-42b2-8f3c-3672368dedda"],
+Cell[175826, 4577, 45304, 1131, 923, "Output",ExpressionUUID->"32a9245e-e624-4802-9be0-64fb867f04e5"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[220912, 5712, 394, 7, 29, "Input",ExpressionUUID->"79e9d179-552b-4381-93e1-00adef9dcfbf"],
-Cell[221309, 5721, 7393, 148, 295, "Output",ExpressionUUID->"31ca751b-2ae6-4e44-af3e-dc2f34ec72f0"]
+Cell[221167, 5713, 394, 7, 29, "Input",ExpressionUUID->"79e9d179-552b-4381-93e1-00adef9dcfbf"],
+Cell[221564, 5722, 32664, 563, 295, 7127, 143, "CachedBoxData", "BoxData", "Output",ExpressionUUID->"a9dd364a-cf8b-437a-9986-ff5f6606d7a8"]
 }, Open  ]],
-Cell[228717, 5872, 173, 2, 29, "Input",ExpressionUUID->"3765b641-ac46-43d2-914a-80976826ad8f"],
-Cell[228893, 5876, 710, 13, 99, "Text",ExpressionUUID->"be4af4a5-65cc-4735-b971-850df46fd197"],
+Cell[254243, 6288, 173, 2, 29, "Input",ExpressionUUID->"3765b641-ac46-43d2-914a-80976826ad8f"],
+Cell[254419, 6292, 710, 13, 99, "Text",ExpressionUUID->"be4af4a5-65cc-4735-b971-850df46fd197"],
 Cell[CellGroupData[{
-Cell[229628, 5893, 1001, 23, 49, "Input",ExpressionUUID->"5970b30d-0380-4e42-a88c-73371a66a2f0"],
-Cell[230632, 5918, 3673, 138, 891, "Output",ExpressionUUID->"f977bdcb-ab94-45b4-89c0-07ef5031dc16"]
+Cell[255154, 6309, 1715, 45, 51, "Input",ExpressionUUID->"5970b30d-0380-4e42-a88c-73371a66a2f0"],
+Cell[256872, 6356, 8575, 239, 897, "Output",ExpressionUUID->"3d55805b-69fc-4822-b937-a2246fa07b15"]
 }, Open  ]],
-Cell[234320, 6059, 6680, 186, 370, "Input",ExpressionUUID->"a5fa38b7-ab93-460d-b41d-23e55eaf2119"],
+Cell[265462, 6598, 7978, 220, 415, "Input",ExpressionUUID->"a5fa38b7-ab93-460d-b41d-23e55eaf2119"],
 Cell[CellGroupData[{
-Cell[241025, 6249, 897, 24, 51, "Input",ExpressionUUID->"c0abdf1b-dd09-47c0-8c18-12dd07c560f6"],
-Cell[241925, 6275, 13045, 373, 6682, "Output",ExpressionUUID->"12140cb2-5b62-4693-b4fb-ae635b84a73d"]
+Cell[273465, 6822, 897, 24, 51, "Input",ExpressionUUID->"c0abdf1b-dd09-47c0-8c18-12dd07c560f6"],
+Cell[274365, 6848, 46947, 1125, 976, "Output",ExpressionUUID->"5768dc99-eaa2-4861-ae61-04ea6676367d"]
 }, Open  ]],
-Cell[254985, 6651, 329, 10, 10, "Text",ExpressionUUID->"9c2abd9d-b95b-4563-b03d-da4e3cb1cc99"],
-Cell[255317, 6663, 334, 8, 55, "Text",ExpressionUUID->"353a2480-c114-45bd-ade4-43578e828af3"],
-Cell[255654, 6673, 502, 11, 99, "Text",ExpressionUUID->"f19de0fe-c45d-488a-921f-6ed558944a90"],
+Cell[321327, 7976, 329, 10, 10, "Text",ExpressionUUID->"9c2abd9d-b95b-4563-b03d-da4e3cb1cc99"],
+Cell[321659, 7988, 334, 8, 55, "Text",ExpressionUUID->"353a2480-c114-45bd-ade4-43578e828af3"],
+Cell[321996, 7998, 502, 11, 99, "Text",ExpressionUUID->"f19de0fe-c45d-488a-921f-6ed558944a90"],
 Cell[CellGroupData[{
-Cell[256181, 6688, 1879, 52, 157, "Input",ExpressionUUID->"54f278c2-a5d1-4598-a321-deb34f46de26"],
-Cell[258063, 6742, 19816, 380, 374, "Output",ExpressionUUID->"e9280156-dd8d-46c5-b833-3bfeb50765b6"]
+Cell[322523, 8013, 1879, 52, 157, "Input",ExpressionUUID->"54f278c2-a5d1-4598-a321-deb34f46de26"],
+Cell[324405, 8067, 19842, 381, 374, "Output",ExpressionUUID->"2d17cab9-58f0-4530-89cb-1ee6a477f92d"]
 }, Open  ]],
-Cell[277894, 7125, 340, 7, 33, "Text",ExpressionUUID->"ff9c3072-466f-4554-af96-e04f6502224c"],
+Cell[344262, 8451, 340, 7, 33, "Text",ExpressionUUID->"ff9c3072-466f-4554-af96-e04f6502224c"],
 Cell[CellGroupData[{
-Cell[278259, 7136, 802, 17, 29, "Input",ExpressionUUID->"650f7283-3aae-4366-94fe-4471c262d14b"],
-Cell[279064, 7155, 3261, 62, 77, "Output",ExpressionUUID->"562005bf-faba-42c1-9624-4202e1e8a857"]
+Cell[344627, 8462, 802, 17, 29, "Input",ExpressionUUID->"650f7283-3aae-4366-94fe-4471c262d14b"],
+Cell[345432, 8481, 3287, 63, 77, "Output",ExpressionUUID->"bd8b03d1-eac3-4a80-bfe8-fceec603887f"]
 }, Open  ]],
-Cell[282340, 7220, 614, 11, 99, "Text",ExpressionUUID->"1e541163-8390-4964-80f0-2e0645fedfba"],
-Cell[282957, 7233, 9469, 245, 331, "Input",ExpressionUUID->"bfdae4e6-e734-4d46-bdaa-eda4f2b38243",
+Cell[348734, 8547, 614, 11, 99, "Text",ExpressionUUID->"1e541163-8390-4964-80f0-2e0645fedfba"],
+Cell[349351, 8560, 9469, 245, 331, "Input",ExpressionUUID->"bfdae4e6-e734-4d46-bdaa-eda4f2b38243",
  Evaluatable->False]
 }
 ]
