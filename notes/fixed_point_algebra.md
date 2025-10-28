@@ -74,17 +74,7 @@ Finally, we show that the two modules are isomorphic. Since they are cyclic, hig
 $$
 \begin{equation}\tag*{$\Box$}\end{equation}
 $$
-This leads us to the following, description of the simple objects in $\text{Rep}(\mathcal{A}^S)$.
-
-**<u>Theorem:</u>** Given a set of simple objects $I \subset \text{Rep}(\text{Vir})$ a set of simple objects $I^S \subset \text{Rep}(\mathcal{A}^S)$ is given by
-$$
-I^S = \{A_{ii}^{\pm} \in \text{Rep}(\mathcal{A}) \mid i \in I\} \cup \{A_{ij}^S \mid i\neq j \in I \text{ and } (i,j) \sim (j,i)\}.
-$$
- ***Proof:*** We know that a complete set of simple objects should appear in a rational CFT with chiral algebra $\mathcal{A}$ and the $A_{ij}^{\pm,S}$ are the ones that appear when we express the same theory as a rational CFT with algebra $\mathcal{A}^S$. 
-$$
-\begin{equation}\tag*{$\Box$}\end{equation}
-$$
-Awesome, so we were able to make a nontrivial statement about the representation theory of $\mathcal{A}^S$. Now let's calculate the characters of these representations. Before we proceed, let's prove this useful property. 
+What he have found is a description of the simple objects in $\text{Rep}(\mathcal{A}^S)$. **Have we found all of them?** The answer is no! In fact, we have found $6\times 2 + 6 \times 5/2 = 27$ simple objects. There are $12$ more irreps but these do not appear in the Hilbert space of this theory. How do we find them?
 
 **<u>Lemma:</u>** Let $i,j$ be irreducible representations of $\text{Vir}$ then for $L_0 \in \mathcal{A}^S$ and $q \in \mathbb{C}$
 $$
@@ -186,7 +176,6 @@ S_{A_{ij}^S,A_{kl}^S} &= s_{ij} s_{kl} + s_{ik}s_{jl}\\
 S_{A_{ij}^S,A_{kk}^\pm} &= s_{ik}s_{jk}
 \end{align*} 
 $$
-
 
 
 
