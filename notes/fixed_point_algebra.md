@@ -16,7 +16,7 @@ We will use this a lot in our decompositions.
 
 **<u>Corollary:</u>** The character of the $\mathcal{V}$-representation $V_{ij}$ is given by
 $$
-\chi_{ij}^{\mathcal{A}}(q) = \chi_i(q) \chi_{j}(q),
+\chi_{V_{ij}}(q) = \chi_i(q) \chi_{j}(q),
 $$
 where $\chi(q)$ denote the $\text{Vir}$ characters. 
 
@@ -202,13 +202,70 @@ where $s$ is the $\text{Vir}$ $S$-matrix.
 
 All we need to do now is to calculate the $S$-matrix for the fixed point algebra irreducible modules. This is straightforward since we know the $S$-matrix for the Virasoro characters, and these are given in terms of them.
 
-**<u>Proposition:</u>** Let $s$ be the Virasoro $S$-Matrix. Then the $S$-Matrix for $\mathcal{W}$ is given by 
+**<u>Proposition:</u>** Let $s$ be the Virasoro $S$-Matrix. Then the $S$-Matrix for $\mathcal{W}$ is given by the symmetric matrix with the following elements
 $$
 \begin{align*}
-S_{A_{ij}^S,A_{kl}^S} &= s_{ij} s_{kl} + s_{ik}s_{jl}\\
-S_{A_{ij}^S,A_{kk}^\pm} &= s_{ik}s_{jk}
+S_{V_{ij}^S,V_{kl}^S} &= s_{ij} s_{kl} + s_{ik}s_{jl}\\
+S_{V_{ij}^S,V_{kk}^\pm} &= s_{ik}s_{jk}\\
+S_{V_{ii}^{a}, V_{jj}^{b}} &= \frac{1}{2} s_{ij}^2\\
+S_{V_{ii}^{a}, V_{j}^{\pm}} &= \pm \frac{1}{2} s_{ij}\\
+S_{V_{i}^{a}, V_{j}^b} &= \frac{1}{2}ab\hat t_{ij},
 \end{align*}
 $$
+
+where $a,b \in \{\pm1\}$, the remaining elements vanish, and the matrix $\hat t$ is given by
+$$
+\hat t = t^{\frac{1}{2}} st^2 st^{\frac{1}{2}},
+$$
+with $t$ the Virasoro modular $t$ matrix.
+
+
+
+One check we can do now, is to find the modular mass matrix for the theory with maximal chiral algebra $\mathcal{V}$ written in terms of irreducible representations of $\mathcal{V}^S$.
+
+**<u>Proposition:</u>** The nonzero components of the modular mass matrix in question are given by 
+$$
+\begin{align*}
+M_{V_{ii}^{a},V_{ii}^{b}} = M_{V_{ij}^S,V_{ij}^S} = 1.
+\end{align*}
+$$
+for $a,b \in \{\pm 1\}$.
+
+By direct calculation we can show that this is modular invariant under the $S$ matrix we have introduced above, which is pretty cute. Finally, let's then use this $S$-matrix to write out some Cardy states for this theory.
+
+**<u>Proposition:</u>** Let $I$ be the set of irreducible highest weight unitary representations of $\mathcal{V}^S$ such that for any $V \in I$ the mass matrix $M_{VV} = 1$, then for any $V \in I$ the following state satisfies Cardy's conditions
+$$
+\psi_{V} \coloneqq \sum_{U \in I} \frac{S_{UV}}{\sqrt{S_{1U}}} \phi_U,
+$$
+where $\phi_U$ is the ishibashi state corresponding to the module $U$ and $1\in I$ is the vacuum module. 
+
+**<u>Corollary:</u>** Any state of the form $\psi_V$ has $g$-function
+$$
+g_V = \frac{S_{1V}}{\sqrt{S_{11}}}.
+$$
+Namely this gives us that the g-functions of these Cardy states are
+$$
+\begin{matrix} 
+\frac{1}{\sqrt{5-\sqrt{5}}} &
+\frac{1}{\sqrt{5-\sqrt{5}}} &
+\frac{1}{2} \sqrt{1-\frac{1}{\sqrt{5}}} &
+\sqrt{\frac{1}{10} \left(\sqrt{5}+5\right)} &
+\sqrt{\frac{1}{10} \left(5-\sqrt{5}\right)} \\
+\frac{\sqrt{5}+5}{2 \sqrt{25-5 \sqrt{5}}} &
+\frac{1}{\sqrt{5-\sqrt{5}}} &
+\sqrt{1+\frac{2}{\sqrt{5}}} &
+\sqrt{\frac{1}{10} \left(\sqrt{5}+5\right)} &
+\frac{1}{\sqrt{5-\sqrt{5}}} \\ 
+\sqrt{1+\frac{2}{\sqrt{5}}} & 
+\sqrt{\frac{1}{10} \left(\sqrt{5}+5\right)} &
+\sqrt{\frac{1}{10} \left(\sqrt{5}+5\right)} &
+\sqrt{\frac{1}{10} \left(5-\sqrt{5}\right)} &
+\frac{2}{\sqrt{5-\sqrt{5}}} &
+\end{matrix}
+$$
+Another check we can make is which ones could be global fixed points under relevant operators. This is relatively easy. We just need to check if they contain any ishibashi states that have conformal weight between 0 and 1. If they don't then there would be no relevant operators under RG. 
+
+Unfortunately they all contain multiple states operators with conformal weight less than 1. But no matter, we keep going strong.
 
 
 
