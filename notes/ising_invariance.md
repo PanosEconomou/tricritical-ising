@@ -37,7 +37,7 @@ Now all we need to do is to find these numbers. The good thing is though that we
 **<u>Proposition:</u>** The representation of the Ising fusion category in Tricritical Ising is given by $\eta,N$ such that for the highest vector $v_i$ of the Virasoro irreducible unitary highest weight representation $i$
 $$
 \begin{align*}
-\eta v_i = \eta_i v_n = \frac{S_{\eta i}}{S_{\eta 1}}v_i && Nv_i = N_i v_i= \frac{S_{Ni}}{S_{N1}}v_i,
+\eta v_i\otimes \bar v_i = \eta_i v_i \otimes \bar v_i= \frac{S_{\eta i}}{S_{\eta 1}}v_i\otimes \bar v_i && Nv_i\otimes \bar v_i = N_i v_i\otimes \bar v_i= \frac{S_{Ni}}{S_{N1}}v_i \otimes \bar v_i,
 \end{align*}
 $$
 where the corresponding irreducible highest weight Virasoro representations have weights $h_{\eta} = \frac{3}{2}$ and $h_N = \frac{7}{16}$.
