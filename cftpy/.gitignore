@@ -2,3 +2,4 @@ cftpy.egg-info/
 cftpy/cftpy.egg-info/
 cftpy/cythonft.c
 cftpy/cythonft.cpython-313-darwin.so
+cftpy/cythonft.cpython-313-x86_64-linux-gnu.so
