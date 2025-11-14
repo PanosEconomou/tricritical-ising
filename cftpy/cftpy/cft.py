@@ -284,10 +284,17 @@ def folded_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set
         S (matrix): The s matrix in the field K
         labels (set): the set of labels in ((r,s),(r',s')) notation
     """
-    s, labels = minimal_model_S_matrix(p,q,K)
-    labels    = set([(l,m) for l in labels for m in labels])
+    s, labels   = minimal_model_S_matrix(p,q,K)
+    idx         = {l:i for i,l in enumerate(labels)}
+    labels      = set([(l,m) for l in labels for m in labels])
+    n           = len(labels)
+    S           = matrix(base_ring = K, nrows = n, ncols = n)
 
-    return s.tensor_product(s), labels
+    for i,l in enumerate(labels):
+        for j,m in enumerate(labels):
+            S[i,j] = s[idx[l[0]], idx[m[0]]]*s[idx[l[1]], idx[m[1]]]
+    
+    return S, labels
 
 
 #===========================================================#
@@ -295,7 +302,7 @@ def folded_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set
 #===========================================================#
 
 def T_matrix(K = None,*args,**kwargs) -> (matrix, set):
-    """Calculate the S-matrix of a minimal model
+    """Calculate the T-matrix of a minimal model
 
     Args:
         p (int, optional): Kac-index p. Defaults to 4.
@@ -310,11 +317,14 @@ def T_matrix(K = None,*args,**kwargs) -> (matrix, set):
 
     labels  = info(*args,**kwargs)['labels']
     cc      = c(*args,**kwargs)
+    hh      = h(*args,**kwargs)
     n       = len(labels)
     T       = matrix(base_ring = K, nrows = n, ncols = n)
 
+    print(cc,hh)
+
     for i,label in enumerate(labels):
-        T[i,i] = exp(2j*pi*(h(label = label, *args, **kwargs) - cc/24))
+        T[i,i] = exp(2j*pi*(hh[label] - cc/24))
     return T, labels
 
 #===========================================================#
