@@ -36,8 +36,8 @@ cpdef object cstring_function_su2(int l, int m, int k, int order):
     free(coeff)
     
     cdef object R, series, eta
-    R = PowerSeriesRing(ZZ, 'q', default_prec=order+1)
-    series = R(pycoeff, order+1)           
-    eta = qexp_eta(R, order)
+    R       = PowerSeriesRing(ZZ, 'q', default_prec=order+1)
+    series  = R(pycoeff, order+1)
+    eta     = qexp_eta(R, order+1)
 
     return series * eta**(-3)

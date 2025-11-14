@@ -15,9 +15,9 @@
 # IMPORTS                                                   #
 #===========================================================#
 try:
-    from sage.all import SR, QQ
+    from sage.all import SR, QQ, QQbar
     from sage.all import matrix
-    from sage.all import pi, gcd, sqrt, sin, exp
+    from sage.all import pi, gcd, sqrt, sin, exp, I 
     from sage.all import latex
 except ImportError:
     raise RuntimeError("cftpy requires SageMath, but Sage cannot be imported.\nInstall SageMath and run with its Python interpreter.")
@@ -96,7 +96,7 @@ def h(model='minimal', *args, **kwargs):
     return MODEL_WEIGHTS[model](*arguments.args,**arguments.kwargs)
 
 
-def h_minimal(label:tuple=(), p:int=4, q:int=3):
+def h_minimal(label:tuple = (), p:int = 4, q:int = 3):
     """Conformal weights for irreducible representations of minimal models
 
     Args:
@@ -321,10 +321,8 @@ def T_matrix(K = None,*args,**kwargs) -> (matrix, set):
     n       = len(labels)
     T       = matrix(base_ring = K, nrows = n, ncols = n)
 
-    print(cc,hh)
-
     for i,label in enumerate(labels):
-        T[i,i] = exp(2j*pi*(hh[label] - cc/24))
+        T[i,i] = K(exp(2*I*pi*(hh[label] - cc/24)))
     return T, labels
 
 #===========================================================#
@@ -349,9 +347,12 @@ def string_function_su2(l:int = -1, m:int = 0, k:int = 2, order:int = MAX_ORDER)
         strings = {}
         # TODO: Optimize the range of the iterations here to account for multiplicites
         for l in range(k+1):
-            for m in range(k+1):
+            for m in range(l & 2 + 1,l,2):
                 strings[(l,m)] = string_function_su2(l,m,k,order)
         return strings
+
+    if (l - m) & 1 != 0:
+        raise ValueError("l - m must be an even integer")
 
     if 'su(2)' in _STRING_FUNCTIONS:
         if (l,m) in _STRING_FUNCTIONS['su(2)']:
@@ -359,7 +360,7 @@ def string_function_su2(l:int = -1, m:int = 0, k:int = 2, order:int = MAX_ORDER)
                 if order > _STRING_FUNCTIONS['su(2)'][(l,m)]['order']:
                     _STRING_FUNCTIONS['su(2)'][(l,m)] = {}
                 else:
-                    return _STRING_FUNCTIONS['su(2)'][(l,m)]['series'].truncate(order)
+                    return _STRING_FUNCTIONS['su(2)'][(l,m)]['series'].add_bigoh(order)
             except KeyError:
                 del _STRING_FUNCTIONS['su(2)'][(l,m)]
     else:
@@ -405,7 +406,6 @@ def delete_cache():
     """
     _STRING_FUNCTIONS   = {}
     _CHARACTERS         = {}
-
 
 
 #===========================================================#
