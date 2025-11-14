@@ -17,7 +17,7 @@
 try:
     from sage.all import SR, QQ
     from sage.all import matrix
-    from sage.all import pi, gcd, sqrt, sin
+    from sage.all import pi, gcd, sqrt, sin, exp
     from sage.all import latex
 except ImportError:
     raise RuntimeError("cftpy requires SageMath, but Sage cannot be imported.\nInstall SageMath and run with its Python interpreter.")
@@ -289,6 +289,33 @@ def folded_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set
 
     return s.tensor_product(s), labels
 
+
+#===========================================================#
+# T-Matrix Calculations                                     #
+#===========================================================#
+
+def T_matrix(K = None,*args,**kwargs) -> (matrix, set):
+    """Calculate the S-matrix of a minimal model
+
+    Args:
+        p (int, optional): Kac-index p. Defaults to 4.
+        q (int, optional): Kac-index q. Defaults to 3.
+        K (Field, optional): Sage field to calculate the matrix in. Defaults to SymbolicRing.
+    
+    Returns:
+        T (matrix): The T matrix in the field K
+        labels (set): the set of labels in the model's notation
+    """
+    if K == None: K = SR
+
+    labels  = info(*args,**kwargs)['labels']
+    cc      = c(*args,**kwargs)
+    n       = len(labels)
+    T       = matrix(base_ring = K, nrows = n, ncols = n)
+
+    for i,label in enumerate(labels):
+        T[i,i] = exp(2j*pi*(h(label = label, *args, **kwargs) - cc/24))
+    return T, labels
 
 #===========================================================#
 # Characters (These will be cythonized soon)                #
