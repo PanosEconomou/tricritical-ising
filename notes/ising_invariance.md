@@ -74,7 +74,7 @@ $$
 \begin{equation}\tag*{$\Box$}\end{equation}
 $$
 
-So we see that one of them acts trivially, but the other exchanges the irreducible representations, which is slightly nontrivial. What we need to figure out, however, is how to induce the action of the lines in the rest of the irreducible representations of $\mathcal{V}^S$. 
+So we see that one of them acts trivially, but the other exchanges the irreducible representations, which is slightly nontrivial. What we need to figure out, however, is how to induce the action of the lines in the rest of the irreducible representations of $\mathcal{V}^S$. The remaining representations appear in the twisted sectors of our theory which is quite convenient. What would be interesting to study is why this happens from the MTC and TQFT point of view. So we need to figure out how to calculate the Twisted sector from Fuchs' perspective. We can probably express this using the S-matrix. 
 
 
 

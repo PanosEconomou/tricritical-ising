@@ -14,8 +14,15 @@ sage -python -m pip install cftpy
 ```
 but for now, if you want to run the notebooks and edit everything, a local version of the module is in this repository under `./cftpy`. You can install it locally via
 ```
-save -python -m pip install -e ./cftpy
+sage -python -m pip install -e ./cftpy
 ```
 the `-e` flag stands for editable, so if you `git pull` our updates sage will automatically use the updated module.
+
+If you have a self respecting operating system with a rolling package manager like `Arch` you might want to create a local python environment using the whichever python distribution your sage knows about, and then compiling the library. 
+```
+python -m venv env
+source ./env/bin/activate
+pip install -e ./cftpy
+```
 
 
