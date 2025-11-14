@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cftpy"
 version = "0.1.0"
-description = "Conformal field theory utilities"
+description = "Conformal Field Theory toolkit"
 authors = [
   { name="Panos Oikonomou", email="po524@nyu.edu" },
   { name="Quinten Weller", email="qgw1@nyu.edu" }
@@ -20,4 +20,4 @@ requires-python = ">=3.8"
 dependencies = ["ipython"]
 
 [tool.setuptools.packages.find]
-where = ["cftpy"]
+where = ["."]

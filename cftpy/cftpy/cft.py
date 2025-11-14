@@ -30,12 +30,12 @@ from re import sub
 
 
 #===========================================================#
-# Module Variables                                          #
+# Module Parameters and Cache                               #
 #===========================================================#
 
 MAX_ORDER           = 1000          # Order to calculate q-expansions in
-_STRING_FUNCTIONS   = {}            # Stores string functions once they're calculated
-_CHARACTERS         = {}            # Stores string functions once they're calculated
+_STRING_FUNCTIONS   = {}            # Caches string functions once they're calculated
+_CHARACTERS         = {}            # Caches charaacters once they're calculated
 
 
 #===========================================================#
@@ -369,6 +369,7 @@ MODEL_S_MATRIX      = {
 
 DICTS               = [MODEL_LABELS, MODEL_WEIGHTS, MODEL_CENTRAL_CHARGES, MODEL_S_MATRIX]
 DYNAMIC_DOCSTRINGS  = [info, h, c, S_matrix]
+MODEL_NAMES         = list(MODEL_LABELS.keys())
 
 #===========================================================#
 #oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo#
