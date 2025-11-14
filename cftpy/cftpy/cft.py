@@ -15,14 +15,14 @@
 # IMPORTS                                                   #
 #===========================================================#
 try:
-    from sage.all import SR, QQ, ZZ, PowerSeriesRing, PuiseuxSeriesRing
+    from sage.all import SR, QQ
     from sage.all import matrix
     from sage.all import pi, gcd, sqrt, sin
     from sage.all import latex
-
-    from sage.modular.etaproducts import qexp_eta
 except ImportError:
     raise RuntimeError("cftpy requires SageMath, but Sage cannot be imported.\nInstall SageMath and run with its Python interpreter.")
+
+from .cythonft import cstring_function_su2_coefficients # type: ignore
 
 from IPython.display import display, Math
 from inspect import signature
@@ -291,18 +291,49 @@ def folded_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set
 
 
 #===========================================================#
-# Characters                                                #
+# Characters (These will be cythonized soon)                #
 #===========================================================#
 
 def string_function_su2(l:int = -1, m:int = 0, k:int = 2, order:int = MAX_ORDER):
+    """Generates the string function of su(2) at level k for highest weight l, and string weight m
+
+    Args:
+        l (int, optional): Highest weight. If left blank all the string functions for level k are calculated
+        m (int, optional): String weight.
+        k (int, optional): Level of su(2)_k. Defaults to 2.
+        order (int, optional): maximum order to calculate the q expansion. Defaults to MAX_ORDER=1000, or whatever the user overrides thsi to 
+
+    Returns:
+        PowerSeriesRing: Containing the q expansion for the corresponding string function or
+        dict: Containing all string functison if l is unspecified
+    """
     
-    P = PowerSeriesRing(ZZ, 'q', default_prec=order)
-    # for r in range(order):
+    if l == -1: 
+        strings = {}
+        # TODO: Optimize the range of the iterations here to account for multiplicites
+        for l in range(k+1):
+            for m in range(k+1):
+                strings[(l,m)] = string_function_su2(l,m,k,order)
+        return strings
 
+    if 'su(2)' in _STRING_FUNCTIONS:
+        if (l,m) in _STRING_FUNCTIONS['su(2)']:
+            try:
+                if order > _STRING_FUNCTIONS['su(2)'][(l,m)]['order']:
+                    _STRING_FUNCTIONS['su(2)'][(l,m)] = {}
+                else:
+                    return _STRING_FUNCTIONS['su(2)'][(l,m)]['series'].truncate(order)
+            except KeyError:
+                del _STRING_FUNCTIONS['su(2)'][(l,m)]
+    else:
+        _STRING_FUNCTIONS['su(2)'] = {}
 
+    _STRING_FUNCTIONS['su(2)'][(l,m)] = {
+            'order'  : order, 
+            'series' : cstring_function_su2_coefficients(l,m,k,order)
+        }
 
-
-# def character_diagonal_coset():
+    return _STRING_FUNCTIONS['su(2)'][(l,m)]['series']
 
 
 
@@ -332,6 +363,14 @@ def fill_docstring(func):
     # match {anything-but-braces}
     func.__doc__ = sub(r"\{([^{}]+)\}", repl, func.__doc__)
 
+def delete_cache():
+    """Removes all the cached series from memory
+    """
+    _STRING_FUNCTIONS   = {}
+    _CHARACTERS         = {}
+
+
+
 #===========================================================#
 # Globals                                                   #
 #===========================================================#
@@ -339,11 +378,13 @@ def fill_docstring(func):
 SPECIAL_NAMES       = {
     'minimal': {
         'ising'                     : lambda f: lambda *args, **kwargs: f(p=4,q=3,*args,**kwargs),
-        'tricritical_ising'         : lambda f: lambda *args, **kwargs: f(p=5,q=4,*args,**kwargs)
+        'tricritical_ising'         : lambda f: lambda *args, **kwargs: f(p=5,q=4,*args,**kwargs),
+        'yang_lee'                  : lambda f: lambda *args, **kwargs: f(p=5,q=2,*args,**kwargs),
     },
     'folded_minimal': {
-        'folded_ising'              : lambda f: lambda *args,**kwargs: f(p=4,q=3,*args,**kwargs),
-        'folded_tricritical_ising'  : lambda f: lambda *args,**kwargs: f(p=5,q=4,*args,**kwargs)
+        'folded_ising'              : lambda f: lambda *args, **kwargs: f(p=4,q=3,*args,**kwargs),
+        'folded_tricritical_ising'  : lambda f: lambda *args, **kwargs: f(p=5,q=4,*args,**kwargs),
+        'folded_yang_lee'           : lambda f: lambda *args, **kwargs: f(p=5,q=2,*args,**kwargs),
     },
 }
 
