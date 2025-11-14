@@ -69,13 +69,12 @@ $$
 $$
 where $V_{ij}^S \otimes V_{ji}^S = V_{ij} \otimes V_{ji}$ with $V_{ij}^S \cong V_{ji}^S$.
 
-***Proof:*** The highest weight vectors of $V_{ii}^\pm$ are descendants of $v_i\otimes v_i$, therefore $L^-v_{i}\otimes v_{i} = (h_i - h_i)v_{i}\otimes v_i$. For $V_{ij}^S$ the highest weight vector in given by $P^\pm v_i \otimes v_j$ where $P^{\pm} = \frac{1}{\sqrt{2}}(1 \pm S)$ where the $\pm$ corresponds to weather we are considering the left or right copy in the decomposition of $V_{ij} \otimes V_{ji}$. From here we have that $L^- P^{\pm} = P^{\pm} L^-$ and that $L^- v_i\otimes v_j = (L_i - L_j) v_i \otimes v_j$.
+***Proof:*** The highest weight vectors of $V_{ii}^\pm$ are descendants of $v_i\otimes v_i$, therefore $L^-v_{i}\otimes v_{i} = (h_i - h_i)v_{i}\otimes v_i$. For $V_{ij}^S$ the highest weight vector in given by $P^\pm v_i \otimes v_j$ where $P^{\pm} = \frac{1}{\sqrt{2}}(1 \pm S)$ where the $\pm$ corresponds to weather we are considering the left or right copy in the decomposition of $V_{ij} \otimes V_{ji}$. From here we have that $L^- P^{\pm} = P^{\mp} L^-$ and that $L^- v_i\otimes v_j = (L_i - L_j) v_i \otimes v_j$.
 $$
-\begin{equation}\tag*{$\Box$}\end{equation} 
+\begin{equation}\tag*{$\Box$}\end{equation}
 $$
 
-
-
+So we see that one of them acts trivially, but the other exchanges the irreducible representations, which is slightly nontrivial. What we need to figure out, however, is how to induce the action of the lines in the rest of the irreducible representations of $\mathcal{V}^S$. 
 
 
 
