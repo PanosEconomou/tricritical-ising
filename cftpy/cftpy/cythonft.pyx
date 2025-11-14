@@ -10,7 +10,7 @@ from sage.rings.power_series_ring import PowerSeriesRing
 from sage.modular.etaproducts import qexp_eta 
 
 
-cpdef object cstring_function_su2_coefficients(int l, int m, int k, int order):
+cpdef object cstring_function_su2(int l, int m, int k, int order):
     cdef Py_ssize_t r, s
     cdef Py_ssize_t ind1, ind2
     cdef int sgn

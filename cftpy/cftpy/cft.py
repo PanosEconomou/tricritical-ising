@@ -22,7 +22,7 @@ try:
 except ImportError:
     raise RuntimeError("cftpy requires SageMath, but Sage cannot be imported.\nInstall SageMath and run with its Python interpreter.")
 
-from .cythonft import cstring_function_su2_coefficients # type: ignore
+from .cythonft import cstring_function_su2 # type: ignore
 
 from IPython.display import display, Math
 from inspect import signature
@@ -330,7 +330,7 @@ def string_function_su2(l:int = -1, m:int = 0, k:int = 2, order:int = MAX_ORDER)
 
     _STRING_FUNCTIONS['su(2)'][(l,m)] = {
             'order'  : order, 
-            'series' : cstring_function_su2_coefficients(l,m,k,order)
+            'series' : cstring_function_su2(l,m,k,order)
         }
 
     return _STRING_FUNCTIONS['su(2)'][(l,m)]['series']
