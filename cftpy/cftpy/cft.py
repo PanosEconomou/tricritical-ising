@@ -14,21 +14,35 @@
 #===========================================================#
 # IMPORTS                                                   #
 #===========================================================#
+try:
+    from sage.all import SR, QQ, ZZ, PowerSeriesRing, PuiseuxSeriesRing
+    from sage.all import matrix
+    from sage.all import pi, gcd, sqrt, sin
+    from sage.all import latex
 
-from sage.all import SR, QQ
-from sage.all import matrix
-from sage.all import pi, gcd, sqrt, sin
-from sage.all import latex
+    from sage.modular.etaproducts import qexp_eta
+except ImportError:
+    raise RuntimeError("cftpy requires SageMath, but Sage cannot be imported.\nInstall SageMath and run with its Python interpreter.")
 
 from IPython.display import display, Math
 from inspect import signature
 from re import sub
 
+
+#===========================================================#
+# Module Variables                                          #
+#===========================================================#
+
+MAX_ORDER           = 1000          # Order to calculate q-expansions in
+_STRING_FUNCTIONS   = {}            # Stores string functions once they're calculated
+_CHARACTERS         = {}            # Stores string functions once they're calculated
+
+
 #===========================================================#
 # Weights, Central Chrages, and other Mode Info             #
 #===========================================================#
 
-def get_info(model='minimal', *args, **kwargs) -> dict:
+def info(model='minimal', *args, **kwargs) -> dict:
     """Returns information like the labelling system for a specific model
 
     Args:
@@ -95,7 +109,7 @@ def h_minimal(label:tuple=(), p:int=4, q:int=3):
         dict: A dictionary of conformal weights indexed by Kac-labels
     """
     if not label:
-        labels = get_Kac_labels(p,q)
+        labels = Kac_labels(p,q)
         return {l: h_minimal(l, p, q) for l in labels}
     
     return QQ(((p*label[0] - q*label[1])**2 - (p-q)**2)/(4*p*q))
@@ -113,7 +127,7 @@ def h_folded_minimal(label:tuple=(), p:int=4, q:int=3):
         dict: A dictionary of conformal weights indexed by Kac-labels
     """
     if not label:
-        labels = get_folded_Kac_labels(p,q)
+        labels = folded_Kac_labels(p,q)
         return {l: h_folded_minimal(l, p, q) for l in labels}
 
     return h_minimal(label[0],p,q) + h_minimal(label[1],p,q)  # type: ignore
@@ -166,7 +180,7 @@ def c_folded_minimal(p:int=4, q:int=3) -> QQ:
 # S-Matrix Calculations                                     #
 #===========================================================#
 
-def get_S_matrix(*args,model='minimal',**kwargs) -> (matrix, set):
+def S_matrix(*args,model='minimal',**kwargs) -> (matrix, set):
     """Returns the smatrix of a Rational CFT as well as a list of indices 
     for the irreducible rerpesentations of the algebra
 
@@ -198,7 +212,7 @@ def get_S_matrix(*args,model='minimal',**kwargs) -> (matrix, set):
     return MODEL_S_MATRIX[model](*arguments.args,**arguments.kwargs)
 
 
-def get_Kac_labels(p:int = 4, q:int = 3) -> set:
+def Kac_labels(p:int = 4, q:int = 3) -> set:
     """Return a list of pairs (s,r) of Kac labels for the minimal model p,q
 
     Args:
@@ -219,7 +233,7 @@ def get_Kac_labels(p:int = 4, q:int = 3) -> set:
     
     return labels
 
-def get_folded_Kac_labels(p:int = 4,q:int = 3, K = None) -> set:
+def folded_Kac_labels(p:int = 4,q:int = 3, K = None) -> set:
     """Return a list of pairs ((s,r),(s',r')) of Kac labels for the folded minimal model p,q
 
     Args:
@@ -229,11 +243,11 @@ def get_folded_Kac_labels(p:int = 4,q:int = 3, K = None) -> set:
     Returns:
         set: the set of labels in ((r,s),(r',s')) notation
     """
-    labels = get_Kac_labels(p,q)
+    labels = Kac_labels(p,q)
     return set([(l,m) for l in labels for m in labels])
 
 
-def get_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set):
+def minimal_model_S_matrix(p:int = 4, q:int = 3, K = None) -> (matrix, set):
     """Calculate the S-matrix of a minimal model
 
     Args:
@@ -247,7 +261,7 @@ def get_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set):
     """
     if K == None: K = SR
 
-    labels  = get_Kac_labels(p,q)
+    labels  = Kac_labels(p,q)
     n       = len(labels)
     S       = matrix(base_ring = K, nrows = n, ncols = n)
 
@@ -258,7 +272,7 @@ def get_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set):
                 S[i,j] = S[i,j].canonicalize_radical()
     return S, labels
 
-def get_folded_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set):
+def folded_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set):
     """Calculate the S-matrix of a folded minimal model
 
     Args:
@@ -270,10 +284,27 @@ def get_folded_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix,
         S (matrix): The s matrix in the field K
         labels (set): the set of labels in ((r,s),(r',s')) notation
     """
-    s, labels = get_minimal_model_S_matrix(p,q,K)
+    s, labels = minimal_model_S_matrix(p,q,K)
     labels    = set([(l,m) for l in labels for m in labels])
 
     return s.tensor_product(s), labels
+
+
+#===========================================================#
+# Characters                                                #
+#===========================================================#
+
+def string_function_su2(l:int = -1, m:int = 0, k:int = 2, order:int = MAX_ORDER):
+    
+    P = PowerSeriesRing(ZZ, 'q', default_prec=order)
+    # for r in range(order):
+
+
+
+
+# def character_diagonal_coset():
+
+
 
 
 #===========================================================#
@@ -285,7 +316,6 @@ def showvs(obj=None, *args, **kwargs):
     """
     if obj is None:
         return
-
     try:
         display(Math(latex(obj))) 
     except Exception:
@@ -318,8 +348,8 @@ SPECIAL_NAMES       = {
 }
 
 MODEL_LABELS        = {
-    'minimal'                   : get_Kac_labels,
-    'folded_minimal'            : get_folded_Kac_labels,
+    'minimal'                   : Kac_labels,
+    'folded_minimal'            : folded_Kac_labels,
 }
 
 MODEL_WEIGHTS       = {
@@ -333,23 +363,12 @@ MODEL_CENTRAL_CHARGES= {
 }
 
 MODEL_S_MATRIX      = {
-    'minimal'                   : get_minimal_model_S_matrix,
-    'folded_minimal'            : get_folded_minimal_model_S_matrix,
+    'minimal'                   : minimal_model_S_matrix,
+    'folded_minimal'            : folded_minimal_model_S_matrix,
 }
 
 DICTS               = [MODEL_LABELS, MODEL_WEIGHTS, MODEL_CENTRAL_CHARGES, MODEL_S_MATRIX]
-
-# Populate the dictionaries with examples listed in SPECIAL_NAMES
-for name in SPECIAL_NAMES:
-    for labels in DICTS:
-        for example in SPECIAL_NAMES[name]:
-            labels[example] = SPECIAL_NAMES[name][example](labels[name])
-
-MODEL_NAMES         = list(MODEL_LABELS.keys())
-DYNAMIC_DOCSTRINGS  = [get_info, h, c, get_S_matrix]
-
-# Assing the appropriate dynamic docstring
-for func in DYNAMIC_DOCSTRINGS: fill_docstring(func)
+DYNAMIC_DOCSTRINGS  = [info, h, c, S_matrix]
 
 #===========================================================#
 #oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo#

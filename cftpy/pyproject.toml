@@ -1,0 +1,23 @@
+[build-system]
+requires = [
+    "setuptools>=61.0",
+    "wheel",
+    "cython",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cftpy"
+version = "0.1.0"
+description = "Conformal field theory utilities"
+authors = [
+  { name="Panos Oikonomou", email="po524@nyu.edu" },
+  { name="Quinten Weller", email="qgw1@nyu.edu" }
+]
+# readme = "README.md" NOT YET!
+requires-python = ">=3.8"
+
+dependencies = ["ipython"]
+
+[tool.setuptools.packages.find]
+where = ["cftpy"]
