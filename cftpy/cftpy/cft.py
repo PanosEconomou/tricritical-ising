@@ -320,6 +320,8 @@ def folded_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set
         S (matrix): The s matrix in the field K
         labels (set): the set of labels in ((r,s),(r',s')) notation
     """
+    if K == None: K = SR
+    
     s, labels   = minimal_model_S_matrix(p,q,K)
     idx         = {l:i for i,l in enumerate(labels)}
     labels      = [(l,m) for l in labels for m in labels]
@@ -337,10 +339,12 @@ def folded_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set
 # T-Matrix Calculations                                     #
 #===========================================================#
 
-def T_matrix(K = None,*args,**kwargs) -> (matrix, set):
+def T_matrix(*args, K = None, **kwargs) -> (matrix, set):
     """Calculate the T-matrix of a minimal model
 
     Args:
+        model (string, optional): The CFT you want. Defaults to 'minimal'.
+            Other options include:'{"', '".join(MODEL_NAMES)}'
         p (int, optional): Kac-index p. Defaults to 4.
         q (int, optional): Kac-index q. Defaults to 3.
         K (Field, optional): Sage field to calculate the matrix in. Defaults to SymbolicRing.
@@ -366,11 +370,81 @@ def T_matrix(K = None,*args,**kwargs) -> (matrix, set):
 # Topological Defect Line Tools                             #
 #===========================================================#
 
-def minimal_model_verlinde_line_matrix(p:int = 4, q:int = 3, label:tuple = (0,0), S:matrix = None, K = None):
-    if not S:
-        S   = minimal_model_S_matrix(p, q, K)
-    
+def verlinde_line(*args, model:str = 'minimal', **kwargs) -> matrix:
+    """Calculates the matrix of how a Verlinde line in the theory acts on the primaries
 
+    Args:
+        model (string, optional): The CFT you want. Defaults to 'minimal'.
+            Other options include:'{"', '".join(MODEL_NAMES)}'
+        label (tuple, optional): Label of conformal defect. Defaults to identity.
+        S (matrix, optional): S-matrix for model. If unset, the S-matrix is calculated.
+        p (int, optional): Kac-index p. Defaults to 4.
+        q (int, optional): Kac-index q. Defaults to 3.
+        k (int, optional): level of the WZW algebra. Defaults to 2.
+        l (int, optional): level of the second WZW algebra in the diagonal su(2) coset. Defaults to 2.
+        K (field, optional): Sage field to calculate the matrix in. Defaults to SymbolicRing.
+    
+    Returns:
+        matrix: The matrix L whose diagonal contains how the Verlinde line acts on the corresponding primary.
+    """
+    
+    allowed_kwargs = {'label', 'S', 'p', 'q', 'k', 'l', 'K'}
+    unknown = set(kwargs) - allowed_kwargs
+    if unknown:
+        raise TypeError(f'Unexpected keword argument(s) {unknown}')
+
+    sig = signature(MODEL_VERLINDE[model])
+    arguments = sig.bind(*args,**kwargs)
+    arguments.apply_defaults()
+
+    return MODEL_VERLINDE[model](*arguments.args,**arguments.kwargs)
+
+
+def minimal_model_verlinde_line_matrix(p:int = 4, q:int = 3, label:tuple = (1,1), S:matrix = None, K = None) -> matrix:
+    """Calculates the matrix of how a Verlinde line from a minimal model acts on the primaries of that theory.
+
+    Args:
+        p (int, optional): Kac p-index. Defaults to 4.
+        q (int, optional): Kac q-index. Defaults to 3.
+        label (tuple, optional): Kac label of conformal defect. Defaults to (1,1).
+        S (matrix, optional): S-matrix for model. If unset, the S-matrix is calculated.
+        K (Ring, optional): The Ring to calculate the matrix as. Defaults to Symbolic Ring (SR).
+
+    Returns:
+        matrix: The matrix L whose diagonal contains how the Verlinde line acts on the corresponding primary.
+    """
+    if not S: S, _ = minimal_model_S_matrix(p, q, K)
+    if not K: K = SR
+    i = Kac_labels_inverse(label, p, q)
+
+    L = matrix(base_ring = K, nrows = S.nrows(), ncols = S.ncols())
+    for j,Sij in enumerate(S[i]):
+        L[j,j] = Sij/S[j,0]
+
+    return L 
+
+def folded_minimal_model_verlinde_line_matrix(p:int = 4, q:int = 3, label:tuple = ((1,1),(1,1)), S:matrix = None, K = None) -> matrix:
+    """Calculates the matrix of how a Verlinde line from a folded minimal model acts on the primaries of that theory.
+
+    Args:
+        p (int, optional): Kac p-index. Defaults to 4.
+        q (int, optional): Kac q-index. Defaults to 3.
+        label (tuple, optional): Kac label of conformal defect. Defaults to (1,1).
+        S (matrix, optional): S-matrix for model. If unset, the S-matrix is calculated.
+        K (Ring, optional): The Ring to calculate the matrix as. Defaults to Symbolic Ring (SR).
+
+    Returns:
+        matrix: The matrix L whose diagonal contains how the Verlinde line acts on the corresponding primary.
+    """
+    if not S: S, _ = folded_minimal_model_S_matrix(p, q, K)
+    if not K: K = SR
+    i = folded_Kac_labels_inverse(label, p, q)
+
+    L = matrix(base_ring = K, nrows = S.nrows(), ncols = S.ncols())
+    for j,Sij in enumerate(S[i]):
+        L[j,j] = Sij/S[j,0]
+
+    return L 
 
 
 #===========================================================#
@@ -493,8 +567,13 @@ MODEL_S_MATRIX      = {
     'folded_minimal'            : folded_minimal_model_S_matrix,
 }
 
-DICTS               = [MODEL_LABELS, MODEL_WEIGHTS, MODEL_CENTRAL_CHARGES, MODEL_S_MATRIX]
-DYNAMIC_DOCSTRINGS  = [info, h, c, S_matrix]
+MODEL_VERLINDE      = {
+    'minimal'                   : minimal_model_verlinde_line_matrix,
+    'folded_minimal'            : folded_minimal_model_verlinde_line_matrix,
+}
+
+DICTS               = [MODEL_LABELS, MODEL_WEIGHTS, MODEL_CENTRAL_CHARGES, MODEL_S_MATRIX, MODEL_VERLINDE]
+DYNAMIC_DOCSTRINGS  = [info, h, c, S_matrix, T_matrix, verlinde_line]
 MODEL_NAMES         = list(MODEL_LABELS.keys())
 
 #===========================================================#
