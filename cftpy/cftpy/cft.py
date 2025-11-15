@@ -42,7 +42,7 @@ _CHARACTERS         = {}            # Caches charaacters once they're calculated
 # Weights, Central Chrages, and other Mode Info             #
 #===========================================================#
 
-def info(model='minimal', *args, **kwargs) -> dict:
+def info(*args, model:str ='minimal', **kwargs) -> dict:
     """Returns information like the labelling system for a specific model
 
     Args:
@@ -73,7 +73,7 @@ def info(model='minimal', *args, **kwargs) -> dict:
     return info
 
 
-def h(model='minimal', *args, **kwargs):
+def h(*args, model:str = 'minimal', **kwargs):
     """Returns information like the labelling system for a specific model
 
     Args:
@@ -132,11 +132,11 @@ def h_folded_minimal(label:tuple=(), p:int=4, q:int=3):
 
     return h_minimal(label[0],p,q) + h_minimal(label[1],p,q)  # type: ignore
 
-def c(model='minimal',*args,**kwargs) -> QQ:
+def c(*args, model:str = 'minimal',**kwargs) -> QQ:
     """Central charge for a spefic cft
 
     Args:
-        model: The CFT you want. Defaults to 'minimal'.
+        model (string, optional): The CFT you want. Defaults to 'minimal'.
             Other options include:'{"', '".join(MODEL_NAMES)}'
         p (int, optional): Kac-index. Defaults to 4.
         q (int, optional): Kac-index. Defaults to 3.
@@ -180,7 +180,7 @@ def c_folded_minimal(p:int=4, q:int=3) -> QQ:
 # S-Matrix Calculations                                     #
 #===========================================================#
 
-def S_matrix(*args,model='minimal',**kwargs) -> (matrix, set):
+def S_matrix(*args, model:str = 'minimal', **kwargs) -> (matrix, set):
     """Returns the smatrix of a Rational CFT as well as a list of indices 
     for the irreducible rerpesentations of the algebra
 
@@ -212,7 +212,7 @@ def S_matrix(*args,model='minimal',**kwargs) -> (matrix, set):
     return MODEL_S_MATRIX[model](*arguments.args,**arguments.kwargs)
 
 
-def Kac_labels(p:int = 4, q:int = 3) -> set:
+def Kac_labels(p:int = 4, q:int = 3) -> list:
     """Return a list of pairs (s,r) of Kac labels for the minimal model p,q
 
     Args:
@@ -220,20 +220,40 @@ def Kac_labels(p:int = 4, q:int = 3) -> set:
         q (int, optional): Kac-index q. Defaults to 3.
     
     Returns:
-        set: the set of labels in (r,s) notation
+        list: the set of labels in (r,s) notation
     """
     if gcd(p,q) != 1: raise ValueError("p and q must be coprime")
 
-    labels = set()
+    labels = []
 
     for r in range(1, q):
         for s in range(1,p):
             if (r < q - r) or (r == q-r and s <= p - s):
-                labels.add((r,s))
+                if (r,s) not in labels:
+                    labels.append((r,s))
     
     return labels
 
-def folded_Kac_labels(p:int = 4,q:int = 3, K = None) -> set:
+def Kac_labels_inverse(label = None, p:int = 4, q:int = 3):
+    """Return a dictionary {i:(s,r)} that matches the Kac label (s,r) 
+    to this module's internal index i, or it returns the corresponding index given a label 
+
+    Args:
+        label (tuple, optional): Kac-label to convert. If unset a dictionary is returned.
+        p (int, optional): Kac-index p. Defaults to 4.
+        q (int, optional): Kac-index q. Defaults to 3.
+    
+    Returns:
+        dict: the map of labels and indices {i:(r,s)}
+    """
+    if gcd(p,q) != 1: raise ValueError("p and q must be coprime")
+
+    if not label:
+        return {i:label for i,label in enumerate(Kac_labels(p, q))}
+
+    return int((label[0]-1)*q + label[1] - 1)
+
+def folded_Kac_labels(p:int = 4,q:int = 3, K = None) -> list:
     """Return a list of pairs ((s,r),(s',r')) of Kac labels for the folded minimal model p,q
 
     Args:
@@ -244,8 +264,24 @@ def folded_Kac_labels(p:int = 4,q:int = 3, K = None) -> set:
         set: the set of labels in ((r,s),(r',s')) notation
     """
     labels = Kac_labels(p,q)
-    return set([(l,m) for l in labels for m in labels])
+    return [(l,m) for l in labels for m in labels]
 
+def folded_Kac_labels_inverse(label = None, p:int = 4,q:int = 3, K = None):
+    """eturn a dictionary {i:((s,r),(s',r'))} that matches the Kac label ((s,r),(s',r'))
+    to this module's internal index i, or it returns the corresponding index given a label 
+
+    Args:
+        label (tuple, optional): Kac-label to convert. If unset a dictionary is returned.
+        p (int, optional): Kac-index p. Defaults to 4.
+        q (int, optional): Kac-index q. Defaults to 3.
+    
+    Returns:
+        dict: the map of labels and indices {i:((r,s),(r',s'))}
+    """
+    if not label:
+        return {i:label for i,label in enumerate(folded_Kac_labels(p, q))}
+
+    return int(Kac_labels_inverse(label[0], p, q)*(p-1)*(q-1)//2 + Kac_labels_inverse(label[1], p, q))
 
 def minimal_model_S_matrix(p:int = 4, q:int = 3, K = None) -> (matrix, set):
     """Calculate the S-matrix of a minimal model
@@ -286,7 +322,7 @@ def folded_minimal_model_S_matrix(p:int = 4,q:int = 3, K = None) -> (matrix, set
     """
     s, labels   = minimal_model_S_matrix(p,q,K)
     idx         = {l:i for i,l in enumerate(labels)}
-    labels      = set([(l,m) for l in labels for m in labels])
+    labels      = [(l,m) for l in labels for m in labels]
     n           = len(labels)
     S           = matrix(base_ring = K, nrows = n, ncols = n)
 
@@ -324,6 +360,18 @@ def T_matrix(K = None,*args,**kwargs) -> (matrix, set):
     for i,label in enumerate(labels):
         T[i,i] = K(exp(2*I*pi*(hh[label] - cc/24)))
     return T, labels
+
+
+#===========================================================#
+# Topological Defect Line Tools                             #
+#===========================================================#
+
+def minimal_model_verlinde_line_matrix(p:int = 4, q:int = 3, label:tuple = (0,0), S:matrix = None, K = None):
+    if not S:
+        S   = minimal_model_S_matrix(p, q, K)
+    
+
+
 
 #===========================================================#
 # Characters (These will be cythonized soon)                #

@@ -7,7 +7,7 @@ for name in SPECIAL_NAMES:
         for example in SPECIAL_NAMES[name]:
             labels[example] = SPECIAL_NAMES[name][example](labels[name])
 
-MODEL_NAMES = list(MODEL_LABELS.keys())
+cft.MODEL_NAMES = list(MODEL_LABELS.keys())
 
 # Assing the appropriate dynamic docstring
 for func in DYNAMIC_DOCSTRINGS: fill_docstring(func)
