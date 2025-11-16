@@ -109,7 +109,7 @@ def h_minimal(label:tuple = (), p:int = 4, q:int = 3):
         dict: A dictionary of conformal weights indexed by Kac-labels
     """
     if not label:
-        labels = Kac_labels(p,q)
+        labels = kac_labels(p,q)
         return {l: h_minimal(l, p, q) for l in labels}
     
     return QQ(((p*label[0] - q*label[1])**2 - (p-q)**2)/(4*p*q))
@@ -127,7 +127,7 @@ def h_folded_minimal(label:tuple=(), p:int=4, q:int=3):
         dict: A dictionary of conformal weights indexed by Kac-labels
     """
     if not label:
-        labels = folded_Kac_labels(p,q)
+        labels = folded_kac_labels(p,q)
         return {l: h_folded_minimal(l, p, q) for l in labels}
 
     return h_minimal(label[0],p,q) + h_minimal(label[1],p,q)  # type: ignore
@@ -211,8 +211,36 @@ def S_matrix(*args, model:str = 'minimal', **kwargs) -> (matrix, set):
 
     return MODEL_S_MATRIX[model](*arguments.args,**arguments.kwargs)
 
+# TODO: Add verification? Not sure
+def kac_disambiguate(label:tuple, p:int = 4, q:int = 3) -> tuple:
+    """Kac indices are not unique, this transforms them into the conventions used here.
 
-def Kac_labels(p:int = 4, q:int = 3) -> list:
+    Args:
+        label (tuple): the Kac-label of the representation/primary
+        p (int, optional): p-index of the model M(p,q). Defaults to 4.
+        q (int, optional): q-index of the model M(p,q). Defaults to 3.
+
+    Returns:
+        tuple: (r,s) disambiguated
+    """
+
+    return label if (label[0] < q-label[0]) or (label[0] == q-label[0] and label[1] <= p-label[1]) else (q-label[0],p-label[1])
+
+def folded_kac_disambiguate(label:tuple, p:int = 4, q:int = 3) -> tuple:
+    """Kac indices are not unique, this transforms them into the conventions used here.
+
+    Args:
+        label (tuple): the Kac-label of the representation/primary
+        p (int, optional): p-index of the model M(p,q). Defaults to 4.
+        q (int, optional): q-index of the model M(p,q). Defaults to 3.
+
+    Returns:
+        tuple: ((r,s),(u,v)) disambiguated
+    """
+    
+    return (kac_disambiguate(label[0],p,q), kac_disambiguate(label[1],p,q))
+
+def kac_labels(p:int = 4, q:int = 3) -> list:
     """Return a list of pairs (s,r) of Kac labels for the minimal model p,q
 
     Args:
@@ -227,14 +255,14 @@ def Kac_labels(p:int = 4, q:int = 3) -> list:
     labels = []
 
     for r in range(1, q):
-        for s in range(1,p):
+        for s in range(1, p):
             if (r < q - r) or (r == q-r and s <= p - s):
                 if (r,s) not in labels:
                     labels.append((r,s))
     
     return labels
 
-def Kac_labels_inverse(label = None, p:int = 4, q:int = 3):
+def kac_labels_inverse(label = None, p:int = 4, q:int = 3):
     """Return a dictionary {i:(s,r)} that matches the Kac label (s,r) 
     to this module's internal index i, or it returns the corresponding index given a label 
 
@@ -249,11 +277,12 @@ def Kac_labels_inverse(label = None, p:int = 4, q:int = 3):
     if gcd(p,q) != 1: raise ValueError("p and q must be coprime")
 
     if not label:
-        return {i:label for i,label in enumerate(Kac_labels(p, q))}
+        return {i:label for i,label in enumerate(kac_labels(p, q))}
 
+    label = kac_disambiguate(label, p, q)
     return int((label[0]-1)*q + label[1] - 1)
 
-def folded_Kac_labels(p:int = 4,q:int = 3, K = None) -> list:
+def folded_kac_labels(p:int = 4,q:int = 3, K = None) -> list:
     """Return a list of pairs ((s,r),(s',r')) of Kac labels for the folded minimal model p,q
 
     Args:
@@ -263,10 +292,10 @@ def folded_Kac_labels(p:int = 4,q:int = 3, K = None) -> list:
     Returns:
         set: the set of labels in ((r,s),(r',s')) notation
     """
-    labels = Kac_labels(p,q)
+    labels = kac_labels(p,q)
     return [(l,m) for l in labels for m in labels]
 
-def folded_Kac_labels_inverse(label = None, p:int = 4,q:int = 3, K = None):
+def folded_kac_labels_inverse(label = None, p:int = 4,q:int = 3, K = None):
     """eturn a dictionary {i:((s,r),(s',r'))} that matches the Kac label ((s,r),(s',r'))
     to this module's internal index i, or it returns the corresponding index given a label 
 
@@ -279,9 +308,10 @@ def folded_Kac_labels_inverse(label = None, p:int = 4,q:int = 3, K = None):
         dict: the map of labels and indices {i:((r,s),(r',s'))}
     """
     if not label:
-        return {i:label for i,label in enumerate(folded_Kac_labels(p, q))}
+        return {i:label for i,label in enumerate(folded_kac_labels(p, q))}
 
-    return int(Kac_labels_inverse(label[0], p, q)*(p-1)*(q-1)//2 + Kac_labels_inverse(label[1], p, q))
+    label = folded_kac_disambiguate(label, p, q)
+    return int(kac_labels_inverse(label[0], p, q)*(p-1)*(q-1)//2 + kac_labels_inverse(label[1], p, q)) # type: ignore
 
 def minimal_model_S_matrix(p:int = 4, q:int = 3, K = None) -> (matrix, set):
     """Calculate the S-matrix of a minimal model
@@ -297,7 +327,7 @@ def minimal_model_S_matrix(p:int = 4, q:int = 3, K = None) -> (matrix, set):
     """
     if K == None: K = SR
 
-    labels  = Kac_labels(p,q)
+    labels  = kac_labels(p,q)
     n       = len(labels)
     S       = matrix(base_ring = K, nrows = n, ncols = n)
 
@@ -400,7 +430,7 @@ def verlinde_line(*args, model:str = 'minimal', **kwargs) -> matrix:
     return MODEL_VERLINDE[model](*arguments.args,**arguments.kwargs)
 
 
-def minimal_model_verlinde_line_matrix(p:int = 4, q:int = 3, label:tuple = (1,1), S:matrix = None, K = None) -> matrix:
+def minimal_model_verlinde_line_matrix(label:tuple = (1,1), p:int = 4, q:int = 3, S:matrix = None, K = None) -> matrix:
     """Calculates the matrix of how a Verlinde line from a minimal model acts on the primaries of that theory.
 
     Args:
@@ -413,9 +443,10 @@ def minimal_model_verlinde_line_matrix(p:int = 4, q:int = 3, label:tuple = (1,1)
     Returns:
         matrix: The matrix L whose diagonal contains how the Verlinde line acts on the corresponding primary.
     """
-    if not S: S, _ = minimal_model_S_matrix(p, q, K)
-    if not K: K = SR
-    i = Kac_labels_inverse(label, p, q)
+    if not S: S, _  = minimal_model_S_matrix(p, q, K)
+    if not K: K     = SR
+    
+    i = kac_labels_inverse(label, p, q)
 
     L = matrix(base_ring = K, nrows = S.nrows(), ncols = S.ncols())
     for j,Sij in enumerate(S[i]):
@@ -423,7 +454,7 @@ def minimal_model_verlinde_line_matrix(p:int = 4, q:int = 3, label:tuple = (1,1)
 
     return L 
 
-def folded_minimal_model_verlinde_line_matrix(p:int = 4, q:int = 3, label:tuple = ((1,1),(1,1)), S:matrix = None, K = None) -> matrix:
+def folded_minimal_model_verlinde_line_matrix(label:tuple = ((1,1),(1,1)), p:int = 4, q:int = 3, S:matrix = None, K = None) -> matrix:
     """Calculates the matrix of how a Verlinde line from a folded minimal model acts on the primaries of that theory.
 
     Args:
@@ -436,9 +467,9 @@ def folded_minimal_model_verlinde_line_matrix(p:int = 4, q:int = 3, label:tuple 
     Returns:
         matrix: The matrix L whose diagonal contains how the Verlinde line acts on the corresponding primary.
     """
-    if not S: S, _ = folded_minimal_model_S_matrix(p, q, K)
-    if not K: K = SR
-    i = folded_Kac_labels_inverse(label, p, q)
+    if not S: S, _  = folded_minimal_model_S_matrix(p, q, K)
+    if not K: K     = SR
+    i = folded_kac_labels_inverse(label, p, q)
 
     L = matrix(base_ring = K, nrows = S.nrows(), ncols = S.ncols())
     for j,Sij in enumerate(S[i]):
@@ -548,8 +579,8 @@ SPECIAL_NAMES       = {
 }
 
 MODEL_LABELS        = {
-    'minimal'                   : Kac_labels,
-    'folded_minimal'            : folded_Kac_labels,
+    'minimal'                   : kac_labels,
+    'folded_minimal'            : folded_kac_labels,
 }
 
 MODEL_WEIGHTS       = {
