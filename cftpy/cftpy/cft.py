@@ -60,18 +60,34 @@ def info(*args, model:str ='minimal', **kwargs) -> dict:
                 For example minimal models returns a set of elements (r,s) corresponding to the Kaz indices
     """
 
-    sig       = signature(MODEL_LABELS[model])
-    arguments = sig.bind(*args,**kwargs)
-    arguments.apply_defaults()
-    
-    labels  = MODEL_LABELS[model](*arguments.args,**arguments.kwargs)
     info    =  {
         'model' : model, 
-        'labels': labels,
+        'labels': labels(*args, model = model, **kwargs),
+        'c'     : c(*args, model = model, **kwargs),
+        'h'     : h(*args, model = model, **kwargs),
         **kwargs
         }
     return info
 
+def labels(*args, model:str = 'minimal', **kwargs) -> list:
+    """A list of labels for the irreducible representations of the current model
+
+    Args:
+        model (string, optional): The CFT you want. Defaults to 'minimal'.
+            Other options include:'{"', '".join(MODEL_NAMES)}'
+        p (int, optional): Kac-index p. Defaults to 4.
+        q (int, optional): Kac-index q. Defaults to 3.
+        k (int, optional): Level of the WZW algebra. Defaults to 2.
+        l (int, optional): Level of the second WZW algebra in the diagonal su(2) coset. Defaults to 2.
+
+    Returns:
+        list: List of irreducible representation labels.
+    """
+    sig       = signature(MODEL_LABELS[model])
+    arguments = sig.bind(*args,**kwargs)
+    arguments.apply_defaults()
+    
+    return MODEL_LABELS[model](*arguments.args,**arguments.kwargs)
 
 def h(*args, model:str = 'minimal', **kwargs):
     """Returns information like the labelling system for a specific model
@@ -282,7 +298,7 @@ def kac_labels_inverse(label = None, p:int = 4, q:int = 3):
     label = kac_disambiguate(label, p, q)
     return int((label[0]-1)*q + label[1] - 1)
 
-def folded_kac_labels(p:int = 4,q:int = 3, K = None) -> list:
+def folded_kac_labels(p:int = 4,q:int = 3) -> list:
     """Return a list of pairs ((s,r),(s',r')) of Kac labels for the folded minimal model p,q
 
     Args:
@@ -479,6 +495,34 @@ def folded_minimal_model_verlinde_line_matrix(label:tuple = ((1,1),(1,1)), p:int
 
 
 #===========================================================#
+# Modular tools for Orbifolds                               #
+#===========================================================#
+
+def exchange_orbifold_minimal_labels(p:int = 4, q:int = 3) -> list:
+    """Takes a folded (squared) rational cft and returns labels for the irreducible representations
+    of the exchange chiral algebra.
+
+    Args:
+        p (int, optional): Kac-index p. Defaults to 4.
+        q (int, optional): Kac-index q. Defaults to 3.
+
+    Returns:
+        list: A list of labels for the irreps.
+    """
+
+    folded_labels   = folded_kac_labels(p,q)
+    orbifold_labels = []
+
+    for l in folded_labels:
+        if l[0] == l[1]:
+            orbifold_labels += [(*l,1), (*l,-1), (*l,2), (*l,-2)]
+        else:
+            orbifold_labels += [(*l,0)]
+
+    return orbifold_labels
+
+
+#===========================================================#
 # Characters (These will be cythonized soon)                #
 #===========================================================#
 
@@ -576,31 +620,37 @@ SPECIAL_NAMES       = {
         'folded_tricritical_ising'  : lambda f: lambda *args, **kwargs: f(p=5,q=4,*args,**kwargs),
         'folded_yang_lee'           : lambda f: lambda *args, **kwargs: f(p=5,q=2,*args,**kwargs),
     },
+    'exchange_minimal': {
+        'exchange_ising'            : lambda f: lambda *args, **kwargs: f(p=4,q=3,*args,**kwargs),
+        'exchange_tricritical_ising': lambda f: lambda *args, **kwargs: f(p=5,q=4,*args,**kwargs),
+        'exchange_yang_lee'         : lambda f: lambda *args, **kwargs: f(p=5,q=2,*args,**kwargs),
+    },
 }
 
 MODEL_LABELS        = {
-    'minimal'                   : kac_labels,
-    'folded_minimal'            : folded_kac_labels,
+    'minimal'           : kac_labels,
+    'folded_minimal'    : folded_kac_labels,
+    'exchange_minimal'  : exchange_orbifold_minimal_labels,
 }
 
 MODEL_WEIGHTS       = {
-    'minimal'                   : h_minimal,
-    'folded_minimal'            : h_folded_minimal,
+    'minimal'           : h_minimal,
+    'folded_minimal'    : h_folded_minimal,
 }
 
 MODEL_CENTRAL_CHARGES= {
-    'minimal'                   : c_minimal,
-    'folded_minimal'            : c_folded_minimal,
+    'minimal'           : c_minimal,
+    'folded_minimal'    : c_folded_minimal,
 }
 
 MODEL_S_MATRIX      = {
-    'minimal'                   : minimal_model_S_matrix,
-    'folded_minimal'            : folded_minimal_model_S_matrix,
+    'minimal'           : minimal_model_S_matrix,
+    'folded_minimal'    : folded_minimal_model_S_matrix,
 }
 
 MODEL_VERLINDE      = {
-    'minimal'                   : minimal_model_verlinde_line_matrix,
-    'folded_minimal'            : folded_minimal_model_verlinde_line_matrix,
+    'minimal'           : minimal_model_verlinde_line_matrix,
+    'folded_minimal'    : folded_minimal_model_verlinde_line_matrix,
 }
 
 DICTS               = [MODEL_LABELS, MODEL_WEIGHTS, MODEL_CENTRAL_CHARGES, MODEL_S_MATRIX, MODEL_VERLINDE]

@@ -3,10 +3,10 @@ from .cythonft import * # type: ignore
 
 # Populate the dictionaries with examples listed in SPECIAL_NAMES
 for name in SPECIAL_NAMES:
-    for labels in DICTS:
+    for LABELS in DICTS:
         for example in SPECIAL_NAMES[name]:
-            if name in labels:
-                labels[example] = SPECIAL_NAMES[name][example](labels[name])
+            if name in LABELS:
+                LABELS[example] = SPECIAL_NAMES[name][example](LABELS[name])
 
 cft.MODEL_NAMES = list(MODEL_LABELS.keys())
 
