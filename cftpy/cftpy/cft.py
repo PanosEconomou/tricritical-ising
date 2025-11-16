@@ -15,7 +15,7 @@
 # IMPORTS                                                   #
 #===========================================================#
 try:
-    from sage.all import SR, QQ, QQbar
+    from sage.all import SR, QQ, ZZ, QQbar
     from sage.all import matrix
     from sage.all import pi, gcd, sqrt, sin, exp, I 
     from sage.all import latex
@@ -278,7 +278,7 @@ def kac_labels(p:int = 4, q:int = 3) -> list:
     
     return labels
 
-def kac_labels_inverse(label = None, p:int = 4, q:int = 3):
+def kac_labels_inverse(label = None, p:int = 4, q:int = 3) -> dict | int:
     """Return a dictionary {i:(s,r)} that matches the Kac label (s,r) 
     to this module's internal index i, or it returns the corresponding index given a label 
 
@@ -293,7 +293,7 @@ def kac_labels_inverse(label = None, p:int = 4, q:int = 3):
     if gcd(p,q) != 1: raise ValueError("p and q must be coprime")
 
     if not label:
-        return {i:label for i,label in enumerate(kac_labels(p, q))}
+        return {label:i for i,label in enumerate(kac_labels(p, q))}
 
     label = kac_disambiguate(label, p, q)
     return int((label[0]-1)*q + label[1] - 1)
@@ -324,7 +324,7 @@ def folded_kac_labels_inverse(label = None, p:int = 4,q:int = 3, K = None):
         dict: the map of labels and indices {i:((r,s),(r',s'))}
     """
     if not label:
-        return {i:label for i,label in enumerate(folded_kac_labels(p, q))}
+        return {label:i for i,label in enumerate(folded_kac_labels(p, q))}
 
     label = folded_kac_disambiguate(label, p, q)
     return int(kac_labels_inverse(label[0], p, q)*(p-1)*(q-1)//2 + kac_labels_inverse(label[1], p, q)) # type: ignore
@@ -498,7 +498,7 @@ def folded_minimal_model_verlinde_line_matrix(label:tuple = ((1,1),(1,1)), p:int
 # Modular tools for Orbifolds                               #
 #===========================================================#
 
-def exchange_orbifold_minimal_labels(p:int = 4, q:int = 3) -> list:
+def exchange_orbifold_kac_labels(p:int = 4, q:int = 3) -> list:
     """Takes a folded (squared) rational cft and returns labels for the irreducible representations
     of the exchange chiral algebra.
 
@@ -510,17 +510,108 @@ def exchange_orbifold_minimal_labels(p:int = 4, q:int = 3) -> list:
         list: A list of labels for the irreps.
     """
 
-    folded_labels   = folded_kac_labels(p,q)
+    folded_labels   = folded_kac_labels(p=p, q=q)
+    inv             = kac_labels_inverse(p=p, q=q)
     orbifold_labels = []
 
     for l in folded_labels:
         if l[0] == l[1]:
             orbifold_labels += [(*l,1), (*l,-1), (*l,2), (*l,-2)]
-        else:
+        elif inv[l[0]] < inv[l[1]]: # type: ignore
             orbifold_labels += [(*l,0)]
 
     return orbifold_labels
 
+def exchange_orbifold_change_of_basis(p:int = 4, q:int = 3) -> dict:
+    """Get a dictionary of the form {l:m} where l is a label for a representation of a folded minimal model
+    and m is a list of indices in the larger chiral algebra that is invariant by exchange that this 
+    representation decomposes to.
+
+    Args:
+        p (int, optional): Kac-index p. Defaults to 4.
+        q (int, optional): Kac-index q. Defaults to 3.
+
+    Returns:
+        dict: the dictionary in the description.
+    """
+
+    folded_labels   = folded_kac_labels(p,q)
+    exchange_labels = exchange_orbifold_kac_labels(p,q)
+    cob_labels      = {l: [m for m in exchange_labels if ((m[0], m[1]) == l or (m[1], m[0]) == l) and abs(m[2]) <= 1] for l in folded_labels}
+
+    return cob_labels
+
+def exchange_orbifold_change_of_basis_matrix(p:int = 4, q:int = 3, K = None) -> matrix:
+    """Get the matrix that takes in the character vector of the folded theory and spits out
+    its decomposition into the components in the same theory but under the chiral algebra
+    that is fixed under the exchange of the two copies.
+
+    Args:
+        p (int, optional): Kac-index p. Defaults to 4.
+        q (int, optional): Kac-index q. Defaults to 3.
+        K (Ring, optional): The Ring to calculate the matrix as. Defaults to Symbolic Ring (SR).
+
+    Returns:
+        matrix: Embedding matrix into the smaller chiral algbera.
+    """
+    
+    if not K: K = SR
+
+    folded_labels    = folded_kac_labels(p,q)
+    exchange_labels  = exchange_orbifold_kac_labels(p,q)
+    exchange_inverse = {l: i for i,l in enumerate(exchange_labels)}
+    cob_labels       = {l: [m for m in exchange_labels if ((m[0], m[1]) == l or (m[1], m[0]) == l) and abs(m[2]) <= 1] for l in folded_labels}
+    cob              = matrix(base_ring = K, nrows = len(exchange_labels), ncols = len(folded_labels))
+
+    for i,l in enumerate(folded_labels):
+        for m in cob_labels[l]:
+            cob[exchange_inverse[m], i] += 1
+
+    return cob
+
+def exchange_orbifold_minimal_S_matrix(p:int = 4, q:int = 3, K = None) -> matrix:
+    """The s-matrix of corredponding to the fixed point VOA under exchange of a folded minimal model
+
+    Args:
+        p (int, optional): Kac-index p. Defaults to 4.
+        q (int, optional): Kac-index q. Defaults to 3.
+        K (Ring, optional): The Ring to calculate the matrix as. Defaults to Symbolic Ring (SR).
+
+    Returns:
+        matrix: Corresponding S-matrix
+    """
+    
+    if not K: K = SR
+    
+    exchange_labels = exchange_orbifold_kac_labels(p,q)
+    inv             = kac_labels_inverse(p=p, q=q)
+    s, _            = minimal_model_S_matrix(p=p, q=q, K=K)
+    t, _            = T_matrix(model='minimal', p=p, q=q, K=K)
+    sqrtk           = (lambda x: x.sqrt()) if K == QQbar else sqrt
+    P               = matrix(K,t.apply_map(sqrtk) * s * t.apply_map(lambda x: x*x) * s * t.apply_map(sqrtk))
+    S               = matrix(base_ring = K, nrows = len(exchange_labels), ncols = len(exchange_labels))
+
+    for i,a in enumerate(exchange_labels):
+        for j,b in enumerate(exchange_labels):
+            if a[2] == b[2] == 0: 
+                S[i,j] = s[inv[a[0]], inv[b[1]]] * s[inv[b[0]], inv[a[1]]] + s[inv[a[0]], inv[b[0]]] * s[inv[a[1]], inv[b[1]]] # type: ignore
+            
+            if (a[2] == 0 and abs(b[2]) == 1) or (abs(a[2]) == 1 and b[2] == 0): 
+                S[i,j] = s[inv[a[0]], inv[b[0]]] * s[inv[a[1]], inv[b[1]]]  # type: ignore
+            
+            if abs(a[2]) == abs(b[2]) == 1:
+                S[i,j] = s[inv[a[0]],inv[b[0]]]**2 / 2                      # type: ignore
+            
+            if abs(a[2]) == 1 and abs(b[2]) == 2:
+                S[i,j] = a[2] * s[inv[a[0]], inv[b[0]]] / 2                 # type: ignore
+
+            if abs(a[2]) == 2 and abs(b[2]) == 1:
+                S[i,j] = b[2] * s[inv[b[0]], inv[a[0]]] / 2                 # type: ignore
+            
+            if abs(a[2]) == abs(b[2]) == 2:
+                S[i,j] = K(a[2]*b[2])/8 * P[inv[a[0]], inv[b[0]]]              # type: ignore 
+
+    return S
 
 #===========================================================#
 # Characters (These will be cythonized soon)                #
@@ -533,7 +624,8 @@ def string_function_su2(l:int = -1, m:int = 0, k:int = 2, order:int = MAX_ORDER)
         l (int, optional): Highest weight. If left blank all the string functions for level k are calculated
         m (int, optional): String weight.
         k (int, optional): Level of su(2)_k. Defaults to 2.
-        order (int, optional): maximum order to calculate the q expansion. Defaults to MAX_ORDER=1000, or whatever the user overrides thsi to 
+        order (int, optional): maximum order to calculate the q expansion. Defaults to MAX_ORDER=1000, or 
+            whatever the user overrides this to be.
 
     Returns:
         PowerSeriesRing: Containing the q expansion for the corresponding string function or
@@ -630,7 +722,7 @@ SPECIAL_NAMES       = {
 MODEL_LABELS        = {
     'minimal'           : kac_labels,
     'folded_minimal'    : folded_kac_labels,
-    'exchange_minimal'  : exchange_orbifold_minimal_labels,
+    'exchange_minimal'  : exchange_orbifold_kac_labels,
 }
 
 MODEL_WEIGHTS       = {
@@ -646,6 +738,7 @@ MODEL_CENTRAL_CHARGES= {
 MODEL_S_MATRIX      = {
     'minimal'           : minimal_model_S_matrix,
     'folded_minimal'    : folded_minimal_model_S_matrix,
+    'exchange_minimal'  : exchange_orbifold_minimal_S_matrix
 }
 
 MODEL_VERLINDE      = {
