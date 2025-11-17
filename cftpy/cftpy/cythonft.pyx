@@ -25,7 +25,7 @@ cpdef object cstring_function_su2(int l, int m, int k, int order):
             ind1 = ( r*(r+1+l+m) + s*(s+1+l-m) )//2 + r*s*(k+1)
             ind2 = ( r*(r+1-l-m) + s*(s+1-l+m) )//2 + (k+1)*(r+s+1+r*s) - l
 
-            sgn = 1 if ((r + s) & 1) == 0 else -1
+            sgn = -1 if ((r + s) & 1) else 1
 
             if ind1 <= order:
                 coeff[ind1] += sgn
