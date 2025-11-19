@@ -55,16 +55,16 @@ $$
 $$
 If the fixed point algebra under $S$ is given by $\mathcal{V}^S$ then the same Hilbert space can be written as
 $$
-\mathcal{H}= \left[\bigoplus_{\substack{i\in I\\a,b = \pm}} V_{ii}^a\otimes \overline{V_{ii}^b}\right] \oplus \left[ \bigoplus_{ij \in I} V_{ij}^S\otimes \overline{V_{ij}^S}  \right]
+\mathcal{H}= \left[\bigoplus_{\substack{i\in I\\a,b = \pm}} V_{ii}^a\otimes \overline{V_{ii}^b}\right] \oplus \left[ \bigoplus_{i\neq j \in I} V_{ij}^S\otimes \overline{V_{ij}^S}   \right]
 $$
- where $V_{ij}^s \cong V_{ji}^S$ as irreducible $\mathcal{V}^S$ modules.
+ where $V_{ij}^S \cong V_{ji}^S$ as irreducible $\mathcal{V}^S$ modules.
 
 
 
 **<u>Proposition:</u>** Let $L$ be a simple TDL and $L^- = L\otimes 1 -  1\otimes L$. Then the action of $L^-$  on the irreducible representations of $\mathcal{V}^S$ in the bulk Hilbert space on the theory with maximal chiral algebra $\mathcal{V}$ is given by
 $$
 \begin{align*}
-\left.L^-\right|_{V_{ii}^{\pm}} = 0 && \left.L^-\right|_{V_{ij}^S} = (L_i - L_j) \text{Id}_{V_{ji}^{S}},
+\left.L^-\right|_{V_{ii}^{\pm}} = 0 && \left.L^-\right|_{V_{ij}^S} = (L_i - L_j) \text{Id}_{V_{ji}^{S}} = \frac{S_{Li} - S_{Lj}}{S_{L1}} \text{Id}_{V_{ji}^{S}},
 \end{align*}
 $$
 where $V_{ij}^S \otimes V_{ji}^S = V_{ij} \otimes V_{ji}$ with $V_{ij}^S \cong V_{ji}^S$.
@@ -76,7 +76,9 @@ $$
 
 So we see that one of them acts trivially, but the other exchanges the irreducible representations, which is slightly nontrivial. What we need to figure out, however, is how to induce the action of the lines in the rest of the irreducible representations of $\mathcal{V}^S$. The remaining representations appear in the twisted sectors of our theory which is quite convenient. What would be interesting to study is why this happens from the MTC and TQFT point of view. So we need to figure out how to calculate the Twisted sector from Fuchs' perspective. We can probably express this using the S-matrix. 
 
+## Action on Twisted Sector
 
+As we have seen above, this is slightly tricky. The defects $L\otimes 1$ and $1\otimes L$ don't have the vacuum vectors of the irreducible $\mathcal{V}^S$ representations  as eigenvectors in this representation. However, we have found that the operator $L^- = L\otimes 1 - 1\otimes L$ is a topological line that actually preserves the representations (even though it permutes them) however even in this case, we see that the partition function with the insertion of $L^-$ gives $0$ because it acts as a zero map on the diagonal modules, while it has the negative eigenvalues between the two copies of the off diagonal modules. Summing up their characters will give $0$. So perhaps we find find their action on the twisted sectors by looking at some covering. This requires us to really understand the twisted ishibashi states. 
 
 
 
