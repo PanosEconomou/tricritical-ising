@@ -80,6 +80,10 @@ So we see that one of them acts trivially, but the other exchanges the irreducib
 
 As we have seen above, this is slightly tricky. The defects $L\otimes 1$ and $1\otimes L$ don't have the vacuum vectors of the irreducible $\mathcal{V}^S$ representations  as eigenvectors in this representation. However, we have found that the operator $L^- = L\otimes 1 - 1\otimes L$ is a topological line that actually preserves the representations (even though it permutes them) however even in this case, we see that the partition function with the insertion of $L^-$ gives $0$ because it acts as a zero map on the diagonal modules, while it has the negative eigenvalues between the two copies of the off diagonal modules. Summing up their characters will give $0$. So perhaps we find find their action on the twisted sectors by looking at some covering. This requires us to really understand the twisted ishibashi states. 
 
+Use the relation $SL\otimes 1 = 1\otimes L S$ and show that the action of either of them in the twisted sector is the same up to a phase! The phase will come from the braiding between $1 \otimes L$ and $S$. What is this brading structure? $S$ is not in the MTC, so it is unclear what this means precisely.
+
+To repeat this calculation for $\text{Ising}^2$ find out how the defect $S$ acts on the Virasoro primaries. Virasoro algebra is invariant, so it will only give a $\pm$ sign since it is idempotent. We know the S transform of the free bosons, so we only need to calculate the twisted sector of S. We don't do it using the S-transform, rather we impose an $S$ twist on the bosons and calculate the trace from scratch. 
+
 
 
 
