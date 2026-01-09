@@ -162,6 +162,46 @@ To find them we will use the orbifold induction procedure. We know that there ar
 
 > The details of this are worked out [here](https://notes.panos.wiki/Projects+CFT+Tricritical_Ising). At some point I will write a more comprehensive summary, but for now here are the results.
 
+One could, in principle find the twisted sector of the theory by using generalized modular bootstrap, relating partition functions via F-symbols. However, in this orbifold we can cheat noticing a particularly pleasant duality.
+
+**<u>Proposition:</u>** There is a bijection between the fields in the twisted sector of the folded theory and the unfolded theory at twice the radius. 
+
+***Proof:*** Let $\phi_1 = \phi \otimes 1$ and $\phi_2 = 1\otimes\phi$ be fields in the folded theory for some field $\phi$ in the unfolded one. In the twisted sector by $S$ these fields satisfy $\phi_1(\sigma + 2\pi) = \phi_2(\sigma)$ and so on. Then define
+$$
+\hat \phi(\sigma') \coloneqq 
+\begin{cases}
+\phi_1(\sigma') & \sigma' \in [0,2\pi)\\
+\phi_2(\sigma' - 2\pi) & \sigma' \in [2\pi, 4\pi)
+\end{cases}
+$$
+this field is $4\pi$ periodic because of the properties of the $\phi_i$. The other way around also holds. Take a field $\hat \phi$ of the unfolded theory that is $4\pi$ periodic, then we can define $\phi_1(\sigma') = \phi(\sigma')$ if $\sigma' \in [0,2\pi)$ and so on. Then we can see immediately that the boundary conditions of the other fields still hold. 
+$$
+\begin{equation}\tag*{$\Box$}\end{equation}
+$$
+Moving on there is something nice. What we have done is to simply repackage degrees of freedom, so to find out how the stress tensor acts on the twisted sector we simply need to pull it back from the doubled theory back to the circle.
+
+**<u>Proposition:</u>** The stress tensor in the twisted sector of the folded theory acts as 
+$$
+T_{\text{folded}}(z) = \frac{T(w)}{4w^2} - \frac{c}{32z^2},
+$$
+where $z=w^2$ and $T(w)$ is the unfolded stress tensor.
+
+***Proof:*** We transform the stress tensor of the unfolded theory in the doubled radius by $z=w^2$. 
+$$
+\begin{equation}\tag*{$\Box$}\end{equation}
+$$
+**<u>Corollary:</u>** The conformal weights in the twisted sector can be given for each primary labeled by $i\in \text{Rep}(\text{Vir}_c)$ as
+$$
+h^S_i = \frac{h_i}{2} - \frac{c}{16}.
+$$
+***Proof:*** We can calculate the Virasoro generators from scratch in the $z$ coordinate by contour integrating $T_{\text{folded}}$.
+$$
+\begin{equation}\tag*{$\Box$}\end{equation}
+$$
+This was a particularly cheeky way to come up with the primaries as well as the conformal weights of the fields in the twisted sector of the folded theory. The reason why this worked at all, was that the bijection we defined was functorial in the quantization. 
+
+
+
 **<u>Proposition:</u>** To each irreducible unitary highest weight representation $i$ of $\text{Vir}$ we can assign two more irreducible representations $V_i^{\pm}$ of $\mathcal{V}^S$ with characters
 $$
 \chi_{V_i^{\pm}}(q) = \frac{\chi_i(\sqrt q) \pm e^{\pi i (h_i - \frac{c}{24})}\chi_i(-\sqrt q)}{2},
