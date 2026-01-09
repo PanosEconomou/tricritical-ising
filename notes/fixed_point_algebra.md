@@ -182,7 +182,7 @@ Moving on there is something nice. What we have done is to simply repackage degr
 
 **<u>Proposition:</u>** The stress tensor in the twisted sector of the folded theory acts as 
 $$
-T_{\text{folded}}(z) = \frac{T(w)}{4w^2} - \frac{c}{32z^2},
+T_{\text{folded}}(z) = \frac{T(w)}{4w^2} + \frac{c}{32z^2},
 $$
 where $z=w^2$ and $T(w)$ is the unfolded stress tensor.
 
@@ -192,7 +192,7 @@ $$
 $$
 **<u>Corollary:</u>** The conformal weights in the twisted sector can be given for each primary labeled by $i\in \text{Rep}(\text{Vir}_c)$ as
 $$
-h^S_i = \frac{h_i}{2} - \frac{c}{16}.
+h^S_i = \frac{h_i}{2} + \frac{c}{16}.
 $$
 ***Proof:*** We can calculate the Virasoro generators from scratch in the $z$ coordinate by contour integrating $T_{\text{folded}}$.
 $$
