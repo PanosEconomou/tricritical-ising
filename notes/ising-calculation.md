@@ -12,7 +12,15 @@ The double cover of a circle is a circle with twice the radius, and by definitio
 
 To calculate the actual action, we will calculate the partition function in the double cover with various insertions of the defect and then do a conformal transformation to the twisted sector, where we will write it in terms of the twisted characters and read off the action of the defects. 
 
-This phase difference would not appear on the torus partition function (most likely) so we need to do it on the annulus. The setup and idea will be almost identical, but in order to calculate it we will obtain the annulus picture using two different pullbacks from the double covered version of it. It's gonna be fun.
+This phase difference would not appear on the torus partition function (most likely) so we need to do it on the annulus. The setup and idea will be almost identical, but in order to calculate it we will obtain the annulus picture using two different pullbacks from the double covered version of it. It's gonna be fun. 
+
+So what combination would help us calculate it? One of the central problems would be to calculate how the boundary state looks like on the double cover. Though that boundary state corresponds to an Ishibashi state corresponding to a spin-0 primary in the twisted sector, so in the double covert it would correspond to an Ishibashi state of an unfolded primary. So the annulus partition function in the unfolded theory is simply going to be multiplied by the action of the defect to the sate. 
+
+It seems like the phase difference between the two lifts will not depend on the defect at all! That's kinda confusing ngl. We can think carefully what happens when this 
+
+
+
+
 
 
 
