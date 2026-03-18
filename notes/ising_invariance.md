@@ -84,7 +84,10 @@ Use the relation $SL\otimes 1 = 1\otimes L S$ and show that the action of either
 
 To repeat this calculation for $\text{Ising}^2$ find out how the defect $S$ acts on the Virasoro primaries. Virasoro algebra is invariant, so it will only give a $\pm$ sign since it is idempotent. We know the S transform of the free bosons, so we only need to calculate the twisted sector of S. We don't do it using the S-transform, rather we impose an $S$ twist on the bosons and calculate the trace from scratch. 
 
+The problem of calculating the action of the Verlinde lines on the twisted sector states is hard. We should not be thinking of these states as states from the original theory that have been mapped under a "twisting" map because that doesn't even exist. Best bet is to use consistency conditions to solve. 
 
+1. We know how the global symmetry acts on the fields ragardless of sector. In the twisted sector states the field simply appears with different boundary conditions and the new algebra can be used to derive the new primary states in the twisted sector. 
+2. Unfortunately we only know how the verlinde lines act on the primaries of the untwisted sector which don't give a legible action for the general fields, which kinda sucks. 
 
 
 
