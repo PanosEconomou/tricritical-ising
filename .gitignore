@@ -1,2 +1,3 @@
 env/
 .ipynb_checkpoints/
+cftpy/cftpy/cythonft.cpython-314-x86_64-linux-gnu.so

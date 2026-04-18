@@ -8,7 +8,7 @@ We will calculate some of the conformal defects that the tricritical Ising CFT a
 
 You need `sage`. To get it [check this out](https://doc.sagemath.org/html/en/installation/source.html). 
 
-Once you have sage installed, we have build a python module with tools for CFT that you can use! In the future this would be instaleld via pip by
+Once you have sage installed, we have build a python module with tools for CFT that you can use! In the future this would be installed via pip by
 ```
 sage -python -m pip install cftpy
 ```
@@ -24,5 +24,4 @@ python -m venv env
 source ./env/bin/activate
 pip install -e ./cftpy
 ```
-
 
