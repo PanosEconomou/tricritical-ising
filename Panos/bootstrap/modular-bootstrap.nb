@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[   2852240,      71784]
-NotebookOptionsPosition[   2838943,      71592]
-NotebookOutlinePosition[   2839362,      71609]
-CellTagsIndexPosition[   2839319,      71606]
+NotebookDataLength[   2852050,      71774]
+NotebookOptionsPosition[   2838523,      71578]
+NotebookOutlinePosition[   2838942,      71595]
+CellTagsIndexPosition[   2838899,      71592]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -733,9 +733,10 @@ Cell[BoxData[
    3.987595642365136*^9, 3.9875994385673923`*^9, 3.98760846954025*^9, {
    3.987609468579225*^9, 3.9876094990397778`*^9}, 3.987609591785081*^9, {
    3.9876096240392523`*^9, 3.987609639247044*^9}, {3.987609733493732*^9, 
-   3.987609770071516*^9}, 3.9876099002992563`*^9},
- CellLabel->
-  "In[107]:=",ExpressionUUID->"c9b1988e-b948-4769-b052-be492e4e6a26"],
+   3.987609770071516*^9}, 3.9876099002992563`*^9, 3.987669771753129*^9, {
+   3.987670383455819*^9, 3.987670385366482*^9}, {3.9876708290215893`*^9, 
+   3.987670831564666*^9}},
+ CellLabel->"In[24]:=",ExpressionUUID->"c9b1988e-b948-4769-b052-be492e4e6a26"],
 
 Cell["\<\
 math4ti2: Mathematica interface to 4ti2 (http://www.4ti2.de/)
@@ -745,20 +746,19 @@ Copyright (C) 2017, Silviu Radu <sradu@risc.jku.at>\
  CellFrame->0.5,
  GeneratedCell->True,
  CellAutoOverwrite->True,
- CellChangeTimes->{3.987609901042602*^9},
+ CellChangeTimes->{3.987670831889748*^9},
  ShowAutoSpellCheck->False,
  FontColor->RGBColor[0, 0, 0],
  Background->RGBColor[
   0.796887, 0.789075, 
-   0.871107],ExpressionUUID->"dcbee79e-845b-4981-9349-212ed66706b3"],
+   0.871107],ExpressionUUID->"326050bd-4cc6-4f43-83b4-21cb510f8426"],
 
 Cell[BoxData[
  RowBox[{
   TagBox["\<\"Time: \"\>",
-   "EchoLabel"], "  ", "0.21359`"}]], "Echo",
+   "EchoLabel"], "  ", "0.221654`"}]], "Echo",
  CellChangeTimes->{
-  3.987609901298327*^9},ExpressionUUID->"cb87c146-4c5a-4eb6-8e72-\
-6dadf70dc257"],
+  3.98767083214406*^9},ExpressionUUID->"fb0ecf6d-f199-4e59-95fd-37d1d3591d42"],
 
 Cell[BoxData[
  GraphicsBox[RasterBox[CompressedData["
@@ -880,9 +880,10 @@ kjHVgyRJ5muekiRJkmRM9SBJkv/9ArWWRdY=
    3.987600612973653*^9, 3.987600705525907*^9, 3.987608476735944*^9, 
    3.987609501397193*^9, {3.987609547473068*^9, 3.9876095931039057`*^9}, {
    3.9876096270481033`*^9, 3.987609640429509*^9}, {3.987609735125609*^9, 
-   3.9876097707390203`*^9}, 3.987609907543105*^9},
- CellLabel->
-  "Out[115]=",ExpressionUUID->"0cf9d056-e8bd-4ebb-962a-748d64bc410f"]
+   3.9876097707390203`*^9}, 3.987609907543105*^9, 3.987669778852767*^9, {
+   3.987670381054722*^9, 3.9876703860659237`*^9}, {3.9876708191114063`*^9, 
+   3.987670838421619*^9}},
+ CellLabel->"Out[32]=",ExpressionUUID->"2f99cd96-03b6-4419-b3f7-72d347328127"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -895,6 +896,69 @@ bcc03f1248d6"],
 Cell[CellGroupData[{
 
 Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"processInequalities", "[", 
+     RowBox[{"ineqs_List", ",", "vars_List"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"c", "=", "0"}], "}"}], ",", 
+      RowBox[{"Flatten", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"lhs", ",", 
+           RowBox[{"With", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"coeffs", "=", 
+               RowBox[{"Append", "[", 
+                RowBox[{
+                 RowBox[{"Table", "[", 
+                  RowBox[{
+                   RowBox[{"Coefficient", "[", 
+                    RowBox[{"lhs", ",", "v"}], "]"}], ",", 
+                   RowBox[{"{", 
+                    RowBox[{"v", ",", "vars"}], "}"}]}], "]"}], ",", 
+                 RowBox[{"lhs", "/.", " ", 
+                  RowBox[{"Thread", "[", 
+                   RowBox[{"vars", "->", "0"}], "]"}]}]}], "]"}]}], "}"}], ",", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"AnyTrue", "[", 
+                RowBox[{"coeffs", ",", 
+                 RowBox[{
+                  RowBox[{"!", 
+                   RowBox[{"IntegerQ", "[", "#", "]"}]}], "&"}]}], "]"}], ",", 
+               RowBox[{"With", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"lcm", "=", 
+                    RowBox[{"LCM", "@@", 
+                    RowBox[{"Denominator", "/@", "coeffs"}]}]}], ",", 
+                   RowBox[{"w", "=", 
+                    RowBox[{"Symbol", "[", 
+                    RowBox[{"\"\<w\>\"", "<>", 
+                    RowBox[{"ToString", "[", 
+                    RowBox[{"++", "c"}], "]"}]}], "]"}]}]}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"w", ">=", "0"}], ",", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"Expand", "[", 
+                    RowBox[{"lcm", "*", "lhs"}], "]"}], "-", 
+                    RowBox[{"lcm", "*", "w"}]}], "==", "0"}]}], "}"}]}], 
+                "]"}], ",", 
+               RowBox[{"lhs", ">=", "0"}]}], "]"}]}], "]"}]}], "]"}], "/@", 
+         RowBox[{"(", 
+          RowBox[{"ineqs", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", "1"}], "]"}], "]"}], ")"}]}], ",", "1"}], 
+       "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -998,22 +1062,22 @@ Cell[BoxData[{
          RowBox[{"A", "=", 
           RowBox[{"RootApproximant", "[", "A", "]"}]}], ";"}], "*)"}], 
        "\[IndentingNewLine]", 
+       RowBox[{"eqn", "=", 
+        RowBox[{"DeleteDuplicates", "@", 
+         RowBox[{"Rationalize", "@", 
+          RowBox[{"Chop", "@", 
+           RowBox[{"Expand", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"#", ">=", "0"}], "&"}], "/@", "m"}], "]"}]}]}]}]}], ";",
+        "\[IndentingNewLine]", 
        RowBox[{"(*", 
         RowBox[{
          RowBox[{"eqn", "=", 
           RowBox[{"DeleteDuplicates", "@", 
            RowBox[{"Rationalize", "@", 
             RowBox[{"Chop", "@", 
-             RowBox[{"Expand", "[", 
-              RowBox[{
-               RowBox[{
-                RowBox[{"#", ">=", "0"}], "&"}], "/@", "m"}], "]"}]}]}]}]}], 
-         ";"}], "*)"}], "\[IndentingNewLine]", 
-       RowBox[{"eqn", "=", 
-        RowBox[{"DeleteDuplicates", "@", 
-         RowBox[{"Rationalize", "@", 
-          RowBox[{"Chop", "@", 
-           RowBox[{"Expand", "[", "m", "]"}]}]}]}]}], ";", 
+             RowBox[{"Expand", "[", "m", "]"}]}]}]}]}], ";"}], "*)"}], 
        "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
        RowBox[{"(*", " ", 
         RowBox[{
@@ -1021,35 +1085,35 @@ Cell[BoxData[{
           "it", " ", "so", " ", "that", " ", "the", " ", "system", " ", "has",
           " ", "integer", " ", "coefficients"}], " ", "*)"}], 
        "\[IndentingNewLine]", 
+       RowBox[{"multipliers", "=", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"Min", "@", 
+            RowBox[{"Cases", "[", 
+             RowBox[{"eqn", ",", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"a_.", "*", "#"}], ")"}], ">=", "0"}], ":>", 
+               RowBox[{"Abs", "[", "a", "]"}]}]}], "]"}]}], "^", 
+           RowBox[{"-", "1"}]}], "&"}], "/@", "X"}]}], ";", 
+       "\[IndentingNewLine]", 
        RowBox[{"(*", 
         RowBox[{
          RowBox[{"multipliers", "=", 
           RowBox[{
            RowBox[{
-            RowBox[{
-             RowBox[{"Min", "@", 
-              RowBox[{"Cases", "[", 
-               RowBox[{"eqn", ",", 
-                RowBox[{
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{"Min", "@", 
+               RowBox[{"Abs", "[", 
+                RowBox[{"DeleteCases", "[", 
                  RowBox[{
-                  RowBox[{"(", 
-                   RowBox[{"a_.", "*", "#"}], ")"}], ">=", "0"}], ":>", 
-                 RowBox[{"Abs", "[", "a", "]"}]}]}], "]"}]}], "^", 
-             RowBox[{"-", "1"}]}], "&"}], "/@", "X"}]}], ";"}], "*)"}], 
-       "\[IndentingNewLine]", 
-       RowBox[{"multipliers", "=", 
-        RowBox[{
-         RowBox[{
-          SuperscriptBox[
-           RowBox[{"(", 
-            RowBox[{"Min", "@", 
-             RowBox[{"Abs", "[", 
-              RowBox[{"DeleteCases", "[", 
-               RowBox[{
-                RowBox[{"Coefficient", "[", 
-                 RowBox[{"eqn", ",", "#"}], "]"}], ",", "0"}], "]"}], "]"}]}],
-             ")"}], 
-           RowBox[{"-", "1"}]], "&"}], "/@", "X"}]}], ";", 
+                  RowBox[{"Coefficient", "[", 
+                   RowBox[{"eqn", ",", "#"}], "]"}], ",", "0"}], "]"}], 
+                "]"}]}], ")"}], 
+             RowBox[{"-", "1"}]], "&"}], "/@", "X"}]}], ";"}], "*)"}], 
        "\[IndentingNewLine]", 
        RowBox[{"eqn", "=", 
         RowBox[{
@@ -1063,13 +1127,15 @@ Cell[BoxData[{
               RowBox[{"Subtract", "@@", "#"}], "//", "ExpandAll"}], ",", 
              "0"}], "]"}], ")"}], "&"}], "/@", 
          RowBox[{"(", 
-          RowBox[{
-           RowBox[{"Thread", "[", 
-            RowBox[{"eqn", ">=", "0"}], "]"}], "/.", " ", 
+          RowBox[{"eqn", "/.", " ", 
            RowBox[{"Thread", "[", 
             RowBox[{"X", "->", 
              RowBox[{"multipliers", "*", "X"}]}], "]"}]}], ")"}]}]}], ";", 
-       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"eqn", "=", 
+        RowBox[{"processInequalities", "[", 
+         RowBox[{"eqn", ",", "X"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
        RowBox[{"(*", " ", 
         RowBox[{
          RowBox[{"Use", " ", "Z"}], "-", 
@@ -1085,9 +1151,19 @@ Cell[BoxData[{
          RowBox[{"Echo", "[", "basis", "]"}], ";"}], "*)"}], 
        "\[IndentingNewLine]", 
        RowBox[{"basis", "=", 
-        RowBox[{"basis", "[", 
-         RowBox[{"[", "2", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
-       "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"basis", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", 
+           RowBox[{"Flatten", "[", 
+            RowBox[{"Position", "[", 
+             RowBox[{
+              RowBox[{"basis", "[", 
+               RowBox[{"[", 
+                RowBox[{"-", "1"}], "]"}], "]"}], ",", 
+              RowBox[{"_", "[", "_Integer", "]"}]}], "]"}], "]"}]}], "]"}], 
+         "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
        RowBox[{"ClearAll", "[", "toRoot", "]"}], ";", "\[IndentingNewLine]", 
        RowBox[{
         RowBox[{"toRoot", "[", "x_Real", "]"}], ":=", 
@@ -1254,34 +1330,36 @@ Cell[BoxData[{
    3.987597483914756*^9, 3.9875974840310373`*^9}, {3.987608828190673*^9, 
    3.987608850809063*^9}, 3.98760888518195*^9, 3.987609050555591*^9, 
    3.987609525775165*^9, 3.987609604753034*^9, 3.987609652303193*^9, 
-   3.987609738150428*^9, 3.987609778381817*^9},
- CellLabel->
-  "In[116]:=",ExpressionUUID->"7971f8d4-01a4-4591-81d2-206eed4a5951"],
+   3.987609738150428*^9, 3.987609778381817*^9, {3.987670755656487*^9, 
+   3.987670812333727*^9}, {3.987670864915413*^9, 3.98767087977544*^9}, {
+   3.987670922026287*^9, 3.987670925177594*^9}},
+ CellLabel->"In[47]:=",ExpressionUUID->"7971f8d4-01a4-4591-81d2-206eed4a5951"],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
   TagBox["\<\"Time: \"\>",
-   "EchoLabel"], "  ", "1.079308`"}]], "Echo",
+   "EchoLabel"], "  ", "1.38577`"}]], "Echo",
  CellChangeTimes->{
-  3.987609924299864*^9},ExpressionUUID->"bbab3d3d-83fc-40c8-b1bd-\
-10a49b089d97"],
+  3.987670936591628*^9},ExpressionUUID->"ed8230ba-a1ed-4544-8570-\
+b70c492b4fd2"],
 
 Cell[BoxData[
  RowBox[{
   TagBox["\<\"Time: \"\>",
-   "EchoLabel"], "  ", "9.178235`"}]], "Echo",
+   "EchoLabel"], "  ", "10.427588`"}]], "Echo",
  CellChangeTimes->{
-  3.98760992434558*^9},ExpressionUUID->"a4e8452b-3846-4462-8558-4bb4ec79ad04"],
+  3.987670936628504*^9},ExpressionUUID->"1ce29e13-b1c9-49b7-86f6-\
+f4e6d5e0ddc2"],
 
 Cell[BoxData[
  RowBox[{
   TagBox["\<\"Time: \"\>",
-   "EchoLabel"], "  ", "22.529631`"}]], "Echo",
+   "EchoLabel"], "  ", "23.87332`"}]], "Echo",
  CellChangeTimes->{
-  3.987609946890512*^9},ExpressionUUID->"88649c52-b55b-4d8d-890b-\
-ad168c855418"]
+  3.987670960514963*^9},ExpressionUUID->"f69ab6b1-db22-4286-9e8a-\
+b7c0661faeed"]
 }, Open  ]],
 
 Cell[BoxData[
@@ -2396,6 +2474,14 @@ Cell[BoxData[
          RowBox[{"(", 
           RowBox[{"3", "+", 
            SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{"2", "+", 
+       RowBox[{"2", " ", 
+        SqrtBox["5"]}], "+", 
+       SqrtBox[
+        RowBox[{"6", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -2836,17 +2922,7 @@ Cell[BoxData[
              SuperscriptBox["#1", "6"]}], "&"}], "degree" -> "6", 
         "shortDegree" -> "6", "number" -> 4|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      RowBox[{"2", " ", 
-       RowBox[{"(", 
-        RowBox[{"2", "+", 
-         RowBox[{"2", " ", 
-          SqrtBox["5"]}], "+", 
-         SqrtBox[
-          RowBox[{"6", " ", 
-           RowBox[{"(", 
-            RowBox[{"3", "+", 
-             SqrtBox["5"]}], ")"}]}]]}], ")"}]}]},
+       InterpretationFunction->(Slot["interp"]& )]},
      {"1", "1", "1", "1", "2", 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -3794,6 +3870,9 @@ Cell[BoxData[
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
       RowBox[{
+       RowBox[{"-", "1"}], "-", 
+       SqrtBox["5"]}], 
+      RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{
@@ -3869,11 +3948,7 @@ Cell[BoxData[
        RowBox[{"-", "3"}], "-", 
        SqrtBox["5"]}], 
       RowBox[{"3", "+", 
-       SqrtBox["5"]}], 
-      RowBox[{
-       RowBox[{"-", "2"}], "-", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -5103,6 +5178,37 @@ Cell[BoxData[
        InterpretationFunction->(Slot["interp"]& )], 
       TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
           StyleBox[
+           TemplateBox[{"\"-0.867\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.86710180138136250249658587563317269087`15.\
+954589770191003, Editable -> False], "approx" -> -0.8671018013813625, 
+        "interp" -> InterpretationBox["", 
+          Root[
+          1 - 2 # - 3 #^2 + 2 #^3 + #^4 - #^6 - #^7 + #^8 + #^9 - #^10 + #^11 + 
+           4 #^12& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"2", " ", "#1"}], "-", 
+             RowBox[{"3", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "3"]}], "+", 
+             SuperscriptBox["#1", "4"], "-", 
+             SuperscriptBox["#1", "6"], "-", 
+             SuperscriptBox["#1", "7"], "+", 
+             SuperscriptBox["#1", "8"], "+", 
+             SuperscriptBox["#1", "9"], "-", 
+             SuperscriptBox["#1", "10"], "+", 
+             SuperscriptBox["#1", "11"], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "12"]}]}], "&"}], "degree" -> "12", 
+        "shortDegree" -> "12", "number" -> 2|>,
+       "NumericalApproximationInterp",
+       InterpretationFunction->(Slot["interp"]& )], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
            TemplateBox[{"\"0.867\"", 
              DynamicBox[
               FEPrivate`FrontEndResource[
@@ -5427,42 +5533,6 @@ Cell[BoxData[
                SuperscriptBox["#1", "8"]}], "+", 
              SuperscriptBox["#1", "9"]}], "&"}], "degree" -> "9", 
         "shortDegree" -> "9", "number" -> 3|>,
-       "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
-          StyleBox[
-           TemplateBox[{"\"-1.73\"", 
-             DynamicBox[
-              FEPrivate`FrontEndResource[
-              "FEExpressions", "NumericalApproximationElider"]]}, 
-            "RowDefault"], ShowStringCharacters -> 
-           False], -1.73420360243545634837403213168727234006`15.\
-954589770191003, Editable -> False], "approx" -> -1.7342036024354563`, 
-        "interp" -> InterpretationBox["", 
-          
-          Root[-1 + # + #^2 - #^3 + #^4 + #^5 - 2 #^6 - 2 #^7 + 
-           4 #^8 - #^9 - #^10 + 2 #^11 + 2 #^14 + #^15& , 1, 0]], "head" -> 
-        "Root", "big" -> RowBox[{
-           RowBox[{
-             RowBox[{"-", "1"}], "+", "#1", "+", 
-             SuperscriptBox["#1", "2"], "-", 
-             SuperscriptBox["#1", "3"], "+", 
-             SuperscriptBox["#1", "4"], "+", 
-             SuperscriptBox["#1", "5"], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "6"]}], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "7"]}], "+", 
-             RowBox[{"4", " ", 
-               SuperscriptBox["#1", "8"]}], "-", 
-             SuperscriptBox["#1", "9"], "-", 
-             SuperscriptBox["#1", "10"], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "11"]}], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "14"]}], "+", 
-             SuperscriptBox["#1", "15"]}], "&"}], "degree" -> "15", 
-        "shortDegree" -> "15", "number" -> 1|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )]},
      {"1", "1", "1", "1", 
@@ -6445,6 +6515,8 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
+      RowBox[{"1", "+", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
@@ -6525,10 +6597,7 @@ Cell[BoxData[
        SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "3"}], "-", 
-       SqrtBox["5"]}], 
-      RowBox[{"2", "+", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", "2", 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -6700,7 +6769,6 @@ Cell[BoxData[
               FEPrivate`FrontEndResource[
               "FEExpressions", "NumericalApproximationElider"]]}, 
             "RowDefault"], ShowStringCharacters -> 
-           
            False], -0.98460615754417135647713621438015252352`15.\
 954589770191003, Editable -> False], "approx" -> -0.9846061575441714, 
         "interp" -> InterpretationBox["", 
@@ -7477,6 +7545,9 @@ Cell[BoxData[
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
       RowBox[{
+       RowBox[{"-", "1"}], "-", 
+       SqrtBox["5"]}], 
+      RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{
@@ -7552,11 +7623,7 @@ Cell[BoxData[
        RowBox[{"-", "3"}], "-", 
        SqrtBox["5"]}], 
       RowBox[{"3", "+", 
-       SqrtBox["5"]}], 
-      RowBox[{
-       RowBox[{"-", "2"}], "-", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", "2", 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -8090,6 +8157,7 @@ Cell[BoxData[
            False], -1.59312622860914876454785371606703847647`15.\
 954589770191003, Editable -> False], "approx" -> -1.5931262286091488`, 
         "interp" -> InterpretationBox["", 
+          
           Root[-1 - # - 2 #^2 - 3 #^3 - 2 #^4 + #^5 + #^6 - #^7 + 
            2 #^9 + #^10& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
            RowBox[{
@@ -8811,6 +8879,43 @@ Cell[BoxData[
         "shortDegree" -> "18", "number" -> 3|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.867\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.86710180122329205687492503784596920013`15.954589770191003, 
+          Editable -> False], "approx" -> 0.8671018012232921, "interp" -> 
+        InterpretationBox["", 
+          Root[
+          1 + #^3 - 2 #^4 - #^5 + #^7 - 2 #^8 + #^10 - 2 #^12 - 
+           3 #^13 + #^14 - #^15 + 2 #^16 + 6 #^17 + #^18& , 3, 0]], "head" -> 
+        "Root", "big" -> RowBox[{
+           RowBox[{"1", "+", 
+             SuperscriptBox["#1", "3"], "-", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "4"]}], "-", 
+             SuperscriptBox["#1", "5"], "+", 
+             SuperscriptBox["#1", "7"], "-", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "8"]}], "+", 
+             SuperscriptBox["#1", "10"], "-", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "12"]}], "-", 
+             RowBox[{"3", " ", 
+               SuperscriptBox["#1", "13"]}], "+", 
+             SuperscriptBox["#1", "14"], "-", 
+             SuperscriptBox["#1", "15"], "+", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "16"]}], "+", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "17"]}], "+", 
+             SuperscriptBox["#1", "18"]}], "&"}], "degree" -> "18", 
+        "shortDegree" -> "18", "number" -> 3|>,
+       "NumericalApproximationInterp",
+       InterpretationFunction->(Slot["interp"]& )], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -9100,41 +9205,6 @@ Cell[BoxData[
                SuperscriptBox["#1", "8"]}], "+", 
              SuperscriptBox["#1", "9"]}], "&"}], "degree" -> "9", 
         "shortDegree" -> "9", "number" -> 1|>,
-       "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
-          StyleBox[
-           TemplateBox[{"\"1.73\"", 
-             DynamicBox[
-              FEPrivate`FrontEndResource[
-              "FEExpressions", "NumericalApproximationElider"]]}, 
-            "RowDefault"], ShowStringCharacters -> False], 
-          1.73420360243545634837403213168727234006`15.954589770191003, 
-          Editable -> False], "approx" -> 1.7342036024354563`, "interp" -> 
-        InterpretationBox["", 
-          Root[
-          1 + # - #^2 - #^3 - #^4 + #^5 + 2 #^6 - 2 #^7 - 4 #^8 - #^9 + #^10 + 
-           2 #^11 - 2 #^14 + #^15& , 3, 0]], "head" -> "Root", "big" -> 
-        RowBox[{
-           RowBox[{"1", "+", "#1", "-", 
-             SuperscriptBox["#1", "2"], "-", 
-             SuperscriptBox["#1", "3"], "-", 
-             SuperscriptBox["#1", "4"], "+", 
-             SuperscriptBox["#1", "5"], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "6"]}], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "7"]}], "-", 
-             RowBox[{"4", " ", 
-               SuperscriptBox["#1", "8"]}], "-", 
-             SuperscriptBox["#1", "9"], "+", 
-             SuperscriptBox["#1", "10"], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "11"]}], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "14"]}], "+", 
-             SuperscriptBox["#1", "15"]}], "&"}], "degree" -> "15", 
-        "shortDegree" -> "15", "number" -> 3|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )]},
      {"1", "1", "1", "1", 
@@ -10117,6 +10187,8 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
+      RowBox[{"1", "+", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
@@ -10197,10 +10269,7 @@ Cell[BoxData[
        SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "3"}], "-", 
-       SqrtBox["5"]}], 
-      RowBox[{"2", "+", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -11182,6 +11251,7 @@ Cell[BoxData[
               FEPrivate`FrontEndResource[
               "FEExpressions", "NumericalApproximationElider"]]}, 
             "RowDefault"], ShowStringCharacters -> 
+           
            False], -10.03919445865486892444096156395971775055`15.\
 954589770191003, Editable -> False], "approx" -> -10.039194458654869`, 
         "interp" -> InterpretationBox["", 
@@ -11382,6 +11452,15 @@ Cell[BoxData[
       RowBox[{"2", "+", 
        RowBox[{"2", " ", 
         SqrtBox["5"]}], "+", 
+       SqrtBox[
+        RowBox[{"6", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       RowBox[{"-", "2"}], "-", 
+       RowBox[{"2", " ", 
+        SqrtBox["5"]}], "-", 
        SqrtBox[
         RowBox[{"6", " ", 
          RowBox[{"(", 
@@ -11892,18 +11971,7 @@ Cell[BoxData[
              SuperscriptBox["#1", "6"]}], "&"}], "degree" -> "6", 
         "shortDegree" -> "6", "number" -> 1|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      RowBox[{"2", " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "2"}], "-", 
-         RowBox[{"2", " ", 
-          SqrtBox["5"]}], "-", 
-         SqrtBox[
-          RowBox[{"6", " ", 
-           RowBox[{"(", 
-            RowBox[{"3", "+", 
-             SqrtBox["5"]}], ")"}]}]]}], ")"}]}]},
+       InterpretationFunction->(Slot["interp"]& )]},
      {"1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "1", "0", 
@@ -12050,7 +12118,7 @@ Cell[BoxData[
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
-       SqrtBox["5"]}], 
+       SqrtBox["5"]}], "0", 
       RowBox[{"1", "+", 
        SqrtBox["5"]}], 
       RowBox[{
@@ -12062,24 +12130,24 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"3", "-", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{"3", "-", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
         RowBox[{
          RowBox[{"-", "3"}], "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"3", "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"1", "-", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
-       SqrtBox["5"]}], 
-      RowBox[{"1", "-", 
-       SqrtBox["5"]}], "0", "0"},
+       SqrtBox["5"]}], "0"},
      {"1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "1", "0", 
@@ -12225,7 +12293,7 @@ Cell[BoxData[
          RowBox[{"-", "3"}], "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{"1", "+", 
-       SqrtBox["5"]}], 
+       SqrtBox["5"]}], "0", 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
@@ -12237,25 +12305,25 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "3"}], "+", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "3"}], "+", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
         RowBox[{"3", "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "3"}], "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "3"}], "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
-      RowBox[{"1", "-", 
-       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
-       SqrtBox["5"]}], "0", "0"},
+       SqrtBox["5"]}], 
+      RowBox[{"1", "-", 
+       SqrtBox["5"]}], "0"},
      {"1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "1", "0", 
@@ -12401,7 +12469,7 @@ Cell[BoxData[
          RowBox[{"-", "3"}], "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{"1", "+", 
-       SqrtBox["5"]}], 
+       SqrtBox["5"]}], "0", 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
@@ -12413,25 +12481,25 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "3"}], "+", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "3"}], "+", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
         RowBox[{"3", "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "3"}], "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "3"}], "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
-      RowBox[{"1", "-", 
-       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
-       SqrtBox["5"]}], "0", "0"},
+       SqrtBox["5"]}], 
+      RowBox[{"1", "-", 
+       SqrtBox["5"]}], "0"},
      {"1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "1", "0", 
@@ -12578,7 +12646,7 @@ Cell[BoxData[
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
-       SqrtBox["5"]}], 
+       SqrtBox["5"]}], "0", 
       RowBox[{"1", "+", 
        SqrtBox["5"]}], 
       RowBox[{
@@ -12590,24 +12658,24 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"3", "-", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{"3", "-", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
         RowBox[{
          RowBox[{"-", "3"}], "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"3", "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"1", "-", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
-       SqrtBox["5"]}], 
-      RowBox[{"1", "-", 
-       SqrtBox["5"]}], "0", "0"},
+       SqrtBox["5"]}], "0"},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -13724,6 +13792,15 @@ Cell[BoxData[
          RowBox[{"(", 
           RowBox[{"3", "+", 
            SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       RowBox[{"-", "2"}], "-", 
+       RowBox[{"2", " ", 
+        SqrtBox["5"]}], "-", 
+       SqrtBox[
+        RowBox[{"6", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
       RowBox[{"2", "+", 
        RowBox[{"2", " ", 
         SqrtBox["5"]}], "+", 
@@ -14219,18 +14296,7 @@ Cell[BoxData[
              SuperscriptBox["#1", "6"]}], "&"}], "degree" -> "6", 
         "shortDegree" -> "6", "number" -> 1|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      RowBox[{"2", " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "2"}], "-", 
-         RowBox[{"2", " ", 
-          SqrtBox["5"]}], "-", 
-         SqrtBox[
-          RowBox[{"6", " ", 
-           RowBox[{"(", 
-            RowBox[{"3", "+", 
-             SqrtBox["5"]}], ")"}]}]]}], ")"}]}]},
+       InterpretationFunction->(Slot["interp"]& )]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -15187,6 +15253,8 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
+      RowBox[{"1", "+", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
@@ -15265,10 +15333,7 @@ Cell[BoxData[
        SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "3"}], "-", 
-       SqrtBox["5"]}], 
-      RowBox[{"2", "+", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", "2", 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -16526,6 +16591,43 @@ Cell[BoxData[
         "shortDegree" -> "18", "number" -> 3|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.867\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.86710180122329205687492503784596920013`15.954589770191003, 
+          Editable -> False], "approx" -> 0.8671018012232921, "interp" -> 
+        InterpretationBox["", 
+          Root[
+          1 + #^3 - 2 #^4 - #^5 + #^7 - 2 #^8 + #^10 - 2 #^12 - 
+           3 #^13 + #^14 - #^15 + 2 #^16 + 6 #^17 + #^18& , 3, 0]], "head" -> 
+        "Root", "big" -> RowBox[{
+           RowBox[{"1", "+", 
+             SuperscriptBox["#1", "3"], "-", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "4"]}], "-", 
+             SuperscriptBox["#1", "5"], "+", 
+             SuperscriptBox["#1", "7"], "-", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "8"]}], "+", 
+             SuperscriptBox["#1", "10"], "-", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "12"]}], "-", 
+             RowBox[{"3", " ", 
+               SuperscriptBox["#1", "13"]}], "+", 
+             SuperscriptBox["#1", "14"], "-", 
+             SuperscriptBox["#1", "15"], "+", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "16"]}], "+", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "17"]}], "+", 
+             SuperscriptBox["#1", "18"]}], "&"}], "degree" -> "18", 
+        "shortDegree" -> "18", "number" -> 3|>,
+       "NumericalApproximationInterp",
+       InterpretationFunction->(Slot["interp"]& )], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -16665,6 +16767,7 @@ Cell[BoxData[
               FEPrivate`FrontEndResource[
               "FEExpressions", "NumericalApproximationElider"]]}, 
             "RowDefault"], ShowStringCharacters -> 
+           
            False], -1.16624934208427788462358876131474971771`15.\
 954589770191003, Editable -> False], "approx" -> -1.1662493420842779`, 
         "interp" -> InterpretationBox["", 
@@ -16691,7 +16794,6 @@ Cell[BoxData[
               FEPrivate`FrontEndResource[
               "FEExpressions", "NumericalApproximationElider"]]}, 
             "RowDefault"], ShowStringCharacters -> 
-           
            False], -1.16624934208427788462358876131474971771`15.\
 954589770191003, Editable -> False], "approx" -> -1.1662493420842779`, 
         "interp" -> InterpretationBox["", 
@@ -16818,41 +16920,6 @@ Cell[BoxData[
                SuperscriptBox["#1", "8"]}], "+", 
              SuperscriptBox["#1", "9"]}], "&"}], "degree" -> "9", 
         "shortDegree" -> "9", "number" -> 1|>,
-       "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
-          StyleBox[
-           TemplateBox[{"\"1.73\"", 
-             DynamicBox[
-              FEPrivate`FrontEndResource[
-              "FEExpressions", "NumericalApproximationElider"]]}, 
-            "RowDefault"], ShowStringCharacters -> False], 
-          1.73420360243545634837403213168727234006`15.954589770191003, 
-          Editable -> False], "approx" -> 1.7342036024354563`, "interp" -> 
-        InterpretationBox["", 
-          Root[
-          1 + # - #^2 - #^3 - #^4 + #^5 + 2 #^6 - 2 #^7 - 4 #^8 - #^9 + #^10 + 
-           2 #^11 - 2 #^14 + #^15& , 3, 0]], "head" -> "Root", "big" -> 
-        RowBox[{
-           RowBox[{"1", "+", "#1", "-", 
-             SuperscriptBox["#1", "2"], "-", 
-             SuperscriptBox["#1", "3"], "-", 
-             SuperscriptBox["#1", "4"], "+", 
-             SuperscriptBox["#1", "5"], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "6"]}], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "7"]}], "-", 
-             RowBox[{"4", " ", 
-               SuperscriptBox["#1", "8"]}], "-", 
-             SuperscriptBox["#1", "9"], "+", 
-             SuperscriptBox["#1", "10"], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "11"]}], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "14"]}], "+", 
-             SuperscriptBox["#1", "15"]}], "&"}], "degree" -> "15", 
-        "shortDegree" -> "15", "number" -> 3|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )]},
      {"1", "1", "1", "1", "2", 
@@ -17000,7 +17067,6 @@ Cell[BoxData[
           0.98460615754416680456273525123833678663`15.954589770191003, 
           Editable -> False], "approx" -> 0.9846061575441668, "interp" -> 
         InterpretationBox["", 
-          
           Root[-1 + 2 # + #^2 - #^3 + 3 #^4 + #^6 + #^7 - 2 #^9 + 
            2 #^10 - #^11 - #^13 + 2 #^14 - 4 #^15 - 5 #^16 + 2 #^17& , 4, 0]],
          "head" -> "Root", "big" -> RowBox[{
@@ -17826,6 +17892,9 @@ Cell[BoxData[
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
       RowBox[{
+       RowBox[{"-", "1"}], "-", 
+       SqrtBox["5"]}], 
+      RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{
@@ -17899,11 +17968,7 @@ Cell[BoxData[
        RowBox[{"-", "3"}], "-", 
        SqrtBox["5"]}], 
       RowBox[{"3", "+", 
-       SqrtBox["5"]}], 
-      RowBox[{
-       RowBox[{"-", "2"}], "-", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -18860,6 +18925,8 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
+      RowBox[{"1", "+", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
@@ -18938,10 +19005,7 @@ Cell[BoxData[
        SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "3"}], "-", 
-       SqrtBox["5"]}], 
-      RowBox[{"2", "+", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -19313,7 +19377,6 @@ Cell[BoxData[
               FEPrivate`FrontEndResource[
               "FEExpressions", "NumericalApproximationElider"]]}, 
             "RowDefault"], ShowStringCharacters -> 
-           
            False], -0.98460615754417135647713621438015252352`15.\
 954589770191003, Editable -> False], "approx" -> -0.9846061575441714, 
         "interp" -> InterpretationBox["", 
@@ -19607,7 +19670,6 @@ Cell[BoxData[
            False], -1.59312622860914876454785371606703847647`15.\
 954589770191003, Editable -> False], "approx" -> -1.5931262286091488`, 
         "interp" -> InterpretationBox["", 
-          
           Root[-1 - # - 2 #^2 - 3 #^3 - 2 #^4 + #^5 + #^6 - #^7 + 
            2 #^9 + #^10& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
            RowBox[{
@@ -19729,7 +19791,6 @@ Cell[BoxData[
           1.96921231510602989800418072263710200787`15.954589770191003, 
           Editable -> False], "approx" -> 1.96921231510603, "interp" -> 
         InterpretationBox["", 
-          
           Root[-1 + # - 2 #^2 + #^3 - #^4 - #^5 + 3 #^6 - 7 #^7 + 9 #^8 - 
            7 #^9 + 6 #^10 - 4 #^11 + #^12& , 2, 0]], "head" -> "Root", "big" -> 
         RowBox[{
@@ -20186,6 +20247,37 @@ Cell[BoxData[
        InterpretationFunction->(Slot["interp"]& )], 
       TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
           StyleBox[
+           TemplateBox[{"\"-0.867\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.86710180138136250249658587563317269087`15.\
+954589770191003, Editable -> False], "approx" -> -0.8671018013813625, 
+        "interp" -> InterpretationBox["", 
+          Root[
+          1 - 2 # - 3 #^2 + 2 #^3 + #^4 - #^6 - #^7 + #^8 + #^9 - #^10 + #^11 + 
+           4 #^12& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"2", " ", "#1"}], "-", 
+             RowBox[{"3", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "3"]}], "+", 
+             SuperscriptBox["#1", "4"], "-", 
+             SuperscriptBox["#1", "6"], "-", 
+             SuperscriptBox["#1", "7"], "+", 
+             SuperscriptBox["#1", "8"], "+", 
+             SuperscriptBox["#1", "9"], "-", 
+             SuperscriptBox["#1", "10"], "+", 
+             SuperscriptBox["#1", "11"], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "12"]}]}], "&"}], "degree" -> "12", 
+        "shortDegree" -> "12", "number" -> 2|>,
+       "NumericalApproximationInterp",
+       InterpretationFunction->(Slot["interp"]& )], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
            TemplateBox[{"\"0.867\"", 
              DynamicBox[
               FEPrivate`FrontEndResource[
@@ -20512,42 +20604,6 @@ Cell[BoxData[
                SuperscriptBox["#1", "8"]}], "+", 
              SuperscriptBox["#1", "9"]}], "&"}], "degree" -> "9", 
         "shortDegree" -> "9", "number" -> 3|>,
-       "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
-          StyleBox[
-           TemplateBox[{"\"-1.73\"", 
-             DynamicBox[
-              FEPrivate`FrontEndResource[
-              "FEExpressions", "NumericalApproximationElider"]]}, 
-            "RowDefault"], ShowStringCharacters -> 
-           False], -1.73420360243545634837403213168727234006`15.\
-954589770191003, Editable -> False], "approx" -> -1.7342036024354563`, 
-        "interp" -> InterpretationBox["", 
-          
-          Root[-1 + # + #^2 - #^3 + #^4 + #^5 - 2 #^6 - 2 #^7 + 
-           4 #^8 - #^9 - #^10 + 2 #^11 + 2 #^14 + #^15& , 1, 0]], "head" -> 
-        "Root", "big" -> RowBox[{
-           RowBox[{
-             RowBox[{"-", "1"}], "+", "#1", "+", 
-             SuperscriptBox["#1", "2"], "-", 
-             SuperscriptBox["#1", "3"], "+", 
-             SuperscriptBox["#1", "4"], "+", 
-             SuperscriptBox["#1", "5"], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "6"]}], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "7"]}], "+", 
-             RowBox[{"4", " ", 
-               SuperscriptBox["#1", "8"]}], "-", 
-             SuperscriptBox["#1", "9"], "-", 
-             SuperscriptBox["#1", "10"], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "11"]}], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "14"]}], "+", 
-             SuperscriptBox["#1", "15"]}], "&"}], "degree" -> "15", 
-        "shortDegree" -> "15", "number" -> 1|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )]},
      {"1", "1", "1", "1", "2", 
@@ -21521,6 +21577,9 @@ Cell[BoxData[
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"]}], 
       RowBox[{
+       RowBox[{"-", "1"}], "-", 
+       SqrtBox["5"]}], 
+      RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{
@@ -21594,11 +21653,7 @@ Cell[BoxData[
        RowBox[{"-", "3"}], "-", 
        SqrtBox["5"]}], 
       RowBox[{"3", "+", 
-       SqrtBox["5"]}], 
-      RowBox[{
-       RowBox[{"-", "2"}], "-", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", "2", 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -22266,7 +22321,6 @@ Cell[BoxData[
               FEPrivate`FrontEndResource[
               "FEExpressions", "NumericalApproximationElider"]]}, 
             "RowDefault"], ShowStringCharacters -> 
-           
            False], -5.94562802740453832939238054677844047546`15.\
 954589770191003, Editable -> False], "approx" -> -5.945628027404538, "interp" -> 
         InterpretationBox["", 
@@ -22779,6 +22833,14 @@ Cell[BoxData[
          RowBox[{"(", 
           RowBox[{"3", "+", 
            SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{"2", "+", 
+       RowBox[{"2", " ", 
+        SqrtBox["5"]}], "+", 
+       SqrtBox[
+        RowBox[{"6", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -23233,17 +23295,7 @@ Cell[BoxData[
              SuperscriptBox["#1", "6"]}], "&"}], "degree" -> "6", 
         "shortDegree" -> "6", "number" -> 4|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      RowBox[{"2", " ", 
-       RowBox[{"(", 
-        RowBox[{"2", "+", 
-         RowBox[{"2", " ", 
-          SqrtBox["5"]}], "+", 
-         SqrtBox[
-          RowBox[{"6", " ", 
-           RowBox[{"(", 
-            RowBox[{"3", "+", 
-             SqrtBox["5"]}], ")"}]}]]}], ")"}]}]},
+       InterpretationFunction->(Slot["interp"]& )]},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -23377,7 +23429,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], "0", 
       SqrtBox[
        RowBox[{"3", "+", 
-        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", 
+        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -23392,17 +23444,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "-", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
+        RowBox[{"1", "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], "0", 
-      SqrtBox["2"], "0", "0", "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -23536,7 +23588,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "+", 
-         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", 
+         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -23551,17 +23603,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
+        RowBox[{"1", "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "-", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       SqrtBox["2"], "0", 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -23695,7 +23747,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "+", 
-         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", 
+         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -23710,17 +23762,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
+        RowBox[{"1", "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "-", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       SqrtBox["2"], "0", 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -23854,7 +23906,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], "0", 
       SqrtBox[
        RowBox[{"3", "+", 
-        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", 
+        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -23869,17 +23921,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "-", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
+        RowBox[{"1", "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], "0", 
-      SqrtBox["2"], "0", "0", "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -24210,15 +24262,7 @@ Cell[BoxData[
        InterpretationFunction->(Slot["interp"]& )], "0", "0", "0", 
       FractionBox["24853", "2433"], 
       RowBox[{"-", 
-       FractionBox["24853", "2433"]}], "0", "0", 
-      RowBox[{"1", "-", 
-       SqrtBox["5"], "-", 
-       SqrtBox[
-        RowBox[{
-         FractionBox["3", "2"], " ", 
-         RowBox[{"(", 
-          RowBox[{"3", "-", 
-           SqrtBox["5"]}], ")"}]}]]}], 
+       FractionBox["24853", "2433"]}], "0", "0", "0", 
       RowBox[{"1", "-", 
        SqrtBox["5"], "-", 
        SqrtBox[
@@ -24230,6 +24274,14 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"], "+", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["3", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "-", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{"1", "-", 
+       SqrtBox["5"], "-", 
        SqrtBox[
         RowBox[{
          FractionBox["3", "2"], " ", 
@@ -24270,7 +24322,7 @@ Cell[BoxData[
          RowBox[{"(", 
           RowBox[{"13", "+", 
            RowBox[{"4", " ", 
-            SqrtBox["3"]}]}], ")"}]}]]}], "0", "0", "0", "0", "0"},
+            SqrtBox["3"]}]}], ")"}]}]]}], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -24618,13 +24670,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "+", 
-         SqrtBox["5"]}]]}], "0", "0", 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
-         SqrtBox["5"]}], ")"}]}], 
+         SqrtBox["5"]}]]}], "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -24635,6 +24681,12 @@ Cell[BoxData[
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{"1", "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -24646,7 +24698,7 @@ Cell[BoxData[
       SqrtBox["2"], "0", 
       SqrtBox["2"], 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -24731,7 +24783,6 @@ Cell[BoxData[
               FEPrivate`FrontEndResource[
               "FEExpressions", "NumericalApproximationElider"]]}, 
             "RowDefault"], ShowStringCharacters -> 
-           
            False], -0.83755602382217664292340941756265237927`15.\
 954589770191003, Editable -> False], "approx" -> -0.8375560238221766, 
         "interp" -> InterpretationBox["", 
@@ -25215,15 +25266,7 @@ Cell[BoxData[
              SuperscriptBox["#1", "14"]}], "&"}], "degree" -> "14", 
         "shortDegree" -> "14", "number" -> 1|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], "0", "0", 
-      RowBox[{"1", "-", 
-       SqrtBox["5"], "+", 
-       SqrtBox[
-        RowBox[{
-         FractionBox["3", "2"], " ", 
-         RowBox[{"(", 
-          RowBox[{"3", "-", 
-           SqrtBox["5"]}], ")"}]}]]}], 
+       InterpretationFunction->(Slot["interp"]& )], "0", "0", "0", 
       RowBox[{"1", "-", 
        SqrtBox["5"], "+", 
        SqrtBox[
@@ -25235,6 +25278,14 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"], "-", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["3", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "-", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{"1", "-", 
+       SqrtBox["5"], "+", 
        SqrtBox[
         RowBox[{
          FractionBox["3", "2"], " ", 
@@ -25275,7 +25326,7 @@ Cell[BoxData[
          RowBox[{"(", 
           RowBox[{"13", "-", 
            RowBox[{"4", " ", 
-            SqrtBox["3"]}]}], ")"}]}]]}], "0", "0", "0", "0", "0"},
+            SqrtBox["3"]}]}], ")"}]}]]}], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -25623,13 +25674,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], 
       SqrtBox[
        RowBox[{"3", "+", 
-        SqrtBox["5"]}]], "0", "0", 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
-         SqrtBox["5"]}], ")"}]}], 
+        SqrtBox["5"]}]], "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -25640,6 +25685,12 @@ Cell[BoxData[
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{"1", "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -25651,7 +25702,7 @@ Cell[BoxData[
        SqrtBox["2"]}], "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], 
-      SqrtBox["2"], "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -25999,13 +26050,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "+", 
-         SqrtBox["5"]}]]}], "0", "0", 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
-         SqrtBox["5"]}], ")"}]}], 
+         SqrtBox["5"]}]]}], "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -26016,6 +26061,12 @@ Cell[BoxData[
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{"1", "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -26027,7 +26078,7 @@ Cell[BoxData[
       SqrtBox["2"], "0", 
       SqrtBox["2"], 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -26595,15 +26646,7 @@ Cell[BoxData[
                SuperscriptBox["#1", "9"]}]}], "&"}], "degree" -> "9", 
         "shortDegree" -> "9", "number" -> 3|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], "0", "0", 
-      RowBox[{"1", "-", 
-       SqrtBox["5"], "+", 
-       SqrtBox[
-        RowBox[{
-         FractionBox["3", "2"], " ", 
-         RowBox[{"(", 
-          RowBox[{"3", "-", 
-           SqrtBox["5"]}], ")"}]}]]}], 
+       InterpretationFunction->(Slot["interp"]& )], "0", "0", "0", 
       RowBox[{"1", "-", 
        SqrtBox["5"], "+", 
        SqrtBox[
@@ -26615,6 +26658,14 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"], "-", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["3", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "-", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{"1", "-", 
+       SqrtBox["5"], "+", 
        SqrtBox[
         RowBox[{
          FractionBox["3", "2"], " ", 
@@ -26655,7 +26706,7 @@ Cell[BoxData[
         RowBox[{"(", 
          RowBox[{"13", "-", 
           RowBox[{"4", " ", 
-           SqrtBox["3"]}]}], ")"}]}]], "0", "0", "0", "0", "0"},
+           SqrtBox["3"]}]}], ")"}]}]], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -26864,7 +26915,6 @@ Cell[BoxData[
               FEPrivate`FrontEndResource[
               "FEExpressions", "NumericalApproximationElider"]]}, 
             "RowDefault"], ShowStringCharacters -> 
-           
            False], -0.83755602382217664292340941756265237927`15.\
 954589770191003, Editable -> False], "approx" -> -0.8375560238221766, 
         "interp" -> InterpretationBox["", 
@@ -27004,13 +27054,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], 
       SqrtBox[
        RowBox[{"3", "+", 
-        SqrtBox["5"]}]], "0", "0", 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
-         SqrtBox["5"]}], ")"}]}], 
+        SqrtBox["5"]}]], "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -27021,6 +27065,12 @@ Cell[BoxData[
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{"1", "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -27032,7 +27082,7 @@ Cell[BoxData[
        SqrtBox["2"]}], "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], 
-      SqrtBox["2"], "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -27363,15 +27413,7 @@ Cell[BoxData[
        InterpretationFunction->(Slot["interp"]& )], "0", "0", "0", 
       RowBox[{"-", 
        FractionBox["24853", "2433"]}], 
-      FractionBox["24853", "2433"], "0", "0", 
-      RowBox[{"1", "-", 
-       SqrtBox["5"], "-", 
-       SqrtBox[
-        RowBox[{
-         FractionBox["3", "2"], " ", 
-         RowBox[{"(", 
-          RowBox[{"3", "-", 
-           SqrtBox["5"]}], ")"}]}]]}], 
+      FractionBox["24853", "2433"], "0", "0", "0", 
       RowBox[{"1", "-", 
        SqrtBox["5"], "-", 
        SqrtBox[
@@ -27383,6 +27425,14 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"], "+", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["3", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "-", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{"1", "-", 
+       SqrtBox["5"], "-", 
        SqrtBox[
         RowBox[{
          FractionBox["3", "2"], " ", 
@@ -27423,7 +27473,7 @@ Cell[BoxData[
         RowBox[{"(", 
          RowBox[{"13", "+", 
           RowBox[{"4", " ", 
-           SqrtBox["3"]}]}], ")"}]}]], "0", "0", "0", "0", "0"},
+           SqrtBox["3"]}]}], ")"}]}]], "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -27557,7 +27607,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "+", 
-         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", 
+         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -27572,17 +27622,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "-", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
+        RowBox[{"1", "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       SqrtBox["2"], "0", 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -27716,7 +27766,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], "0", 
       SqrtBox[
        RowBox[{"3", "+", 
-        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", 
+        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -27731,17 +27781,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
+        RowBox[{"1", "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "-", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], "0", 
-      SqrtBox["2"], "0", "0", "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -27875,7 +27925,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], "0", 
       SqrtBox[
        RowBox[{"3", "+", 
-        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", 
+        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -27890,17 +27940,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
+        RowBox[{"1", "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "-", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], "0", 
-      SqrtBox["2"], "0", "0", "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -28034,7 +28084,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "+", 
-         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", 
+         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -28049,17 +28099,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "-", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "+", 
+        RowBox[{"1", "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       SqrtBox["2"], "0", 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0"},
      {"1", "1", "1", "1", "2", 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -28125,7 +28175,6 @@ Cell[BoxData[
           2.27102782200454411665191400970797985792`15.954589770191003, 
           Editable -> False], "approx" -> 2.271027822004544, "interp" -> 
         InterpretationBox["", 
-          
           Root[-1 - # + 2 #^2 + #^6 - #^7 + #^8 + 2 #^9 + 
            2 #^11 - #^12 - #^14 + #^15 + #^17 + #^18 + #^19 - 3 #^20 + #^21& ,
             5, 0]], "head" -> "Root", "big" -> RowBox[{
@@ -29163,6 +29212,14 @@ Cell[BoxData[
          RowBox[{"(", 
           RowBox[{"3", "-", 
            SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{"2", "-", 
+       RowBox[{"2", " ", 
+        SqrtBox["5"]}], "-", 
+       SqrtBox[
+        RowBox[{"6", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "-", 
+           SqrtBox["5"]}], ")"}]}]]}], 
       RowBox[{"5", "+", 
        FractionBox[
         RowBox[{"5", " ", 
@@ -29495,17 +29552,7 @@ Cell[BoxData[
              SuperscriptBox["#1", "12"]}], "&"}], "degree" -> "12", 
         "shortDegree" -> "12", "number" -> 2|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      RowBox[{"2", " ", 
-       RowBox[{"(", 
-        RowBox[{"2", "-", 
-         RowBox[{"2", " ", 
-          SqrtBox["5"]}], "-", 
-         SqrtBox[
-          RowBox[{"6", " ", 
-           RowBox[{"(", 
-            RowBox[{"3", "-", 
-             SqrtBox["5"]}], ")"}]}]]}], ")"}]}]},
+       InterpretationFunction->(Slot["interp"]& )]},
      {"1", "1", "1", "1", "2", 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -30494,6 +30541,9 @@ Cell[BoxData[
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
       RowBox[{
+       RowBox[{"-", "1"}], "+", 
+       SqrtBox["5"]}], 
+      RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{
@@ -30567,11 +30617,7 @@ Cell[BoxData[
        RowBox[{"-", "3"}], "+", 
        SqrtBox["5"]}], 
       RowBox[{"3", "-", 
-       SqrtBox["5"]}], 
-      RowBox[{
-       RowBox[{"-", "2"}], "+", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -31503,6 +31549,15 @@ Cell[BoxData[
         "shortDegree" -> "10", "number" -> 1|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )], 
+      RowBox[{
+       RowBox[{"-", "2"}], "+", 
+       RowBox[{"2", " ", 
+        SqrtBox["5"]}], "-", 
+       SqrtBox[
+        RowBox[{"6", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "-", 
+           SqrtBox["5"]}], ")"}]}]]}], 
       TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
           StyleBox[
            TemplateBox[{"\"-0.331\"", 
@@ -31867,43 +31922,6 @@ Cell[BoxData[
                SuperscriptBox["#1", "14"]}], "+", 
              SuperscriptBox["#1", "15"]}], "&"}], "degree" -> "15", 
         "shortDegree" -> "15", "number" -> 1|>,
-       "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
-          StyleBox[
-           TemplateBox[{"\"0.662\"", 
-             DynamicBox[
-              FEPrivate`FrontEndResource[
-              "FEExpressions", "NumericalApproximationElider"]]}, 
-            "RowDefault"], ShowStringCharacters -> False], 
-          0.66240683272207978582457599259214475751`15.954589770191003, 
-          Editable -> False], "approx" -> 0.6624068327220798, "interp" -> 
-        InterpretationBox["", 
-          Root[
-          1 - # + 2 #^2 + 2 #^3 - 5 #^4 - 2 #^5 - 9 #^6 + #^8 + 2 #^9 + 
-           3 #^10 + 3 #^11 + 2 #^12& , 3, 0]], "head" -> "Root", "big" -> 
-        RowBox[{
-           RowBox[{"1", "-", "#1", "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "2"]}], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "3"]}], "-", 
-             RowBox[{"5", " ", 
-               SuperscriptBox["#1", "4"]}], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "5"]}], "-", 
-             RowBox[{"9", " ", 
-               SuperscriptBox["#1", "6"]}], "+", 
-             SuperscriptBox["#1", "8"], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "9"]}], "+", 
-             RowBox[{"3", " ", 
-               SuperscriptBox["#1", "10"]}], "+", 
-             RowBox[{"3", " ", 
-               SuperscriptBox["#1", "11"]}], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "12"]}]}], "&"}], "degree" -> "12", 
-        "shortDegree" -> "12", "number" -> 3|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )]},
      {"1", "1", "1", "1", 
@@ -32703,6 +32721,8 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
+      RowBox[{"1", "-", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
@@ -32781,10 +32801,7 @@ Cell[BoxData[
        SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "3"}], "+", 
-       SqrtBox["5"]}], 
-      RowBox[{"2", "-", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", "2", 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -33773,6 +33790,9 @@ Cell[BoxData[
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
       RowBox[{
+       RowBox[{"-", "1"}], "+", 
+       SqrtBox["5"]}], 
+      RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{
@@ -33846,11 +33866,7 @@ Cell[BoxData[
        RowBox[{"-", "3"}], "+", 
        SqrtBox["5"]}], 
       RowBox[{"3", "-", 
-       SqrtBox["5"]}], 
-      RowBox[{
-       RowBox[{"-", "2"}], "+", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", "2", 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -35222,6 +35238,33 @@ Cell[BoxData[
         "shortDegree" -> "10", "number" -> 1|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.331\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.33120341636259570394784645941399503499`15.\
+954589770191003, Editable -> False], "approx" -> -0.3312034163625957, 
+        "interp" -> InterpretationBox["", 
+          Root[1 + 6 # + 7 #^2 - 6 #^3 - #^5 - 2 #^6 + #^9 + 4 #^10& , 1, 0]],
+         "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "+", 
+             RowBox[{"6", " ", "#1"}], "+", 
+             RowBox[{"7", " ", 
+               SuperscriptBox["#1", "2"]}], "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "3"]}], "-", 
+             SuperscriptBox["#1", "5"], "-", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "6"]}], "+", 
+             SuperscriptBox["#1", "9"], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "10"]}]}], "&"}], "degree" -> "10", 
+        "shortDegree" -> "10", "number" -> 1|>,
+       "NumericalApproximationInterp",
+       InterpretationFunction->(Slot["interp"]& )], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -35580,33 +35623,6 @@ Cell[BoxData[
                SuperscriptBox["#1", "14"]}], "+", 
              SuperscriptBox["#1", "15"]}], "&"}], "degree" -> "15", 
         "shortDegree" -> "15", "number" -> 1|>,
-       "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
-          StyleBox[
-           TemplateBox[{"\"-0.662\"", 
-             DynamicBox[
-              FEPrivate`FrontEndResource[
-              "FEExpressions", "NumericalApproximationElider"]]}, 
-            "RowDefault"], ShowStringCharacters -> 
-           False], -0.66240683281434420415223485179012641311`15.\
-954589770191003, Editable -> False], "approx" -> -0.6624068328143442, 
-        "interp" -> InterpretationBox["", 
-          Root[
-          2 + 3 # + #^4 - 3 #^6 + #^7 + #^8 - 2 #^9 - #^11 + #^12& , 2, 0]], 
-        "head" -> "Root", "big" -> RowBox[{
-           RowBox[{"2", "+", 
-             RowBox[{"3", " ", "#1"}], "+", 
-             SuperscriptBox["#1", "4"], "-", 
-             RowBox[{"3", " ", 
-               SuperscriptBox["#1", "6"]}], "+", 
-             SuperscriptBox["#1", "7"], "+", 
-             SuperscriptBox["#1", "8"], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "9"]}], "-", 
-             SuperscriptBox["#1", "11"], "+", 
-             SuperscriptBox["#1", "12"]}], "&"}], "degree" -> "12", 
-        "shortDegree" -> "12", "number" -> 2|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )]},
      {"1", "1", "1", "1", 
@@ -36406,6 +36422,8 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
+      RowBox[{"1", "-", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
@@ -36484,10 +36502,7 @@ Cell[BoxData[
        SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "3"}], "+", 
-       SqrtBox["5"]}], 
-      RowBox[{"2", "-", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -37604,6 +37619,15 @@ Cell[BoxData[
          RowBox[{"(", 
           RowBox[{"3", "-", 
            SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       RowBox[{"-", "2"}], "+", 
+       RowBox[{"2", " ", 
+        SqrtBox["5"]}], "+", 
+       SqrtBox[
+        RowBox[{"6", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "-", 
+           SqrtBox["5"]}], ")"}]}]]}], 
       RowBox[{"2", "-", 
        RowBox[{"2", " ", 
         SqrtBox["5"]}], "-", 
@@ -38005,18 +38029,7 @@ Cell[BoxData[
                    RowBox[{"30295537", "+", 
                     RowBox[{"15", " ", 
                     SqrtBox["3672146913537"]}]}], ")"}]}], ")"}], 
-                RowBox[{"1", "/", "3"}]]}]}]]}]]}]]}]}], 
-      RowBox[{"2", " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "2"}], "+", 
-         RowBox[{"2", " ", 
-          SqrtBox["5"]}], "+", 
-         SqrtBox[
-          RowBox[{"6", " ", 
-           RowBox[{"(", 
-            RowBox[{"3", "-", 
-             SqrtBox["5"]}], ")"}]}]]}], ")"}]}]},
+                RowBox[{"1", "/", "3"}]]}]}]]}]]}]]}]}]},
      {"1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "1", "0", 
@@ -38163,7 +38176,7 @@ Cell[BoxData[
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
-       SqrtBox["5"]}], 
+       SqrtBox["5"]}], "0", 
       RowBox[{"1", "-", 
        SqrtBox["5"]}], 
       RowBox[{
@@ -38175,24 +38188,24 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"3", "+", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{"3", "+", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
         RowBox[{
          RowBox[{"-", "3"}], "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"3", "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"1", "+", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
-       SqrtBox["5"]}], 
-      RowBox[{"1", "+", 
-       SqrtBox["5"]}], "0", "0"},
+       SqrtBox["5"]}], "0"},
      {"1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "1", "0", 
@@ -38338,7 +38351,7 @@ Cell[BoxData[
          RowBox[{"-", "3"}], "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{"1", "-", 
-       SqrtBox["5"]}], 
+       SqrtBox["5"]}], "0", 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
@@ -38350,25 +38363,25 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "3"}], "-", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "3"}], "-", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
         RowBox[{"3", "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "3"}], "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "3"}], "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
-      RowBox[{"1", "+", 
-       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
-       SqrtBox["5"]}], "0", "0"},
+       SqrtBox["5"]}], 
+      RowBox[{"1", "+", 
+       SqrtBox["5"]}], "0"},
      {"1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "1", "0", 
@@ -38514,7 +38527,7 @@ Cell[BoxData[
          RowBox[{"-", "3"}], "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{"1", "-", 
-       SqrtBox["5"]}], 
+       SqrtBox["5"]}], "0", 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
@@ -38526,25 +38539,25 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "3"}], "-", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "3"}], "-", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
         RowBox[{"3", "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "3"}], "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "3"}], "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
-      RowBox[{"1", "+", 
-       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
-       SqrtBox["5"]}], "0", "0"},
+       SqrtBox["5"]}], 
+      RowBox[{"1", "+", 
+       SqrtBox["5"]}], "0"},
      {"1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "1", "0", 
@@ -38691,7 +38704,7 @@ Cell[BoxData[
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
-       SqrtBox["5"]}], 
+       SqrtBox["5"]}], "0", 
       RowBox[{"1", "-", 
        SqrtBox["5"]}], 
       RowBox[{
@@ -38703,24 +38716,24 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"3", "+", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{"3", "+", 
-         SqrtBox["5"]}], ")"}]}], 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
         RowBox[{
          RowBox[{"-", "3"}], "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"3", "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"1", "+", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "-", 
-       SqrtBox["5"]}], 
-      RowBox[{"1", "+", 
-       SqrtBox["5"]}], "0", "0"},
+       SqrtBox["5"]}], "0"},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -39279,7 +39292,6 @@ Cell[BoxData[
               FEPrivate`FrontEndResource[
               "FEExpressions", "NumericalApproximationElider"]]}, 
             "RowDefault"], ShowStringCharacters -> 
-           
            False], -1.4035723835712474727444032396306283772`15.\
 954589770191003, Editable -> False], "approx" -> -1.4035723835712475`, 
         "interp" -> InterpretationBox["", 
@@ -39848,6 +39860,15 @@ Cell[BoxData[
          RowBox[{"(", 
           RowBox[{"3", "-", 
            SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       RowBox[{"-", "2"}], "+", 
+       RowBox[{"2", " ", 
+        SqrtBox["5"]}], "+", 
+       SqrtBox[
+        RowBox[{"6", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "-", 
+           SqrtBox["5"]}], ")"}]}]]}], 
       RowBox[{"2", "-", 
        RowBox[{"2", " ", 
         SqrtBox["5"]}], "-", 
@@ -40231,18 +40252,7 @@ Cell[BoxData[
                    RowBox[{"30295537", "+", 
                     RowBox[{"15", " ", 
                     SqrtBox["3672146913537"]}]}], ")"}]}], ")"}], 
-                RowBox[{"1", "/", "3"}]]}]}]]}]]}]]}]}], 
-      RowBox[{"2", " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "2"}], "+", 
-         RowBox[{"2", " ", 
-          SqrtBox["5"]}], "+", 
-         SqrtBox[
-          RowBox[{"6", " ", 
-           RowBox[{"(", 
-            RowBox[{"3", "-", 
-             SqrtBox["5"]}], ")"}]}]]}], ")"}]}]},
+                RowBox[{"1", "/", "3"}]]}]}]]}]]}]]}]}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -41220,6 +41230,8 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
+      RowBox[{"1", "-", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
@@ -41300,10 +41312,7 @@ Cell[BoxData[
        SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "3"}], "+", 
-       SqrtBox["5"]}], 
-      RowBox[{"2", "-", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", "2", 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -42311,6 +42320,33 @@ Cell[BoxData[
         "shortDegree" -> "10", "number" -> 1|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.331\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.33120341636259570394784645941399503499`15.\
+954589770191003, Editable -> False], "approx" -> -0.3312034163625957, 
+        "interp" -> InterpretationBox["", 
+          Root[1 + 6 # + 7 #^2 - 6 #^3 - #^5 - 2 #^6 + #^9 + 4 #^10& , 1, 0]],
+         "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "+", 
+             RowBox[{"6", " ", "#1"}], "+", 
+             RowBox[{"7", " ", 
+               SuperscriptBox["#1", "2"]}], "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "3"]}], "-", 
+             SuperscriptBox["#1", "5"], "-", 
+             RowBox[{"2", " ", 
+               SuperscriptBox["#1", "6"]}], "+", 
+             SuperscriptBox["#1", "9"], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "10"]}]}], "&"}], "degree" -> "10", 
+        "shortDegree" -> "10", "number" -> 1|>,
+       "NumericalApproximationInterp",
+       InterpretationFunction->(Slot["interp"]& )], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -42685,33 +42721,6 @@ Cell[BoxData[
                SuperscriptBox["#1", "14"]}], "+", 
              SuperscriptBox["#1", "15"]}], "&"}], "degree" -> "15", 
         "shortDegree" -> "15", "number" -> 1|>,
-       "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
-          StyleBox[
-           TemplateBox[{"\"-0.662\"", 
-             DynamicBox[
-              FEPrivate`FrontEndResource[
-              "FEExpressions", "NumericalApproximationElider"]]}, 
-            "RowDefault"], ShowStringCharacters -> 
-           False], -0.66240683281434420415223485179012641311`15.\
-954589770191003, Editable -> False], "approx" -> -0.6624068328143442, 
-        "interp" -> InterpretationBox["", 
-          Root[
-          2 + 3 # + #^4 - 3 #^6 + #^7 + #^8 - 2 #^9 - #^11 + #^12& , 2, 0]], 
-        "head" -> "Root", "big" -> RowBox[{
-           RowBox[{"2", "+", 
-             RowBox[{"3", " ", "#1"}], "+", 
-             SuperscriptBox["#1", "4"], "-", 
-             RowBox[{"3", " ", 
-               SuperscriptBox["#1", "6"]}], "+", 
-             SuperscriptBox["#1", "7"], "+", 
-             SuperscriptBox["#1", "8"], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "9"]}], "-", 
-             SuperscriptBox["#1", "11"], "+", 
-             SuperscriptBox["#1", "12"]}], "&"}], "degree" -> "12", 
-        "shortDegree" -> "12", "number" -> 2|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )]},
      {"1", "1", "1", "1", "2", 
@@ -43538,6 +43547,9 @@ Cell[BoxData[
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
       RowBox[{
+       RowBox[{"-", "1"}], "+", 
+       SqrtBox["5"]}], 
+      RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{
@@ -43613,11 +43625,7 @@ Cell[BoxData[
        RowBox[{"-", "3"}], "+", 
        SqrtBox["5"]}], 
       RowBox[{"3", "-", 
-       SqrtBox["5"]}], 
-      RowBox[{
-       RowBox[{"-", "2"}], "+", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -44595,6 +44603,8 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
+      RowBox[{"1", "-", 
+       SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
@@ -44675,10 +44685,7 @@ Cell[BoxData[
        SqrtBox["5"]}], 
       RowBox[{
        RowBox[{"-", "3"}], "+", 
-       SqrtBox["5"]}], 
-      RowBox[{"2", "-", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{
@@ -44819,6 +44826,7 @@ Cell[BoxData[
               FEPrivate`FrontEndResource[
               "FEExpressions", "NumericalApproximationElider"]]}, 
             "RowDefault"], ShowStringCharacters -> 
+           
            False], -0.60852007089472959222575809690169990063`15.\
 954589770191003, Editable -> False], "approx" -> -0.6085200708947296, 
         "interp" -> InterpretationBox["", 
@@ -45990,6 +45998,15 @@ Cell[BoxData[
         "shortDegree" -> "10", "number" -> 1|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )], 
+      RowBox[{
+       RowBox[{"-", "2"}], "+", 
+       RowBox[{"2", " ", 
+        SqrtBox["5"]}], "-", 
+       SqrtBox[
+        RowBox[{"6", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "-", 
+           SqrtBox["5"]}], ")"}]}]]}], 
       TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
           StyleBox[
            TemplateBox[{"\"-0.331\"", 
@@ -46354,43 +46371,6 @@ Cell[BoxData[
                SuperscriptBox["#1", "14"]}], "+", 
              SuperscriptBox["#1", "15"]}], "&"}], "degree" -> "15", 
         "shortDegree" -> "15", "number" -> 1|>,
-       "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
-          StyleBox[
-           TemplateBox[{"\"0.662\"", 
-             DynamicBox[
-              FEPrivate`FrontEndResource[
-              "FEExpressions", "NumericalApproximationElider"]]}, 
-            "RowDefault"], ShowStringCharacters -> False], 
-          0.66240683272207978582457599259214475751`15.954589770191003, 
-          Editable -> False], "approx" -> 0.6624068327220798, "interp" -> 
-        InterpretationBox["", 
-          Root[
-          1 - # + 2 #^2 + 2 #^3 - 5 #^4 - 2 #^5 - 9 #^6 + #^8 + 2 #^9 + 
-           3 #^10 + 3 #^11 + 2 #^12& , 3, 0]], "head" -> "Root", "big" -> 
-        RowBox[{
-           RowBox[{"1", "-", "#1", "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "2"]}], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "3"]}], "-", 
-             RowBox[{"5", " ", 
-               SuperscriptBox["#1", "4"]}], "-", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "5"]}], "-", 
-             RowBox[{"9", " ", 
-               SuperscriptBox["#1", "6"]}], "+", 
-             SuperscriptBox["#1", "8"], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "9"]}], "+", 
-             RowBox[{"3", " ", 
-               SuperscriptBox["#1", "10"]}], "+", 
-             RowBox[{"3", " ", 
-               SuperscriptBox["#1", "11"]}], "+", 
-             RowBox[{"2", " ", 
-               SuperscriptBox["#1", "12"]}]}], "&"}], "degree" -> "12", 
-        "shortDegree" -> "12", "number" -> 3|>,
        "NumericalApproximationInterp",
        InterpretationFunction->(Slot["interp"]& )]},
      {"1", "1", "1", "1", "2", 
@@ -47217,6 +47197,9 @@ Cell[BoxData[
        RowBox[{"-", "1"}], "+", 
        SqrtBox["5"]}], 
       RowBox[{
+       RowBox[{"-", "1"}], "+", 
+       SqrtBox["5"]}], 
+      RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{
@@ -47292,11 +47275,7 @@ Cell[BoxData[
        RowBox[{"-", "3"}], "+", 
        SqrtBox["5"]}], 
       RowBox[{"3", "-", 
-       SqrtBox["5"]}], 
-      RowBox[{
-       RowBox[{"-", "2"}], "+", 
-       RowBox[{"2", " ", 
-        SqrtBox["5"]}]}]},
+       SqrtBox["5"]}]},
      {"1", "1", "1", "1", "2", 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -47808,7 +47787,6 @@ Cell[BoxData[
           1.40357238339545409289144117792602628469`15.954589770191003, 
           Editable -> False], "approx" -> 1.403572383395454, "interp" -> 
         InterpretationBox["", 
-          
           Root[-1 + 13 # - #^2 - 6 #^3 - 22 #^5 + 3 #^6 - 2 #^7 - 12 #^8 + 
            10 #^9 + 3 #^10& , 4, 0]], "head" -> "Root", "big" -> RowBox[{
            RowBox[{
@@ -48406,6 +48384,14 @@ Cell[BoxData[
        RowBox[{
         RowBox[{"-", "15285"}], "-", 
         SqrtBox["233845465"]}], "4120"], 
+      RowBox[{"2", "-", 
+       RowBox[{"2", " ", 
+        SqrtBox["5"]}], "-", 
+       SqrtBox[
+        RowBox[{"6", " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "-", 
+           SqrtBox["5"]}], ")"}]}]]}], 
       RowBox[{"2", "-", 
        RowBox[{"2", " ", 
         SqrtBox["5"]}], "-", 
@@ -48768,17 +48754,7 @@ Cell[BoxData[
              SuperscriptBox["#1", "12"]}], "&"}], "degree" -> "12", 
         "shortDegree" -> "12", "number" -> 2|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], 
-      RowBox[{"2", " ", 
-       RowBox[{"(", 
-        RowBox[{"2", "-", 
-         RowBox[{"2", " ", 
-          SqrtBox["5"]}], "-", 
-         SqrtBox[
-          RowBox[{"6", " ", 
-           RowBox[{"(", 
-            RowBox[{"3", "-", 
-             SqrtBox["5"]}], ")"}]}]]}], ")"}]}]},
+       InterpretationFunction->(Slot["interp"]& )]},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -48912,7 +48888,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], "0", 
       SqrtBox[
        RowBox[{"3", "-", 
-        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", 
+        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -48927,17 +48903,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "+", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
+        RowBox[{"1", "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       SqrtBox["2"], "0", 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -49071,7 +49047,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "-", 
-         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", 
+         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -49086,17 +49062,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
+        RowBox[{"1", "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "+", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], "0", 
-      SqrtBox["2"], "0", "0", "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -49230,7 +49206,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "-", 
-         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", 
+         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -49245,17 +49221,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
+        RowBox[{"1", "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "+", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], "0", 
-      SqrtBox["2"], "0", "0", "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -49389,7 +49365,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], "0", 
       SqrtBox[
        RowBox[{"3", "-", 
-        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", 
+        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -49404,17 +49380,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "+", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
+        RowBox[{"1", "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       SqrtBox["2"], "0", 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -50002,15 +49978,7 @@ Cell[BoxData[
              SuperscriptBox["#1", "16"]}], "&"}], "degree" -> "16", 
         "shortDegree" -> "16", "number" -> 1|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], "0", "0", 
-      RowBox[{"1", "+", 
-       SqrtBox["5"], "+", 
-       SqrtBox[
-        RowBox[{
-         FractionBox["3", "2"], " ", 
-         RowBox[{"(", 
-          RowBox[{"3", "+", 
-           SqrtBox["5"]}], ")"}]}]]}], 
+       InterpretationFunction->(Slot["interp"]& )], "0", "0", "0", 
       RowBox[{"1", "+", 
        SqrtBox["5"], "+", 
        SqrtBox[
@@ -50022,6 +49990,14 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"], "-", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["3", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{"1", "+", 
+       SqrtBox["5"], "+", 
        SqrtBox[
         RowBox[{
          FractionBox["3", "2"], " ", 
@@ -50062,7 +50038,7 @@ Cell[BoxData[
         RowBox[{"(", 
          RowBox[{"13", "+", 
           RowBox[{"4", " ", 
-           SqrtBox["3"]}]}], ")"}]}]], "0", "0", "0", "0", "0"},
+           SqrtBox["3"]}]}], ")"}]}]], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -50406,13 +50382,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "-", 
-         SqrtBox["5"]}]]}], "0", "0", 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
-         SqrtBox["5"]}], ")"}]}], 
+         SqrtBox["5"]}]]}], "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -50423,6 +50393,12 @@ Cell[BoxData[
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{"1", "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -50434,7 +50410,7 @@ Cell[BoxData[
        SqrtBox["2"]}], "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], 
-      SqrtBox["2"], "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -50842,15 +50818,7 @@ Cell[BoxData[
              SuperscriptBox["#1", "14"]}], "&"}], "degree" -> "14", 
         "shortDegree" -> "14", "number" -> 1|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], "0", "0", 
-      RowBox[{"1", "+", 
-       SqrtBox["5"], "-", 
-       SqrtBox[
-        RowBox[{
-         FractionBox["3", "2"], " ", 
-         RowBox[{"(", 
-          RowBox[{"3", "+", 
-           SqrtBox["5"]}], ")"}]}]]}], 
+       InterpretationFunction->(Slot["interp"]& )], "0", "0", "0", 
       RowBox[{"1", "+", 
        SqrtBox["5"], "-", 
        SqrtBox[
@@ -50862,6 +50830,14 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"], "+", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["3", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{"1", "+", 
+       SqrtBox["5"], "-", 
        SqrtBox[
         RowBox[{
          FractionBox["3", "2"], " ", 
@@ -50902,7 +50878,7 @@ Cell[BoxData[
         RowBox[{"(", 
          RowBox[{"13", "-", 
           RowBox[{"4", " ", 
-           SqrtBox["3"]}]}], ")"}]}]], "0", "0", "0", "0", "0"},
+           SqrtBox["3"]}]}], ")"}]}]], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -51247,13 +51223,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], 
       SqrtBox[
        RowBox[{"3", "-", 
-        SqrtBox["5"]}]], "0", "0", 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
-         SqrtBox["5"]}], ")"}]}], 
+        SqrtBox["5"]}]], "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -51264,6 +51234,12 @@ Cell[BoxData[
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{"1", "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -51275,7 +51251,7 @@ Cell[BoxData[
       SqrtBox["2"], "0", 
       SqrtBox["2"], 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -51619,13 +51595,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "-", 
-         SqrtBox["5"]}]]}], "0", "0", 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
-         SqrtBox["5"]}], ")"}]}], 
+         SqrtBox["5"]}]]}], "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -51636,6 +51606,12 @@ Cell[BoxData[
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{"1", "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -51647,7 +51623,7 @@ Cell[BoxData[
        SqrtBox["2"]}], "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], 
-      SqrtBox["2"], "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -52055,15 +52031,7 @@ Cell[BoxData[
              SuperscriptBox["#1", "14"]}], "&"}], "degree" -> "14", 
         "shortDegree" -> "14", "number" -> 2|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], "0", "0", 
-      RowBox[{"1", "+", 
-       SqrtBox["5"], "-", 
-       SqrtBox[
-        RowBox[{
-         FractionBox["3", "2"], " ", 
-         RowBox[{"(", 
-          RowBox[{"3", "+", 
-           SqrtBox["5"]}], ")"}]}]]}], 
+       InterpretationFunction->(Slot["interp"]& )], "0", "0", "0", 
       RowBox[{"1", "+", 
        SqrtBox["5"], "-", 
        SqrtBox[
@@ -52075,6 +52043,14 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"], "+", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["3", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{"1", "+", 
+       SqrtBox["5"], "-", 
        SqrtBox[
         RowBox[{
          FractionBox["3", "2"], " ", 
@@ -52115,7 +52091,7 @@ Cell[BoxData[
          RowBox[{"(", 
           RowBox[{"13", "-", 
            RowBox[{"4", " ", 
-            SqrtBox["3"]}]}], ")"}]}]]}], "0", "0", "0", "0", "0"},
+            SqrtBox["3"]}]}], ")"}]}]]}], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -52459,13 +52435,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], 
       SqrtBox[
        RowBox[{"3", "-", 
-        SqrtBox["5"]}]], "0", "0", 
-      RowBox[{
-       FractionBox["1", "2"], " ", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
-         SqrtBox["5"]}], ")"}]}], 
+        SqrtBox["5"]}]], "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -52476,6 +52446,12 @@ Cell[BoxData[
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
         RowBox[{"1", "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
@@ -52487,7 +52463,7 @@ Cell[BoxData[
       SqrtBox["2"], "0", 
       SqrtBox["2"], 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0"},
      {"1", "1", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", 
@@ -53075,15 +53051,7 @@ Cell[BoxData[
              SuperscriptBox["#1", "15"]}], "&"}], "degree" -> "15", 
         "shortDegree" -> "15", "number" -> 3|>,
        "NumericalApproximationInterp",
-       InterpretationFunction->(Slot["interp"]& )], "0", "0", 
-      RowBox[{"1", "+", 
-       SqrtBox["5"], "+", 
-       SqrtBox[
-        RowBox[{
-         FractionBox["3", "2"], " ", 
-         RowBox[{"(", 
-          RowBox[{"3", "+", 
-           SqrtBox["5"]}], ")"}]}]]}], 
+       InterpretationFunction->(Slot["interp"]& )], "0", "0", "0", 
       RowBox[{"1", "+", 
        SqrtBox["5"], "+", 
        SqrtBox[
@@ -53095,6 +53063,14 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "1"}], "-", 
        SqrtBox["5"], "-", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["3", "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{"3", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{"1", "+", 
+       SqrtBox["5"], "+", 
        SqrtBox[
         RowBox[{
          FractionBox["3", "2"], " ", 
@@ -53135,7 +53111,7 @@ Cell[BoxData[
          RowBox[{"(", 
           RowBox[{"13", "+", 
            RowBox[{"4", " ", 
-            SqrtBox["3"]}]}], ")"}]}]]}], "0", "0", "0", "0", "0"},
+            SqrtBox["3"]}]}], ")"}]}]]}], "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -53269,7 +53245,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "-", 
-         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", 
+         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -53284,17 +53260,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "+", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
+        RowBox[{"1", "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], "0", 
-      SqrtBox["2"], "0", "0", "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -53428,7 +53404,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], "0", 
       SqrtBox[
        RowBox[{"3", "-", 
-        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", 
+        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -53443,17 +53419,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
+        RowBox[{"1", "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "+", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       SqrtBox["2"], "0", 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -53587,7 +53563,7 @@ Cell[BoxData[
          SqrtBox["5"]}]]}], "0", 
       SqrtBox[
        RowBox[{"3", "-", 
-        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", 
+        SqrtBox["5"]}]], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -53602,17 +53578,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
+        RowBox[{"1", "+", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "+", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       SqrtBox["2"], "0", 
       RowBox[{"-", 
-       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0", "0"},
+       SqrtBox["2"]}], "0", "0", "0", "0", "0", "0"},
      {"1", 
       RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", 
@@ -53746,7 +53722,7 @@ Cell[BoxData[
       RowBox[{"-", 
        SqrtBox[
         RowBox[{"3", "-", 
-         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", 
+         SqrtBox["5"]}]]}], "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
@@ -53761,17 +53737,17 @@ Cell[BoxData[
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{"1", "+", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
          SqrtBox["5"]}], ")"}]}], 
       RowBox[{
        FractionBox["1", "2"], " ", 
        RowBox[{"(", 
-        RowBox[{
-         RowBox[{"-", "1"}], "-", 
+        RowBox[{"1", "+", 
          SqrtBox["5"]}], ")"}]}], "0", "0", 
       RowBox[{"-", 
        SqrtBox["2"]}], "0", 
-      SqrtBox["2"], "0", "0", "0", "0", "0", "0", "0"},
+      SqrtBox["2"], "0", "0", "0", "0", "0", "0"},
      {"1", "1", "1", "1", "2", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], 
@@ -53856,6 +53832,8 @@ Cell[BoxData[
       RowBox[{"2", "+", 
        SqrtBox["3"]}], 
       RowBox[{"2", "+", 
+       SqrtBox["3"]}], 
+      RowBox[{"2", "+", 
        SqrtBox["3"]}], "0", "0", "0", "0", 
       RowBox[{"1", "+", 
        RowBox[{"2", " ", 
@@ -53875,9 +53853,6 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "2"}], "-", 
        RowBox[{"4", " ", 
-        SqrtBox["3"]}]}], 
-      RowBox[{"4", "+", 
-       RowBox[{"2", " ", 
         SqrtBox["3"]}]}]},
      {"1", "1", "1", "1", "2", 
       RowBox[{"-", "1"}], 
@@ -53941,9 +53916,9 @@ Cell[BoxData[
        SqrtBox["3"]}], "2", "1", "1", "1", "1", "0", "0", "0", "0", "0", "0", 
       "0", "0", 
       RowBox[{"-", "1"}], 
+      RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", 
       "0", "2", "2", "2", 
-      RowBox[{"-", "2"}], 
       RowBox[{"-", "2"}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
@@ -54033,6 +54008,9 @@ Cell[BoxData[
        SqrtBox["3"]}], "0", "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{"2", "-", 
        SqrtBox["3"]}], 
+      RowBox[{
+       RowBox[{"-", "2"}], "+", 
+       SqrtBox["3"]}], 
       RowBox[{"2", "-", 
        SqrtBox["3"]}], "0", "0", "0", "0", 
       RowBox[{
@@ -54052,10 +54030,6 @@ Cell[BoxData[
         SqrtBox["3"]}]}], 
       RowBox[{"2", "-", 
        RowBox[{"4", " ", 
-        SqrtBox["3"]}]}], 
-      RowBox[{
-       RowBox[{"-", "4"}], "+", 
-       RowBox[{"2", " ", 
         SqrtBox["3"]}]}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
@@ -54121,10 +54095,10 @@ Cell[BoxData[
        SqrtBox["3"]}], 
       RowBox[{"-", "2"}], "1", "1", "1", "1", "0", "0", "0", "0", "0", "0", 
       "0", "0", 
-      RowBox[{"-", "1"}], 
+      RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", "0", "0", "0", 
       RowBox[{"-", "1"}], "0", "0", "0", "0", "0", "0", 
-      RowBox[{"-", "2"}], "2", "2", "2", "2"},
+      RowBox[{"-", "2"}], "2", "2", "2"},
      {"1", "1", "1", "1", "2", 
       RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], 
@@ -54187,9 +54161,9 @@ Cell[BoxData[
        SqrtBox["3"]}], "2", "1", "1", "1", "1", "0", "0", "0", "0", "0", "0", 
       "0", "0", 
       RowBox[{"-", "1"}], 
+      RowBox[{"-", "1"}], 
       RowBox[{"-", "1"}], "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", 
       "0", "2", "2", "2", 
-      RowBox[{"-", "2"}], 
       RowBox[{"-", "2"}]},
      {"1", "1", "1", "1", "2", 
       RowBox[{"-", "1"}], 
@@ -54275,6 +54249,8 @@ Cell[BoxData[
       RowBox[{"2", "-", 
        SqrtBox["3"]}], 
       RowBox[{"2", "-", 
+       SqrtBox["3"]}], 
+      RowBox[{"2", "-", 
        SqrtBox["3"]}], "0", "0", "0", "0", 
       RowBox[{"1", "-", 
        RowBox[{"2", " ", 
@@ -54294,9 +54270,6 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"-", "2"}], "+", 
        RowBox[{"4", " ", 
-        SqrtBox["3"]}]}], 
-      RowBox[{"4", "-", 
-       RowBox[{"2", " ", 
         SqrtBox["3"]}]}]},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
@@ -54362,10 +54335,10 @@ Cell[BoxData[
        SqrtBox["3"]}], 
       RowBox[{"-", "2"}], "1", "1", "1", "1", "0", "0", "0", "0", "0", "0", 
       "0", "0", 
-      RowBox[{"-", "1"}], 
+      RowBox[{"-", "1"}], "1", 
       RowBox[{"-", "1"}], "0", "0", "0", "0", 
       RowBox[{"-", "1"}], "0", "0", "0", "0", "0", "0", 
-      RowBox[{"-", "2"}], "2", "2", "2", "2"},
+      RowBox[{"-", "2"}], "2", "2", "2"},
      {"1", "1", "1", "1", 
       RowBox[{"-", "2"}], 
       RowBox[{"-", "1"}], 
@@ -54454,6 +54427,9 @@ Cell[BoxData[
        SqrtBox["3"]}], "0", "0", "0", "0", "0", "0", "0", "0", 
       RowBox[{"2", "+", 
        SqrtBox["3"]}], 
+      RowBox[{
+       RowBox[{"-", "2"}], "-", 
+       SqrtBox["3"]}], 
       RowBox[{"2", "+", 
        SqrtBox["3"]}], "0", "0", "0", "0", 
       RowBox[{
@@ -54473,10 +54449,6 @@ Cell[BoxData[
         SqrtBox["3"]}]}], 
       RowBox[{"2", "+", 
        RowBox[{"4", " ", 
-        SqrtBox["3"]}]}], 
-      RowBox[{
-       RowBox[{"-", "4"}], "-", 
-       RowBox[{"2", " ", 
         SqrtBox["3"]}]}]},
      {"2", 
       RowBox[{"-", "2"}], 
@@ -54513,10 +54485,24 @@ Cell[BoxData[
    3.987608514942518*^9, {3.987608864139234*^9, 3.987608889437271*^9}, 
    3.987608925021524*^9, 3.987609060067587*^9, {3.987609527267972*^9, 
    3.9876096303147783`*^9}, 3.987609663857029*^9, {3.987609738960099*^9, 
-   3.987609779930366*^9}, 3.987609947242868*^9},
+   3.987609779930366*^9}, 3.987609947242868*^9, 3.9876703936709557`*^9, {
+   3.987670813884232*^9, 3.987670822150609*^9}, {3.9876708771212883`*^9, 
+   3.987670889620084*^9}, 3.9876709609868927`*^9},
  CellLabel->
-  "Out[120]//MatrixForm=",ExpressionUUID->"f274067f-1c95-4668-adcb-\
-b1235d946e4b"]
+  "Out[52]//MatrixForm=",ExpressionUUID->"d3ce1e40-efd8-4788-b6ad-\
+a452f3dd6758"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"families", "//", "Length"}]], "Input",
+ CellChangeTimes->{{3.987670406888906*^9, 3.987670409753819*^9}},
+ CellLabel->"In[25]:=",ExpressionUUID->"8a6ef9d6-355c-4207-b1c2-2ed45dfda0f9"],
+
+Cell[BoxData["13"], "Output",
+ CellChangeTimes->{3.987670410193665*^9},
+ CellLabel->"Out[25]=",ExpressionUUID->"d6bd236f-f6ae-400d-9650-01855c44b7eb"]
 }, Open  ]],
 
 Cell[BoxData[""], "Input",
@@ -71610,179 +71596,183 @@ CellTagsIndex->{}
 Notebook[{
 Cell[CellGroupData[{
 Cell[576, 22, 169, 3, 72, "Title",ExpressionUUID->"0776f0a0-ed71-4d8f-90dd-1fd383b81ded"],
-Cell[748, 27, 410, 8, 62, "Subtitle",ExpressionUUID->"4b479006-7184-4aad-9b94-3a8e031e3555"],
+Cell[748, 27, 410, 8, 85, "Subtitle",ExpressionUUID->"4b479006-7184-4aad-9b94-3a8e031e3555"],
 Cell[CellGroupData[{
 Cell[1183, 39, 187, 3, 49, "Section",ExpressionUUID->"01ac1b70-84cb-49dc-a14e-864c37ae1a60"],
 Cell[1373, 44, 281, 6, 25, "Text",ExpressionUUID->"d2846055-7ffb-4877-98ba-fac709948cc5"],
 Cell[CellGroupData[{
 Cell[1679, 54, 197, 3, 39, "Subsection",ExpressionUUID->"df5a21eb-3313-4014-a1ec-0d273e564b4e"],
-Cell[1879, 59, 27712, 678, 1083, "Input",ExpressionUUID->"c9b1988e-b948-4769-b052-be492e4e6a26"],
-Cell[29594, 739, 472, 13, 70, "Text",ExpressionUUID->"dcbee79e-845b-4981-9349-212ed66706b3"],
-Cell[30069, 754, 198, 6, 18, "Echo",ExpressionUUID->"cb87c146-4c5a-4eb6-8e72-6dadf70dc257"],
-Cell[30270, 762, 7343, 122, 301, "Output",ExpressionUUID->"0cf9d056-e8bd-4ebb-962a-748d64bc410f"]
+Cell[1879, 59, 27832, 679, 1083, "Input",ExpressionUUID->"c9b1988e-b948-4769-b052-be492e4e6a26"],
+Cell[29714, 740, 472, 13, 70, "Text",ExpressionUUID->"326050bd-4cc6-4f43-83b4-21cb510f8426"],
+Cell[30189, 755, 196, 5, 18, "Echo",ExpressionUUID->"fb0ecf6d-f199-4e59-95fd-37d1d3591d42"],
+Cell[30388, 762, 7465, 123, 291, "Output",ExpressionUUID->"2f99cd96-03b6-4419-b3f7-72d347328127"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[37650, 889, 185, 3, 39, "Subsection",ExpressionUUID->"44fa9f5a-2a50-472e-92ae-bcc03f1248d6"],
+Cell[37890, 890, 185, 3, 39, "Subsection",ExpressionUUID->"44fa9f5a-2a50-472e-92ae-bcc03f1248d6"],
 Cell[CellGroupData[{
-Cell[37860, 896, 16192, 362, 791, "Input",ExpressionUUID->"7971f8d4-01a4-4591-81d2-206eed4a5951"],
+Cell[38100, 897, 19274, 438, 906, "Input",ExpressionUUID->"7971f8d4-01a4-4591-81d2-206eed4a5951"],
 Cell[CellGroupData[{
-Cell[54077, 1262, 199, 6, 18, "Echo",ExpressionUUID->"bbab3d3d-83fc-40c8-b1bd-10a49b089d97"],
-Cell[54279, 1270, 196, 5, 18, "Echo",ExpressionUUID->"a4e8452b-3846-4462-8558-4bb4ec79ad04"],
-Cell[54478, 1277, 200, 6, 18, "Echo",ExpressionUUID->"88649c52-b55b-4d8d-890b-ad168c855418"]
+Cell[57399, 1339, 198, 6, 18, "Echo",ExpressionUUID->"ed8230ba-a1ed-4544-8570-b70c492b4fd2"],
+Cell[57600, 1347, 200, 6, 18, "Echo",ExpressionUUID->"1ce29e13-b1c9-49b7-86f6-f4e6d5e0ddc2"],
+Cell[57803, 1355, 199, 6, 18, "Echo",ExpressionUUID->"f69ab6b1-db22-4286-9e8a-b7c0661faeed"]
 }, Open  ]],
-Cell[54693, 1286, 2051474, 53232, 1958, "Output",ExpressionUUID->"f274067f-1c95-4668-adcb-b1235d946e4b"]
+Cell[58017, 1364, 2047333, 53128, 1958, "Output",ExpressionUUID->"d3ce1e40-efd8-4788-b6ad-a452f3dd6758"]
 }, Open  ]],
-Cell[2106182, 54521, 152, 3, 22, "Input",ExpressionUUID->"229d25b2-7b33-44b5-bfdf-b905b61f4e25"],
 Cell[CellGroupData[{
-Cell[2106359, 54528, 2382, 70, 114, "Input",ExpressionUUID->"28c368fe-73a9-4635-8272-63c02bde0276"],
-Cell[2108744, 54600, 273, 5, 35, "Output",ExpressionUUID->"a0877c92-1e85-438f-996c-7206923746ed"]
+Cell[2105387, 54497, 207, 3, 22, "Input",ExpressionUUID->"8a6ef9d6-355c-4207-b1c2-2ed45dfda0f9"],
+Cell[2105597, 54502, 150, 2, 25, "Output",ExpressionUUID->"d6bd236f-f6ae-400d-9650-01855c44b7eb"]
+}, Open  ]],
+Cell[2105762, 54507, 152, 3, 22, "Input",ExpressionUUID->"229d25b2-7b33-44b5-bfdf-b905b61f4e25"],
+Cell[CellGroupData[{
+Cell[2105939, 54514, 2382, 70, 125, "Input",ExpressionUUID->"28c368fe-73a9-4635-8272-63c02bde0276"],
+Cell[2108324, 54586, 273, 5, 25, "Output",ExpressionUUID->"a0877c92-1e85-438f-996c-7206923746ed"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2109078, 54612, 166, 3, 49, "Section",ExpressionUUID->"3b5e26b2-9076-4f0d-a92f-c04ae4451f48"],
-Cell[2109247, 54617, 623, 11, 41, "Text",ExpressionUUID->"e0649843-0a83-46b1-a791-a940ae635825"],
+Cell[2108658, 54598, 166, 3, 49, "Section",ExpressionUUID->"3b5e26b2-9076-4f0d-a92f-c04ae4451f48"],
+Cell[2108827, 54603, 623, 11, 41, "Text",ExpressionUUID->"e0649843-0a83-46b1-a791-a940ae635825"],
 Cell[CellGroupData[{
-Cell[2109895, 54632, 170, 3, 39, "Subsection",ExpressionUUID->"867fe0f3-0c38-4413-8f93-6c7a49f1e50c"],
-Cell[2110068, 54637, 452, 8, 25, "Text",ExpressionUUID->"102a37e0-005e-4c42-916f-003025d5ae15"],
-Cell[2110523, 54647, 6010, 141, 357, "Input",ExpressionUUID->"f786ca15-c946-4c15-9fff-452b7f2b8a05"]
+Cell[2109475, 54618, 170, 3, 39, "Subsection",ExpressionUUID->"867fe0f3-0c38-4413-8f93-6c7a49f1e50c"],
+Cell[2109648, 54623, 452, 8, 25, "Text",ExpressionUUID->"102a37e0-005e-4c42-916f-003025d5ae15"],
+Cell[2110103, 54633, 6010, 141, 357, "Input",ExpressionUUID->"f786ca15-c946-4c15-9fff-452b7f2b8a05"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2116570, 54793, 164, 3, 39, "Subsection",ExpressionUUID->"f3030058-f919-469d-a83d-afe975e93b68"],
-Cell[2116737, 54798, 20463, 434, 639, "Input",ExpressionUUID->"a603ab09-8523-46fc-8e61-f14d93b6978b"]
+Cell[2116150, 54779, 164, 3, 39, "Subsection",ExpressionUUID->"f3030058-f919-469d-a83d-afe975e93b68"],
+Cell[2116317, 54784, 20463, 434, 639, "Input",ExpressionUUID->"a603ab09-8523-46fc-8e61-f14d93b6978b"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2137237, 55237, 162, 3, 39, "Subsection",ExpressionUUID->"f7967cea-5175-4038-b76b-93d2c67fddab"],
-Cell[2137402, 55242, 5915, 141, 304, "Input",ExpressionUUID->"3ddae025-72a2-411d-8c66-6b5677c4e247"],
-Cell[2143320, 55385, 15442, 355, 588, "Input",ExpressionUUID->"803aa87a-5455-44c1-8d2e-2cdb9958ba0c"]
+Cell[2136817, 55223, 162, 3, 39, "Subsection",ExpressionUUID->"f7967cea-5175-4038-b76b-93d2c67fddab"],
+Cell[2136982, 55228, 5915, 141, 304, "Input",ExpressionUUID->"3ddae025-72a2-411d-8c66-6b5677c4e247"],
+Cell[2142900, 55371, 15442, 355, 588, "Input",ExpressionUUID->"803aa87a-5455-44c1-8d2e-2cdb9958ba0c"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2158799, 55745, 159, 3, 39, "Subsection",ExpressionUUID->"1eb00de1-bf94-465b-867b-956178904e5a"],
-Cell[2158961, 55750, 14413, 292, 514, "Input",ExpressionUUID->"a9fa93a0-ef97-45df-a9d5-c1da36833c75"]
+Cell[2158379, 55731, 159, 3, 39, "Subsection",ExpressionUUID->"1eb00de1-bf94-465b-867b-956178904e5a"],
+Cell[2158541, 55736, 14413, 292, 514, "Input",ExpressionUUID->"a9fa93a0-ef97-45df-a9d5-c1da36833c75"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2173411, 56047, 216, 4, 39, "Subsection",ExpressionUUID->"d1a2eb12-ab62-46c6-9713-77892be2af49"],
-Cell[2173630, 56053, 12467, 241, 440, "Input",ExpressionUUID->"9a4377be-7060-4302-bd61-ee60ffafffdf"]
+Cell[2172991, 56033, 216, 4, 39, "Subsection",ExpressionUUID->"d1a2eb12-ab62-46c6-9713-77892be2af49"],
+Cell[2173210, 56039, 12467, 241, 440, "Input",ExpressionUUID->"9a4377be-7060-4302-bd61-ee60ffafffdf"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2186134, 56299, 167, 3, 39, "Subsection",ExpressionUUID->"4a25c2cf-92f7-4695-bfe8-ec87fb8ae6f3"],
-Cell[2186304, 56304, 352, 7, 25, "Text",ExpressionUUID->"42886f58-f746-48dc-bda3-3bee21925f9a"],
-Cell[2186659, 56313, 7373, 155, 272, "Input",ExpressionUUID->"25b53d80-3110-4a8c-a848-096ad28d22de"]
+Cell[2185714, 56285, 167, 3, 39, "Subsection",ExpressionUUID->"4a25c2cf-92f7-4695-bfe8-ec87fb8ae6f3"],
+Cell[2185884, 56290, 352, 7, 25, "Text",ExpressionUUID->"42886f58-f746-48dc-bda3-3bee21925f9a"],
+Cell[2186239, 56299, 7373, 155, 272, "Input",ExpressionUUID->"25b53d80-3110-4a8c-a848-096ad28d22de"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2194081, 56474, 457, 9, 49, "Section",ExpressionUUID->"3d7df1d1-a170-4aec-8810-cdb2e1def83c"],
-Cell[2194541, 56485, 679, 12, 41, "Text",ExpressionUUID->"ffbe10d8-7bb2-4eb5-9e5d-d896100d9bc6"],
-Cell[2195223, 56499, 37520, 732, 1551, "Input",ExpressionUUID->"c0843399-a16e-43e9-99ce-25571eae5405"],
+Cell[2193661, 56460, 457, 9, 49, "Section",ExpressionUUID->"3d7df1d1-a170-4aec-8810-cdb2e1def83c"],
+Cell[2194121, 56471, 679, 12, 41, "Text",ExpressionUUID->"ffbe10d8-7bb2-4eb5-9e5d-d896100d9bc6"],
+Cell[2194803, 56485, 37520, 732, 1551, "Input",ExpressionUUID->"c0843399-a16e-43e9-99ce-25571eae5405"],
 Cell[CellGroupData[{
-Cell[2232768, 57235, 14289, 251, 382, "Input",ExpressionUUID->"23775880-6f5a-4d55-9557-b06efa02190d"],
+Cell[2232348, 57221, 14289, 251, 382, "Input",ExpressionUUID->"23775880-6f5a-4d55-9557-b06efa02190d"],
 Cell[CellGroupData[{
-Cell[2247082, 57490, 201, 6, 18, "Echo",ExpressionUUID->"d85bb482-25ff-4c09-af63-2953c601e8fe"],
-Cell[2247286, 57498, 199, 6, 18, "Echo",ExpressionUUID->"61853aa5-1174-4d0f-89cf-5e92da90bd19"]
+Cell[2246662, 57476, 201, 6, 18, "Echo",ExpressionUUID->"d85bb482-25ff-4c09-af63-2953c601e8fe"],
+Cell[2246866, 57484, 199, 6, 18, "Echo",ExpressionUUID->"61853aa5-1174-4d0f-89cf-5e92da90bd19"]
 }, Open  ]],
-Cell[2247500, 57507, 11939, 262, 119, "Output",ExpressionUUID->"f0d1de9a-4fda-4c0a-b3e4-fe04b44cb293"],
+Cell[2247080, 57493, 11939, 262, 119, "Output",ExpressionUUID->"f0d1de9a-4fda-4c0a-b3e4-fe04b44cb293"],
 Cell[CellGroupData[{
-Cell[2259464, 57773, 16978, 474, 130, "Echo",ExpressionUUID->"6f47a2c4-0560-409f-b224-8d0e5e398bf5"],
-Cell[2276445, 58249, 199, 6, 18, "Echo",ExpressionUUID->"ad3fa2eb-9b10-4f2e-b490-d5d25c69538f"]
+Cell[2259044, 57759, 16978, 474, 130, "Echo",ExpressionUUID->"6f47a2c4-0560-409f-b224-8d0e5e398bf5"],
+Cell[2276025, 58235, 199, 6, 18, "Echo",ExpressionUUID->"ad3fa2eb-9b10-4f2e-b490-d5d25c69538f"]
 }, Open  ]],
-Cell[2276659, 58258, 9583, 173, 36, "Output",ExpressionUUID->"f41581ab-ef8c-41bf-9444-457d82e2401a"],
-Cell[2286245, 58433, 199, 6, 18, "Echo",ExpressionUUID->"5617c0c8-a61c-437d-8202-d6fb85eb2ad0"],
-Cell[2286447, 58441, 7508, 105, 35, "Output",ExpressionUUID->"8f5d0893-f8bc-482c-be01-ff7a6aec8d19"]
+Cell[2276239, 58244, 9583, 173, 36, "Output",ExpressionUUID->"f41581ab-ef8c-41bf-9444-457d82e2401a"],
+Cell[2285825, 58419, 199, 6, 18, "Echo",ExpressionUUID->"5617c0c8-a61c-437d-8202-d6fb85eb2ad0"],
+Cell[2286027, 58427, 7508, 105, 35, "Output",ExpressionUUID->"8f5d0893-f8bc-482c-be01-ff7a6aec8d19"]
 }, Open  ]],
-Cell[2293970, 58549, 147, 3, 37, "Input",ExpressionUUID->"4e849fa4-f8f0-403d-b399-d6e0f02b5eb8"],
-Cell[2294120, 58554, 1953, 58, 67, "Input",ExpressionUUID->"129010f6-3cf4-4e89-b9af-88413fc48b7f"],
+Cell[2293550, 58535, 147, 3, 37, "Input",ExpressionUUID->"4e849fa4-f8f0-403d-b399-d6e0f02b5eb8"],
+Cell[2293700, 58540, 1953, 58, 67, "Input",ExpressionUUID->"129010f6-3cf4-4e89-b9af-88413fc48b7f"],
 Cell[CellGroupData[{
-Cell[2296098, 58616, 583, 16, 22, "Input",ExpressionUUID->"cca1a43f-5c39-4ed5-a37f-f43ba13ce1c3"],
-Cell[2296684, 58634, 47853, 1796, 692, "Output",ExpressionUUID->"85ac4033-dd8a-4e09-bd52-279812198138"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2344574, 60435, 224, 4, 22, "Input",ExpressionUUID->"c6a654b2-538c-4b74-90bd-e763ffee2edf"],
-Cell[2344801, 60441, 41330, 1612, 725, "Output",ExpressionUUID->"469a458d-1aac-476d-bb9f-f0c85271d957"]
-}, Open  ]],
-Cell[2386146, 62056, 179, 3, 22, "Input",ExpressionUUID->"8d44c53f-9e57-44c6-a525-e2bcf9d4b913"],
-Cell[CellGroupData[{
-Cell[2386350, 62063, 917, 28, 37, "Input",ExpressionUUID->"db9c426e-e042-4a9d-8b0b-48a888fdb314"],
-Cell[2387270, 62093, 581, 10, 35, "Output",ExpressionUUID->"f549325d-5812-4348-bf82-37d2f5443682"],
-Cell[2387854, 62105, 22491, 570, 278, "Output",ExpressionUUID->"534956e4-60a6-4bac-99a9-e98c4fc77d67"]
+Cell[2295678, 58602, 583, 16, 22, "Input",ExpressionUUID->"cca1a43f-5c39-4ed5-a37f-f43ba13ce1c3"],
+Cell[2296264, 58620, 47853, 1796, 692, "Output",ExpressionUUID->"85ac4033-dd8a-4e09-bd52-279812198138"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2410382, 62680, 227, 5, 22, "Input",ExpressionUUID->"9ff8406e-227f-4771-94fc-4277e56bdf99"],
-Cell[2410612, 62687, 202, 4, 35, "Output",ExpressionUUID->"ed02ea10-36ba-42d5-b6b9-eba3911c31fc"]
+Cell[2344154, 60421, 224, 4, 22, "Input",ExpressionUUID->"c6a654b2-538c-4b74-90bd-e763ffee2edf"],
+Cell[2344381, 60427, 41330, 1612, 725, "Output",ExpressionUUID->"469a458d-1aac-476d-bb9f-f0c85271d957"]
 }, Open  ]],
-Cell[2410829, 62694, 226, 4, 22, "Input",ExpressionUUID->"4d7d90c1-df50-4598-aeef-2ce9469db3fc"],
+Cell[2385726, 62042, 179, 3, 22, "Input",ExpressionUUID->"8d44c53f-9e57-44c6-a525-e2bcf9d4b913"],
 Cell[CellGroupData[{
-Cell[2411080, 62702, 889, 26, 63, "Input",ExpressionUUID->"1c57c72f-1da4-4c84-bcb2-a570703c1749"],
-Cell[2411972, 62730, 4419, 166, 56, "Output",ExpressionUUID->"4602fcd4-ddc9-4127-b284-7a75b93950d6"]
+Cell[2385930, 62049, 917, 28, 37, "Input",ExpressionUUID->"db9c426e-e042-4a9d-8b0b-48a888fdb314"],
+Cell[2386850, 62079, 581, 10, 35, "Output",ExpressionUUID->"f549325d-5812-4348-bf82-37d2f5443682"],
+Cell[2387434, 62091, 22491, 570, 278, "Output",ExpressionUUID->"534956e4-60a6-4bac-99a9-e98c4fc77d67"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2416428, 62901, 182, 3, 22, "Input",ExpressionUUID->"78ac3d72-eae0-4066-a456-74a996694f01"],
-Cell[2416613, 62906, 4289, 160, 85, "Output",ExpressionUUID->"4600ede9-d1d1-47bd-b1b5-c3cfe5a0398c"]
+Cell[2409962, 62666, 227, 5, 22, "Input",ExpressionUUID->"9ff8406e-227f-4771-94fc-4277e56bdf99"],
+Cell[2410192, 62673, 202, 4, 35, "Output",ExpressionUUID->"ed02ea10-36ba-42d5-b6b9-eba3911c31fc"]
+}, Open  ]],
+Cell[2410409, 62680, 226, 4, 22, "Input",ExpressionUUID->"4d7d90c1-df50-4598-aeef-2ce9469db3fc"],
+Cell[CellGroupData[{
+Cell[2410660, 62688, 889, 26, 63, "Input",ExpressionUUID->"1c57c72f-1da4-4c84-bcb2-a570703c1749"],
+Cell[2411552, 62716, 4419, 166, 56, "Output",ExpressionUUID->"4602fcd4-ddc9-4127-b284-7a75b93950d6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2416008, 62887, 182, 3, 22, "Input",ExpressionUUID->"78ac3d72-eae0-4066-a456-74a996694f01"],
+Cell[2416193, 62892, 4289, 160, 85, "Output",ExpressionUUID->"4600ede9-d1d1-47bd-b1b5-c3cfe5a0398c"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2420963, 63073, 146, 3, 72, "Title",ExpressionUUID->"24357e1f-b0dd-4513-bf18-a2607136a204"],
-Cell[2421112, 63078, 7561, 193, 493, "Input",ExpressionUUID->"7ecdd544-b3a3-449d-932d-a8a837c6d0b7"],
-Cell[2428676, 63273, 13310, 318, 1073, "Input",ExpressionUUID->"4e2247a9-a0f2-484c-9007-41afc8024eea"],
-Cell[2441989, 63593, 7959, 199, 665, "Input",ExpressionUUID->"0c721fee-a54f-4cca-9f24-9687c6144bc3"],
+Cell[2420543, 63059, 146, 3, 72, "Title",ExpressionUUID->"24357e1f-b0dd-4513-bf18-a2607136a204"],
+Cell[2420692, 63064, 7561, 193, 493, "Input",ExpressionUUID->"7ecdd544-b3a3-449d-932d-a8a837c6d0b7"],
+Cell[2428256, 63259, 13310, 318, 1073, "Input",ExpressionUUID->"4e2247a9-a0f2-484c-9007-41afc8024eea"],
+Cell[2441569, 63579, 7959, 199, 665, "Input",ExpressionUUID->"0c721fee-a54f-4cca-9f24-9687c6144bc3"],
 Cell[CellGroupData[{
-Cell[2449973, 63796, 558, 11, 49, "Section",ExpressionUUID->"e70a6dd4-4f7f-442e-b8b6-b9e54ce2b61c"],
-Cell[2450534, 63809, 464, 8, 25, "Text",ExpressionUUID->"2ff4fc7a-a9b2-47d5-92bd-3432c7158e9d"],
-Cell[2451001, 63819, 8881, 185, 367, "Input",ExpressionUUID->"36820b89-666c-4349-bdf8-246f44786903"]
+Cell[2449553, 63782, 558, 11, 49, "Section",ExpressionUUID->"e70a6dd4-4f7f-442e-b8b6-b9e54ce2b61c"],
+Cell[2450114, 63795, 464, 8, 25, "Text",ExpressionUUID->"2ff4fc7a-a9b2-47d5-92bd-3432c7158e9d"],
+Cell[2450581, 63805, 8881, 185, 367, "Input",ExpressionUUID->"36820b89-666c-4349-bdf8-246f44786903"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2459919, 64009, 560, 11, 49, "Section",ExpressionUUID->"27bd6efc-6746-4fb5-85ac-c3f6aaeb446b"],
-Cell[2460482, 64022, 573, 10, 25, "Text",ExpressionUUID->"19c7fd92-34fa-4ce6-8eec-d021d9a83ce3"],
-Cell[2461058, 64034, 4461, 100, 272, "Input",ExpressionUUID->"39c142b6-7f29-44a9-9ff1-0512b054f5c2"],
+Cell[2459499, 63995, 560, 11, 49, "Section",ExpressionUUID->"27bd6efc-6746-4fb5-85ac-c3f6aaeb446b"],
+Cell[2460062, 64008, 573, 10, 25, "Text",ExpressionUUID->"19c7fd92-34fa-4ce6-8eec-d021d9a83ce3"],
+Cell[2460638, 64020, 4461, 100, 272, "Input",ExpressionUUID->"39c142b6-7f29-44a9-9ff1-0512b054f5c2"],
 Cell[CellGroupData[{
-Cell[2465544, 64138, 8144, 129, 161, "Input",ExpressionUUID->"233a6723-d4e1-4bf7-831c-71c6ec2051b9"],
-Cell[2473691, 64269, 1291, 22, 19, "Message",ExpressionUUID->"212964d2-c6de-4905-921f-6ba8a12d10b5"],
-Cell[2474985, 64293, 1291, 22, 19, "Message",ExpressionUUID->"5eae0cfc-936a-4328-99bb-fec80e3a2e08"],
-Cell[2476279, 64317, 7378, 103, 54, "Message",ExpressionUUID->"6c414268-28c4-400a-a7b3-29ab53a1b554"],
-Cell[2483660, 64422, 468, 11, 19, "Message",ExpressionUUID->"cad21a9e-ebc3-41a2-a6e1-7a8aa16cbb43"],
-Cell[2484131, 64435, 2615, 40, 33, "Message",ExpressionUUID->"4bee218a-1621-4b73-a452-65e29f2c8fe8"],
-Cell[2486749, 64477, 2613, 40, 33, "Message",ExpressionUUID->"6bf4943c-50d5-4dfe-84f0-9e795a977cd3"],
-Cell[2489365, 64519, 2613, 40, 33, "Message",ExpressionUUID->"1b03c2ee-dfb7-4fd5-892f-042bad1febf4"],
-Cell[2491981, 64561, 475, 11, 19, "Message",ExpressionUUID->"b02fcc36-e27c-438b-a34e-81d055237a1f"],
-Cell[2492459, 64574, 6440, 94, 43, "Message",ExpressionUUID->"0c401dbc-e421-42fe-863c-423cb58f0cb5"],
-Cell[2498902, 64670, 429, 11, 18, "Message",ExpressionUUID->"f3aebf89-b00e-4b7e-b875-48f5f19f3cb9"],
-Cell[2499334, 64683, 199, 6, 18, "Echo",ExpressionUUID->"31494abb-f188-4a29-9faa-a05d51881f28"],
-Cell[2499536, 64691, 19187, 583, 777, "Output",ExpressionUUID->"9547cfc3-f303-42eb-83ae-7ef42494703c"],
-Cell[2518726, 65276, 5730, 84, 43, "Message",ExpressionUUID->"07afe904-e72f-4b2e-ae99-e209aa37c387"],
-Cell[2524459, 65362, 5732, 84, 43, "Message",ExpressionUUID->"8ad4f973-fa7c-4e11-8258-b3f3be6a9714"],
-Cell[2530194, 65448, 5730, 84, 43, "Message",ExpressionUUID->"04ea32f9-317c-42b6-bc9c-5e7ed00d4672"],
-Cell[2535927, 65534, 467, 11, 18, "Message",ExpressionUUID->"4babbf24-50ed-4ab5-ba1e-52c1a40a2a6c"],
-Cell[2536397, 65547, 6039, 87, 43, "Message",ExpressionUUID->"21db2b14-694d-4d2f-9542-f9440aaf7c36"],
-Cell[2542439, 65636, 6770, 96, 58, "Message",ExpressionUUID->"c1594532-5a99-42cf-b05b-d01853b36ad7"],
-Cell[2549212, 65734, 553, 12, 18, "Message",ExpressionUUID->"da9f692e-f903-4afd-86ac-b12e62c98bc8"],
-Cell[2549768, 65748, 79466, 2278, 712, "Echo",ExpressionUUID->"98a5b413-a484-452a-ad86-78483bcdeca3"],
-Cell[2629237, 68028, 17779, 246, 43, "Message",ExpressionUUID->"e3cd40f3-9b07-42eb-90d7-976acb40fcd3"],
-Cell[2647019, 68276, 40149, 1102, 217, "Echo",ExpressionUUID->"8ec902e5-f7f4-4a01-9e1b-70300351ab8d"],
-Cell[2687171, 69380, 17779, 246, 43, "Message",ExpressionUUID->"658c6c0d-fa03-410c-b3de-59f5e91c6dc3"],
-Cell[2704953, 69628, 17880, 247, 43, "Message",ExpressionUUID->"15335900-fe15-4e97-9d3d-cd9f8c2a16be"],
-Cell[2722836, 69877, 469, 11, 18, "Message",ExpressionUUID->"4dc137fb-3456-4084-84d0-82fd172e2d36"],
-Cell[2723308, 69890, 503, 12, 18, "Message",ExpressionUUID->"6bb21ccf-2c74-4063-8087-4a82fca4f1cd"],
-Cell[2723814, 69904, 411, 10, 18, "Message",ExpressionUUID->"a44d265d-fee2-46e9-b3ca-52dea4c627ac"],
-Cell[2724228, 69916, 14440, 204, 81, "Message",ExpressionUUID->"0194e1aa-46a9-4938-89bf-a0bf35eb0bb0"],
-Cell[2738671, 70122, 506, 12, 18, "Message",ExpressionUUID->"32d2ade1-a398-4899-b9e8-f932daad4420"],
-Cell[2739180, 70136, 17449, 241, 93, "Message",ExpressionUUID->"549c1703-301f-45a4-a57a-8c3dd2a5b03c"],
-Cell[2756632, 70379, 2223, 34, 18, "Message",ExpressionUUID->"00c96a1e-1c43-432d-94b4-e01998bc8285"],
-Cell[2758858, 70415, 508, 12, 18, "Message",ExpressionUUID->"ca805fc2-fb34-4a79-9316-3fdb4e828b1f"],
-Cell[2759369, 70429, 465, 11, 18, "Message",ExpressionUUID->"0d458921-3179-4147-9d60-699ec2dd5af5"],
-Cell[2759837, 70442, 17911, 246, 93, "Message",ExpressionUUID->"c7b48850-ebb3-4699-b83c-03f8b8241067"],
-Cell[2777751, 70690, 17449, 241, 93, "Message",ExpressionUUID->"4f678328-f8e1-4b42-b29c-7d61a1bbb189"],
-Cell[2795203, 70933, 465, 11, 18, "Message",ExpressionUUID->"64021260-d772-4003-aa3b-dbede3ec8c4c"],
-Cell[2795671, 70946, 19959, 268, 93, "Message",ExpressionUUID->"9f6d66ae-0c7c-43eb-86e9-91ad7f8a8e89"],
-Cell[2815633, 71216, 19927, 268, 93, "Message",ExpressionUUID->"186710cd-c0c0-433f-b726-5a478802ea82"],
-Cell[2835563, 71486, 476, 11, 18, "Message",ExpressionUUID->"66630d14-611a-481d-97e4-6446a0fe8ccd"],
-Cell[2836042, 71499, 477, 11, 18, "Message",ExpressionUUID->"61c509fe-1afb-44db-ab80-842ed1491934"],
+Cell[2465124, 64124, 8144, 129, 161, "Input",ExpressionUUID->"233a6723-d4e1-4bf7-831c-71c6ec2051b9"],
+Cell[2473271, 64255, 1291, 22, 19, "Message",ExpressionUUID->"212964d2-c6de-4905-921f-6ba8a12d10b5"],
+Cell[2474565, 64279, 1291, 22, 19, "Message",ExpressionUUID->"5eae0cfc-936a-4328-99bb-fec80e3a2e08"],
+Cell[2475859, 64303, 7378, 103, 54, "Message",ExpressionUUID->"6c414268-28c4-400a-a7b3-29ab53a1b554"],
+Cell[2483240, 64408, 468, 11, 19, "Message",ExpressionUUID->"cad21a9e-ebc3-41a2-a6e1-7a8aa16cbb43"],
+Cell[2483711, 64421, 2615, 40, 33, "Message",ExpressionUUID->"4bee218a-1621-4b73-a452-65e29f2c8fe8"],
+Cell[2486329, 64463, 2613, 40, 33, "Message",ExpressionUUID->"6bf4943c-50d5-4dfe-84f0-9e795a977cd3"],
+Cell[2488945, 64505, 2613, 40, 33, "Message",ExpressionUUID->"1b03c2ee-dfb7-4fd5-892f-042bad1febf4"],
+Cell[2491561, 64547, 475, 11, 19, "Message",ExpressionUUID->"b02fcc36-e27c-438b-a34e-81d055237a1f"],
+Cell[2492039, 64560, 6440, 94, 43, "Message",ExpressionUUID->"0c401dbc-e421-42fe-863c-423cb58f0cb5"],
+Cell[2498482, 64656, 429, 11, 18, "Message",ExpressionUUID->"f3aebf89-b00e-4b7e-b875-48f5f19f3cb9"],
+Cell[2498914, 64669, 199, 6, 18, "Echo",ExpressionUUID->"31494abb-f188-4a29-9faa-a05d51881f28"],
+Cell[2499116, 64677, 19187, 583, 777, "Output",ExpressionUUID->"9547cfc3-f303-42eb-83ae-7ef42494703c"],
+Cell[2518306, 65262, 5730, 84, 43, "Message",ExpressionUUID->"07afe904-e72f-4b2e-ae99-e209aa37c387"],
+Cell[2524039, 65348, 5732, 84, 43, "Message",ExpressionUUID->"8ad4f973-fa7c-4e11-8258-b3f3be6a9714"],
+Cell[2529774, 65434, 5730, 84, 43, "Message",ExpressionUUID->"04ea32f9-317c-42b6-bc9c-5e7ed00d4672"],
+Cell[2535507, 65520, 467, 11, 18, "Message",ExpressionUUID->"4babbf24-50ed-4ab5-ba1e-52c1a40a2a6c"],
+Cell[2535977, 65533, 6039, 87, 43, "Message",ExpressionUUID->"21db2b14-694d-4d2f-9542-f9440aaf7c36"],
+Cell[2542019, 65622, 6770, 96, 58, "Message",ExpressionUUID->"c1594532-5a99-42cf-b05b-d01853b36ad7"],
+Cell[2548792, 65720, 553, 12, 18, "Message",ExpressionUUID->"da9f692e-f903-4afd-86ac-b12e62c98bc8"],
+Cell[2549348, 65734, 79466, 2278, 712, "Echo",ExpressionUUID->"98a5b413-a484-452a-ad86-78483bcdeca3"],
+Cell[2628817, 68014, 17779, 246, 43, "Message",ExpressionUUID->"e3cd40f3-9b07-42eb-90d7-976acb40fcd3"],
+Cell[2646599, 68262, 40149, 1102, 217, "Echo",ExpressionUUID->"8ec902e5-f7f4-4a01-9e1b-70300351ab8d"],
+Cell[2686751, 69366, 17779, 246, 43, "Message",ExpressionUUID->"658c6c0d-fa03-410c-b3de-59f5e91c6dc3"],
+Cell[2704533, 69614, 17880, 247, 43, "Message",ExpressionUUID->"15335900-fe15-4e97-9d3d-cd9f8c2a16be"],
+Cell[2722416, 69863, 469, 11, 18, "Message",ExpressionUUID->"4dc137fb-3456-4084-84d0-82fd172e2d36"],
+Cell[2722888, 69876, 503, 12, 18, "Message",ExpressionUUID->"6bb21ccf-2c74-4063-8087-4a82fca4f1cd"],
+Cell[2723394, 69890, 411, 10, 18, "Message",ExpressionUUID->"a44d265d-fee2-46e9-b3ca-52dea4c627ac"],
+Cell[2723808, 69902, 14440, 204, 81, "Message",ExpressionUUID->"0194e1aa-46a9-4938-89bf-a0bf35eb0bb0"],
+Cell[2738251, 70108, 506, 12, 18, "Message",ExpressionUUID->"32d2ade1-a398-4899-b9e8-f932daad4420"],
+Cell[2738760, 70122, 17449, 241, 93, "Message",ExpressionUUID->"549c1703-301f-45a4-a57a-8c3dd2a5b03c"],
+Cell[2756212, 70365, 2223, 34, 18, "Message",ExpressionUUID->"00c96a1e-1c43-432d-94b4-e01998bc8285"],
+Cell[2758438, 70401, 508, 12, 18, "Message",ExpressionUUID->"ca805fc2-fb34-4a79-9316-3fdb4e828b1f"],
+Cell[2758949, 70415, 465, 11, 18, "Message",ExpressionUUID->"0d458921-3179-4147-9d60-699ec2dd5af5"],
+Cell[2759417, 70428, 17911, 246, 93, "Message",ExpressionUUID->"c7b48850-ebb3-4699-b83c-03f8b8241067"],
+Cell[2777331, 70676, 17449, 241, 93, "Message",ExpressionUUID->"4f678328-f8e1-4b42-b29c-7d61a1bbb189"],
+Cell[2794783, 70919, 465, 11, 18, "Message",ExpressionUUID->"64021260-d772-4003-aa3b-dbede3ec8c4c"],
+Cell[2795251, 70932, 19959, 268, 93, "Message",ExpressionUUID->"9f6d66ae-0c7c-43eb-86e9-91ad7f8a8e89"],
+Cell[2815213, 71202, 19927, 268, 93, "Message",ExpressionUUID->"186710cd-c0c0-433f-b726-5a478802ea82"],
+Cell[2835143, 71472, 476, 11, 18, "Message",ExpressionUUID->"66630d14-611a-481d-97e4-6446a0fe8ccd"],
+Cell[2835622, 71485, 477, 11, 18, "Message",ExpressionUUID->"61c509fe-1afb-44db-ab80-842ed1491934"],
 Cell[CellGroupData[{
-Cell[2836544, 71514, 196, 5, 18, "Echo",ExpressionUUID->"d5b3959d-1421-473c-8091-0de7f8b2ef0d"],
-Cell[2836743, 71521, 347, 10, 18, "Echo",ExpressionUUID->"f8dbc5ee-eb26-441c-b202-1932323ac826"]
+Cell[2836124, 71500, 196, 5, 18, "Echo",ExpressionUUID->"d5b3959d-1421-473c-8091-0de7f8b2ef0d"],
+Cell[2836323, 71507, 347, 10, 18, "Echo",ExpressionUUID->"f8dbc5ee-eb26-441c-b202-1932323ac826"]
 }, Open  ]],
-Cell[2837105, 71534, 534, 12, 18, "Message",ExpressionUUID->"7c1cc05c-dabb-4bb7-9edc-e08c53069222"],
-Cell[2837642, 71548, 534, 12, 18, "Message",ExpressionUUID->"cd60a55b-d977-475c-97fc-28fff91c7987"],
-Cell[2838179, 71562, 724, 25, 24, "Output",ExpressionUUID->"6b5574fb-5b45-478b-a4d9-a31157534918"]
+Cell[2836685, 71520, 534, 12, 18, "Message",ExpressionUUID->"7c1cc05c-dabb-4bb7-9edc-e08c53069222"],
+Cell[2837222, 71534, 534, 12, 18, "Message",ExpressionUUID->"cd60a55b-d977-475c-97fc-28fff91c7987"],
+Cell[2837759, 71548, 724, 25, 24, "Output",ExpressionUUID->"6b5574fb-5b45-478b-a4d9-a31157534918"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
