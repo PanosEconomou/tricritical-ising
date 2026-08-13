@@ -45,10 +45,8 @@ hilbert::usage = "hilbert[mat] computes the Hilbert basis of the monoid generate
 Begin["`Private`"]
 
 (* Set this variable to point to the directory of executables of 4ti2 *)
-zsolvecmd = StringTrim@RunProcess[{"which", "zsolve"}, "StandardOutput"]; (* location debian package 4ti2 *)
-(*zsolvecmd = "/opt/homebrew/Caskroom/miniconda/base/bin/zsolve";*)
-hilbertcmd  = StringTrim@RunProcess[{"which", "hilbert"}, "StandardOutput"]; (* location debian package 4ti2 *)
-(*hilbertcmd = "/opt/homebrew/Caskroom/miniconda/base/bin/hilbert";*)
+zsolvecmd = StringTrim@RunProcess[{"which", "zsolve"}, "StandardOutput"]; 
+hilbertcmd  = StringTrim@RunProcess[{"which", "hilbert"}, "StandardOutput"]; 
 
 copyright[line_, lines___] := Module[
     {txt = line <> StringJoin[Map[("\n"<>#)&,{lines}]]},
