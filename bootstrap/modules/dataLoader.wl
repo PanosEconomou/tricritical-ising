@@ -5,13 +5,17 @@
 
 BeginPackage["dataLoader`"]
 
-ModularData::usage                   = "Define a new conformal field theory";
-ModularDataFold::usage               = "From a cft obtain the folded one";
-ModularDataFoldZ2Fixed::usage        = "From a cft obtain the folded in a smaller VOA";
+ModularData::usage                      = "Define a new conformal field theory";
+ModularDataFold::usage                  = "From a cft obtain the folded one";
+ModularDataFoldZ2Fixed::usage           = "From a cft obtain the folded in a smaller VOA";
+ModularDataFoldZ2Orbifold::usage        = "From a cft fold, and then orbifold the exchange";
 
-ModularDataMinimal::usage            = "Easy access to minimal models";
-ModularDataFoldMinimal::usage        = "Easily fold minimal models";
-ModularDataFoldZ2FixedMinimal::usage = "Fold minimal models in a smaller voa";
+ModularDataMinimal::usage               = "Easy access to minimal models";
+ModularDataFoldMinimal::usage           = "Easily fold minimal models";
+ModularDataFoldZ2FixedMinimal::usage    = "Fold minimal models in a smaller voa";
+ModularDataFoldZ2OrbifoldMinimal::usage = "Fold and orbifold the exchange of minimal models";
+
+IshibashiBasis::usage                   = "From a cft get a basis for ishibashi states";
 
 Begin["`Private`"]
 
@@ -56,15 +60,16 @@ MinimalModularInvariant[p_, pp_, invariant_] := Module[
 (* Extracts an association of the modules in a given theory *)
 ModuleData[labels_, weights_, z_] := Module[
     {
-        modules = Position[z, Except[0], {2}, Heads->False],
+        positions = Position[z, Except[0], {2}, Heads->False],
         moduleLables
     },
-    moduleLables = labels[[#]] & /@ modules;
+    moduleLables = labels[[#]] & /@ positions;
     <|
-        "labels"        -> moduleLables,
-        "index"         -> AssociationThread[moduleLables -> Range@Length[moduleLables]],
-        "multiplicities"  -> Extract[z, modules],
-        "weights"       -> (weights[[#]] & /@ modules)
+        "positions"      -> positions,
+        "labels"         -> moduleLables,
+        "index"          -> AssociationThread[moduleLables -> Range@Length[moduleLables]],
+        "multiplicities" -> Extract[z, positions],
+        "weights"        -> (weights[[#]] & /@ positions)
     |>
 ];
 
@@ -141,17 +146,18 @@ ModularDataFoldZ2Fixed[md_ ] := Module[
         labels = md["irreps"]["labels"],
         h      = md["irreps"]["weights"],
         s      = md["S"],
+        z      = md["Z"],
         c      = md["c"],
-        n, vacuum, indices, hf, weights, twist, sf, z
+        n, vacuum, indices, hf, weights, twist, sf, zf
     },
     n       = Length[labels];
-    vacuum  = First @ FirstPosition[h, 0];
+    vacuum = First @ FirstPosition[h, 0];
 
     (* Calculate the new indices *)
     indices = Join [
         Join @@ Table[{{i, i, 1}, {i, i, -1}}, {i, n}],
         {#[[1]], #[[2]], 0}& /@ Subsets[Range[n], {2}],
-        Join @@ Table[{{i, i, 2}, {i, i, -1}}, {i, n}]
+        Join @@ Table[{{i, i, 2}, {i, i, -2}}, {i, n}]
     ];
 
     (* New conformal weights  *)
@@ -175,24 +181,54 @@ ModularDataFoldZ2Fixed[md_ ] := Module[
     ];
 
     (* The modular invariant *)
-    z = Outer[(Boole[#1 === #2] + Boole[#1[[1]] === #2[[1]] && #1[[2]] === #2[[2]] && #1[[3]] === -#2[[3]]]) * Boole[Abs[#1[[3]]] != 2] Boole[Abs[#2[[3]]] != 2] &,states, states, 1];
+    zf[{a_, b_, j_}, {x_, y_, k_}] := Which[
+        Abs[j] == 2 || Abs[k] == 2, 0,
+        j == 0 && k == 0,           2 (z[[a, x]] z[[b, y]] + z[[a, y]] z[[b, x]]),
+        j == 0,                     2 z[[a, x]] z[[b, x]],
+        k == 0,                     2 z[[a, x]] z[[a, y]],
+        True,                       z[[a, x]]^2
+    ];
 
     ModularData[
         {labels[[#[[1]]]], labels[[#[[2]]]], #[[3]]} & /@ indices,
         weights,
         Outer[sf, indices, indices, 1],
         DiagonalMatrix[Exp[2 Pi I (# - 2 c/24)] & /@ weights],
-        z,
-        md["theory"]  <> " x " <> md["theory"],
-        md["algebra"] <> "x"   <> md["algebra"] <> "^Z2",
+        Outer[zf, indices, indices, 1],
+        md["theory"] <> " x " <> md["theory"],
+        "(" <> md["algebra"] <> "x" <> md["algebra"] <> ")^Z2",
         2 * c
     ]
 ];
 
 (* Do the same thing for the a minimal modela a bit faster *)
-ModularDataFoldZ2FixedMinimal[p_: 5, pp_: 4] := ModularDataFoldZ2Fixed[
-    ModularDataMinimal[p, pp, "A"]
+ModularDataFoldZ2FixedMinimal[p_: 5, pp_: 4, invariant_: "A"] := ModularDataFoldZ2Fixed[
+    ModularDataMinimal[p, pp, invariant]
 ];
+
+
+ModularDataFoldZ2Orbifold::nondiag =
+    "Gauging is only implemented for a diagonal parent; got a non-identity Z.";
+
+ModularDataFoldZ2Orbifold[md_] := Module[
+    {fixed},
+    If[md["Z"] =!= IdentityMatrix[Length[md["irreps"]["labels"]]],
+        Message[ModularDataFoldZ2Orbifold::nondiag]; Return[$Failed]];
+    fixed = ModularDataFoldZ2Fixed[md];
+    ModularData[
+        fixed["irreps"]["labels"],
+        fixed["irreps"]["weights"],
+        fixed["S"],
+        fixed["T"],
+        IdentityMatrix[Length[fixed["irreps"]["labels"]]],
+        "(" <> md["theory"] <> " x " <> md["theory"] <> ")/Z2",
+        fixed["algebra"],
+        fixed["c"]
+    ]
+];
+
+ModularDataFoldZ2OrbifoldMinimal[p_: 5, pp_: 4] :=
+    ModularDataFoldZ2Orbifold[ModularDataMinimal[p, pp, "A"]];
 
 
 (* Get the modular data of a theory and output a basis for its ishisbashi states *)
