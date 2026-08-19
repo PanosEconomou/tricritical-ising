@@ -3,9 +3,10 @@
 (* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 (* :!CodeAnalysis::Disable::UppercaseVariable:: *)
 
-BeginPackage["bootstraptdl`"]
+BeginPackage["bootstraptdl`",{"math4ti2`", "invertibleBootstrap`"}]
 
 ModularBootstrapTraces::usage = "Given some modular data obtain the traces of the tdls";
+BootstrapInvertibleTDLs::usage = "Use gap to find candidates for the group of invertible lines";
 
 Begin["`Private`"]
 
@@ -29,7 +30,6 @@ ModularBootstrapTraces[modularData_] := Module[
         modules = modularData["modules"],
         vacuum, st, pos, X, m, coeff, A, eqn, multipliers, basis, traces
     },
-    Needs["math4ti2`"];
 
     vacuum = First @ FirstPosition[modules["weights"], {0, 0}];
     st  = ConjugateTranspose[s];
@@ -67,9 +67,12 @@ ModularBootstrapTraces[modularData_] := Module[
         "theory"  -> modularData["theory"],
         "algebra" -> modularData["algebra"],
         "modules" -> modules,
-        "defects" -> SortBy[traces, #[[1]] &]
+        "defects" -> SortBy[traces, Re[#[[vacuum]]] &]
     |>
 ];
+
+(* Given the traces of the invertible lines, try to bootstrap the actual group *)
+BootstrapInvertibleTDLs[traces_] := ""
 
 End[]
 EndPackage[]
