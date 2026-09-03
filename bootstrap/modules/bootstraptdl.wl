@@ -24,7 +24,7 @@ processInequalities[ineqs_List, vars_List] := Module[{c = 0},
 ];
 
 (* Get some modular data of a rational cft and obtain a set of traces for the simple tdls *)
-ModularBootstrapTraces[modularData_] := Module[
+ModularBootstrapTraces[modularData_,precision_:20] := Module[
     {
         s       = modularData["S"],
         modules = modularData["modules"],
@@ -39,18 +39,18 @@ ModularBootstrapTraces[modularData_] := Module[
     m = st . ReplacePart[modularData["Z"], Thread[pos -> X]] . s // Flatten;
 
     (* Coefficient of each variable in the S-transformed mass matrix *)
-    coeff = CoefficientArrays[m, X][[2]] // Normal // N // Chop;
+    coeff = CoefficientArrays[m, X][[2]] // Normal // N[#, precision]& // Chop;
 
     (* Pick a maximal independent set of equations and invert them *)
-    A = Chop @ Inverse @ N @ coeff[[Flatten[
+    A = Chop @ Inverse @ N[#, precision]& @ coeff[[Flatten[
         FirstPosition[#, 1] & /@ DeleteCases[
-            Chop @ RowReduce @ N @ Transpose @ coeff, 
+            Chop @ RowReduce @ N[#, precision]& @ Transpose @ coeff, 
             {0 ..}
         ]
     ]]];
 
     (* Re-express the constraints in that basis *)
-    m   = Chop[N[coeff . A]] . X;
+    m   = Chop[N[coeff . A, precision]] . X;
     eqn = DeleteDuplicates @ Rationalize @ Chop @ Expand[# >= 0 & /@ m];
 
     (* Rescale variables so the system has integer coefficients *)
