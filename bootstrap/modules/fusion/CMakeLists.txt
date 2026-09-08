@@ -26,10 +26,11 @@ target_link_libraries(fuse
 target_sources(fuse
     PRIVATE
         src/main.c
+        src/interface.c
     PRIVATE
         FILE_SET HEADERS
         BASE_DIRS
             include
         FILES
-            include/test.h
+            include/interface.h
 )
