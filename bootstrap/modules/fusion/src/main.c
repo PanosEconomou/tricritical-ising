@@ -1,5 +1,7 @@
+#include <flint/flint.h>
 #include <stdio.h>
-#include <flint/gr.h>
+#include <flint/fmpz.h>
+#include <flint/fmpz_poly.h>
 
 #include "interface.h"
 
@@ -9,10 +11,7 @@
 int main() {
     printf("Welcome to fuse! Let's bootstrap some fusion rules\n");
 
-    gr_mat_t matrix;
-    gr_ctx_t context;
-
-    parse_algebraic_matrix(matrix, context, INPUT_FILE);
+    parse_algebraic_matrix(INPUT_FILE);
 
     return 0;
 }
