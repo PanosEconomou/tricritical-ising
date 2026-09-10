@@ -6,7 +6,9 @@
 #include <flint/fmpz_poly.h>
 #include <flint/arb.h>
 #include <flint/acb.h>
+#include <flint/gr_types.h>
 #include <flint/qqbar.h>
+#include <flint/gr.h>
 #include <stdio.h>
 
 static int read_fmpz(FILE* file, fmpz_t out)
@@ -168,6 +170,14 @@ static int read_input_entries(FILE* file, input_data_t* in)
 error:
     fprintf(stderr, "ERROR: Input file is not formatted correctly\n"); 
     return -1;
+}
+
+
+static int build_number_field(gr_ctx_t context, fmpq_poly_t** reps, 
+                              const input_data_t* in) 
+{
+
+    return 0;
 }
 
 int parse_algebraic_matrix(char *filename) 
