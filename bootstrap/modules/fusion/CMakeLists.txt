@@ -8,18 +8,12 @@ project(fuse C)
 add_executable(fuse)
 
 # Link external libraries
-find_path   (PARI_INCLUDE_DIR NAMES pari/pari.h)
-find_library(PARI_LIBRARY     NAMES pari)
-
-target_include_directories(fuse PRIVATE ${PARI_INCLUDE_DIR})
-
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(FLINT REQUIRED IMPORTED_TARGET flint)
 
 target_link_libraries(fuse 
     PRIVATE
         PkgConfig::FLINT
-        ${PARI_LIBRARY}
 )
 
 # Source files

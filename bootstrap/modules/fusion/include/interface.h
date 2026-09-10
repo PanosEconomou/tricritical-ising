@@ -1,6 +1,8 @@
 #ifndef FUSE_INTERFACE
 #define FUSE_INTERFACE
 
-int parse_algebraic_matrix(char* filename);
+#include <flint/gr.h>
+
+int parse_algebraic_matrix(gr_mat_t matrix, gr_ctx_t context, char* filename);
 
 #endif

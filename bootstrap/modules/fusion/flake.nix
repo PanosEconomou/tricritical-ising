@@ -17,7 +17,6 @@
       ];
       buildInputs = with pkgs; [
         flint
-        pari
       ];
       shellHook = ''
         alias m="cmake --build build && ./build/fuse"
