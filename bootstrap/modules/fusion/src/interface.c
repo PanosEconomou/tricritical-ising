@@ -292,7 +292,7 @@ static int build_matrix(gr_mat_t matrix, gr_ctx_t context, const nf_t field,
     return 0;
 }
 
-int parse_algebraic_matrix(gr_mat_t matrix, gr_ctx_t context, char* filename) 
+int parse_algebraic_matrix(gr_mat_t matrix, nf_t field, gr_ctx_t context, char* filename) 
 {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
@@ -303,7 +303,6 @@ int parse_algebraic_matrix(gr_mat_t matrix, gr_ctx_t context, char* filename)
     input_data_t in = {0};
 
     fmpq_poly_struct* reps = NULL;
-    nf_t              field;
     int               have_field = 0;
 
     if (read_input_metadata(file, &in)) {
@@ -344,7 +343,6 @@ int parse_algebraic_matrix(gr_mat_t matrix, gr_ctx_t context, char* filename)
 
     for (slong i = 0; i < in.nvals; i++) fmpq_poly_clear(reps + i);
     flint_free(reps);
-    nf_clear(field);
 
     fclose(file);
     free_input_data(&in);
