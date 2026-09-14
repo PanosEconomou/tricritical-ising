@@ -3,7 +3,9 @@
 
 #include <flint/gr.h>
 #include <flint/nf.h>
+#include <flint/qqbar.h>
 
-int parse_algebraic_matrix(gr_mat_t matrix, nf_t field, gr_ctx_t context, char* filename);
+int parse_algebraic_matrix(gr_mat_t matrix, nf_t field, qqbar_t field_generator, 
+                           gr_ctx_t context, char* filename);
 
 #endif

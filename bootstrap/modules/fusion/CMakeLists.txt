@@ -4,10 +4,11 @@ set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(fuse C)
+project(fuse C CXX)
 add_executable(fuse)
 
 # Link external libraries
+set_target_properties(fuse PROPERTIES LINKER_LANGUAGE CXX)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(FLINT REQUIRED IMPORTED_TARGET flint)
 
@@ -20,8 +21,10 @@ find_library(FTI2_ZSOLVE   NAMES zsolve     REQUIRED)
 
 add_library(4ti2 INTERFACE IMPORTED)
 target_include_directories(4ti2 INTERFACE ${FTI2_INCLUDE_DIR})
+find_library(GMPXX NAMES gmpxx REQUIRED)
 target_link_libraries(4ti2 INTERFACE
     ${FTI2_GMP} ${FTI2_ZSOLVE} ${FTI2_COMMON} ${FTI2_UTIL}
+    ${GMPXX}
 )
 
 target_link_libraries(fuse 

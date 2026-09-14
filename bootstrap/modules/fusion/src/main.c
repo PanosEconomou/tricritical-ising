@@ -15,9 +15,10 @@ int main() {
     gr_mat_t matrix;
     gr_ctx_t context;
     nf_t     field;
+    qqbar_t  field_generator; qqbar_init(field_generator);
 
-    parse_algebraic_matrix(matrix, field, context, INPUT_FILE);
-    solve(matrix, field, context);
+    parse_algebraic_matrix(matrix, field, field_generator, context, INPUT_FILE);
+    solve(matrix, field, field_generator, context);
 
     return 0;
 }
