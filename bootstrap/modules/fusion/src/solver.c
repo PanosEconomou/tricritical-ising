@@ -1,4 +1,6 @@
+#include <flint/flint.h>
 #include <gmp.h>
+
 #include <flint/gr.h>
 #include <flint/gr_mat.h>
 #include <flint/fmpq_vec.h>
@@ -10,7 +12,9 @@
 #include <flint/nf_elem.h>
 #include <flint/arb.h>
 #include <flint/arb_fmpz_poly.h>
+
 #include <4ti2/4ti2.h>
+
 #include <stdio.h>
 #include <time.h>
 
@@ -153,6 +157,10 @@ static int setup_zsolve(_4ti2_state** state, const fmpz_mat_t zlhs, const fmpz_m
     int unknowns  = (int) fmpz_mat_ncols(zlhs);
 
     _4ti2_state*  s = _4ti2_zsolve_create_state(_4ti2_PREC_INT_ARB);
+
+    char* opts[] = { "zsolve", "-q" };
+    if (_4ti2_state_set_options(s, 2, opts) != _4ti2_OK) goto cleanup;
+
     _4ti2_matrix* m = NULL;
     mpz_t tmp; mpz_init(tmp);
 
@@ -220,60 +228,106 @@ cleanup:
     return status;
 }
 
+typedef struct {
+    slong i;
+    slong j;
+    slong nsolutions;
+} pair_t;
+
 int solve(gr_mat_struct* matrix, nf_t field, qqbar_t field_generator, gr_ctx_struct *context)
 {
-
     slong rows    =  gr_mat_nrows(matrix, context); 
     slong cols    =  gr_mat_ncols(matrix, context); 
     slong degree  =  fmpq_poly_degree(field->pol);
+
     fmpq_mat_t lhs;  fmpq_mat_init(lhs, rows * degree, cols);
     fmpq_mat_t rhs;  fmpq_mat_init(rhs, rows * degree, 1);
     fmpz_mat_t zlhs; fmpz_mat_init(zlhs, rows * degree, cols);
     fmpz_mat_t zrhs; fmpz_mat_init(zrhs, rows * degree, 1);
+
     slong* bounds =  flint_malloc(cols * sizeof(slong));
 
-    build_lhs(lhs, matrix, field, context);
-    build_rhs(rhs, matrix, 12, 24, field, context);
-    build_bounds(bounds, matrix, 1, 5, 0, field, field_generator, context);
-    zfy(zrhs, zlhs, rhs, lhs);
+    slong npairs  =  cols * (cols + 1) / 2; 
+    pair_t* pairs =  flint_malloc(npairs * sizeof(pair_t));
+    slong pair    =  0;
 
-    // fmpq_mat_print(lhs); printf("\n");
-    // fmpz_mat_print(zrhs); printf("\n");
-    
-    _4ti2_state* state = NULL;
-    if (setup_zsolve(&state, zlhs, zrhs, bounds)) {
-        fprintf(stderr, "ERROR: could not set up zsolve\n");
-        goto cleanup;
-    }
 
     clock_t start = clock();
-    if (_4ti2_state_compute(state) != _4ti2_OK) {
-        fprintf(stderr, "ERROR: zsolve failed\n");
-        goto cleanup;
+
+    build_lhs(lhs, matrix, field, context);
+
+    for (slong i = 0; i < cols; i++) {
+        for (slong j = 0; j <= i; j++, pair++) {
+
+            clock_t start_inside = clock();
+
+            build_rhs(rhs, matrix, i, j, field, context);
+            build_bounds(bounds, matrix, i, j, 0, field, field_generator, context);
+            zfy(zrhs, zlhs, rhs, lhs);
+
+            flint_printf("\n");
+            for(int i = 0; i < cols; i++) flint_printf("%wd ", bounds[i]);
+            flint_printf("\n");
+
+
+            // fmpq_mat_print(lhs); printf("\n");
+            // fmpz_mat_print(zrhs); printf("\n");
+
+            _4ti2_state* state = NULL;
+            if (setup_zsolve(&state, zlhs, zrhs, bounds)) {
+                fprintf(stderr, "ERROR: could not set up zsolve\n");
+                pairs[pair] = (pair_t) {i, j, -1};
+                continue;
+            }
+
+            _4ti2_matrix* out;
+            slong nsolutions = -1;
+
+            if (_4ti2_state_compute(state) != _4ti2_OK) {
+                fprintf(stderr, "ERROR: zsolve failed\n");
+                pairs[pair] = (pair_t) {i, j, -1};
+                continue;
+            }
+
+            flint_printf("(%wd,%wd) took %.2f sec\n", i, j,
+                         (double)(clock() - start_inside) / CLOCKS_PER_SEC);
+
+            // if (_4ti2_state_get_matrix(state, "zhom", &out) == _4ti2_OK)
+            //     flint_printf("zhom:   %d rows (expect 0)\n", _4ti2_matrix_get_num_rows(out));
+            //
+            // if (_4ti2_state_get_matrix(state, "zfree", &out) == _4ti2_OK)
+            //     flint_printf("zfree:  %d rows (expect 0)\n", _4ti2_matrix_get_num_rows(out));
+
+            if (_4ti2_state_get_matrix(state, "zinhom", &out) == _4ti2_OK) {
+                nsolutions = _4ti2_matrix_get_num_rows(out);
+                flint_printf("zinhom: %d solutions\n", nsolutions);
+                if (nsolutions > 0 && nsolutions <= 50)
+                    _4ti2_matrix_write_to_stdout(out);
+                else if (nsolutions > 50)
+                    flint_printf("(too many to print)\n");
+            }
+
+            // for(int i = 0; i < cols; i++) flint_printf("%wd ", bounds[i]);
+
+            _4ti2_state_delete(state);
+
+            if ((pair % 100) == 0) flint_printf("  %wd / %wd\n", pair, npairs);
+        }
     }
 
-    flint_printf("zsolve took %.2f sec\n",
-                 (double)(clock() - start) / CLOCKS_PER_SEC);
+    flint_printf("total: %.1f sec\n", (double)(clock() - start) / CLOCKS_PER_SEC);
 
-    _4ti2_matrix* out;
-
-    if (_4ti2_state_get_matrix(state, "zhom", &out) == _4ti2_OK)
-        flint_printf("zhom:   %d rows (expect 0)\n", _4ti2_matrix_get_num_rows(out));
-
-    if (_4ti2_state_get_matrix(state, "zfree", &out) == _4ti2_OK)
-        flint_printf("zfree:  %d rows (expect 0)\n", _4ti2_matrix_get_num_rows(out));
-
-    if (_4ti2_state_get_matrix(state, "zinhom", &out) == _4ti2_OK) {
-        int nsol = _4ti2_matrix_get_num_rows(out);
-        flint_printf("zinhom: %d solutions\n", nsol);
-        if (nsol > 0 && nsol <= 50)
-            _4ti2_matrix_write_to_stdout(out);
-        else if (nsol > 50)
-            flint_printf("(too many to print)\n");
+    slong total = 0, failures = 0, empty = 0;
+    for (slong k = 0; k < npairs; k++) {
+        if (pairs[k].nsolutions < 0) failures++;
+        else if (pairs[k].nsolutions == 0) empty++;
+        else total += pairs[k].nsolutions;
     }
 
-cleanup:
-    if (state) _4ti2_state_delete(state);
+    flint_printf("pairs: %wd  empty: %wd  failed: %wd  solutions: %wd\n",
+                 npairs, empty, failures, total);
+
+    flint_free(pairs);
     flint_free(bounds);
     fmpz_mat_clear(zrhs);
     fmpz_mat_clear(zlhs);
