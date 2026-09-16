@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[    424986,      13443]
-NotebookOptionsPosition[    421370,      13377]
-NotebookOutlinePosition[    421759,      13393]
-CellTagsIndexPosition[    421716,      13390]
+NotebookDataLength[    602334,      18236]
+NotebookOptionsPosition[    598250,      18162]
+NotebookOutlinePosition[    598638,      18178]
+CellTagsIndexPosition[    598595,      18175]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -75,12 +75,12 @@ Copyright (C) 2017, Silviu Radu <sradu@risc.jku.at>\
  CellFrame->0.5,
  GeneratedCell->True,
  CellAutoOverwrite->True,
- CellChangeTimes->{3.9975197968937893`*^9},
+ CellChangeTimes->{3.998570622295773*^9},
  ShowAutoSpellCheck->False,
  FontColor->RGBColor[0, 0, 0],
  Background->RGBColor[
   0.796887, 0.789075, 
-   0.871107],ExpressionUUID->"3edf58dc-65f6-4f7a-943f-a0d8c6b1a9eb"],
+   0.871107],ExpressionUUID->"8a6867d3-05a1-4708-86f5-e73a278ed961"],
 
 Cell[CellGroupData[{
 
@@ -252,6 +252,4791 @@ Cell[BoxData[
    3.997454422694708*^9, 3.997454547535755*^9, 3.997456938527917*^9, 
    3.997519797377095*^9},
  CellLabel->"Out[6]=",ExpressionUUID->"06790624-bf9b-45dc-9a5e-f0970059c3ca"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Calculate", " ", "Boundaries", " ", "in", " ", 
+    RowBox[{
+     RowBox[{"TIM", "^", "2"}], "/", "Z_"}], "2", " ", "and", " ", "Pull", " ",
+     "back", " ", "to", " ", 
+    RowBox[{"TIM", "^", "2"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "md", ",", "s", ",", "boundaries", ",", " ", "defects", ",", " ", "x", ",",
+        " ", "pullbacks"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"md", "=", 
+       RowBox[{"ModularDataFoldZ2OrbifoldMinimal", "[", "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"s", "=", 
+       RowBox[{"md", "[", "\"\<S\>\"", "]"}]}], ";", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"Calculate", " ", "boundaries"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"boundaries", " ", "=", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"#", "/", 
+           RowBox[{"Sqrt", "[", 
+            RowBox[{"#", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "]"}]}], " ", "&"}], " ", "/@", 
+         " ", "s"}], "//", "Transpose"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"boundaries", "//", "MatrixPlot"}], "//", "Echo"}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "The", " ", "defects", " ", "in", " ", "here", " ", "to", " ", "find", 
+        " ", "the", " ", "inverse", " ", "Z2"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"defects", "=", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"#", "/", 
+           RowBox[{"#", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], " ", "&"}], " ", "/@", " ", 
+         "s"}], "//", "Simplify"}]}], ";", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+        RowBox[{
+        "It", " ", "looks", " ", "like", " ", "there", " ", "are", " ", "3", " ",
+          "Z_", 
+         RowBox[{"2", "'"}], "s", " ", "in", " ", "there", " ", "in", " ", 
+         "a", " ", "Z_", 
+         RowBox[{"2", "^", "2"}]}], ",", " ", "\[IndentingNewLine]", "   ", 
+        RowBox[{"so", " ", "which", " ", "one", " ", "is", " ", "the", " ", 
+         RowBox[{"inverse", "?", " ", "\[IndentingNewLine]", 
+          RowBox[{"(", 
+           RowBox[{"probably", " ", "the", " ", "diagonal", " ", "one"}], 
+           ")"}]}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"x", " ", "=", " ", 
+       RowBox[{
+        RowBox[{"Transpose", "[", "defects", "]"}], "[", 
+        RowBox[{"[", 
+         RowBox[{"-", "1"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+       "The", " ", "pullback", " ", "is", " ", "going", " ", "to", " ", 
+        "be"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"pullbacks", " ", "=", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"#", " ", "+", " ", 
+             RowBox[{"x", " ", "*", " ", "#"}]}], ")"}], "/", "2"}], "&"}], "/@",
+          " ", "boundaries"}], " ", "//", " ", "FullSimplify"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"pullbacks", " ", "//", " ", "MatrixForm"}], "//", "Echo"}], 
+      ";"}]}], "\[IndentingNewLine]", "]"}], "//", "Time"}]}]], "Input",
+ CellChangeTimes->{{3.998570646893968*^9, 3.998570661216383*^9}, {
+  3.99857089405663*^9, 3.998570896330373*^9}, {3.998571035843408*^9, 
+  3.9985710515932217`*^9}, {3.9985711052897863`*^9, 3.998571133542294*^9}, {
+  3.9985711674803667`*^9, 3.998571192569862*^9}, {3.998571238350819*^9, 
+  3.998571253453547*^9}, {3.998571419532887*^9, 3.998571457651276*^9}, {
+  3.998571520929891*^9, 3.998571770360856*^9}, {3.998571855601021*^9, 
+  3.998571862168429*^9}, {3.998571929047565*^9, 3.998571980200268*^9}, {
+  3.9985727124434137`*^9, 3.998573020458118*^9}, {3.998573073409563*^9, 
+  3.998573079958914*^9}, {3.998573137007756*^9, 3.998573168590602*^9}},
+ CellLabel->"In[50]:=",ExpressionUUID->"b0ce5447-ef38-4054-a65e-5f9aa28f723b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1:eJztXXdQVUmzFxFQWOOCogioYAAEFUyo2AIqqyyKrogJFAyImDDjml1RwhJU
+hEVFkogoCIoSJSNZwuWSLuFyL0GSfgrKioTn1tt/+1V11bl15NVnlXWprqk5
+3T0953T/5jczU62PbNwrPmTIkJn//v/nb65bo7WUeRFY7vAdaTQ0G664JfL0
+eCngJqVbx3N8Dc3aCrGaj4th+hl3/hG5GnAvn3hYjpsCmQ8lPG2jikB/Wrnj
+u1dV8OmN4/tPGkKQfR4pZlFZClG9XXJl9k9A75eUDp/DfJBePVPyEpSA3o49
+yqMSwqF/9pio9faxoGm2++LyRA5Y1psaVITzYeenmHNtEjxw1NOTuMkthJ7t
+M94FfnkJ8mNST/i6xsGZ61qBXrdKYW3AZdOl1vWg91Y2bePKCnDc/DVqPrcA
+1trs4ffFxYEkN0zWwo8Pai8toyUOlYDdZ5XREgH4c/8a1XTyyIV0qNLzvLyr
+KR/KnvRFHVzBhc6hTinCgHrY8NMF28bdHKjpiQhO/PgU9Q/mB8bsRfyJ2YuN
+F6bP8+0BX4uyS0Hg+PmhwCgPDtzY+x/hw9eovZg+2LhgckxPqj5YP5ifsf6x
+eMDmC9Y/Zi/WD1WO+WF0avZiDdNa8Hhg7Ll0YjHs8DKpzNOPhB7VBadD6uLB
+YsqUae/vcCF16JsKz6UCdBx9zssHh+6vhxf7gnSuaXJgarVmr51iOGPzlB9/
+y3P5shhY3HZqWE5JCYQb7nkXW1qHPpepeYr5gTF7EX9i9mLjhenD1jzF9KTq
+g/Uz2OfpmoJxkz5ICGDE8S6TmjQO6AQuiFrlh8ehQW6gp0dkAuh92cW5vagM
+nBYFRS9PE4Cq0oDfhywebHbi3MudWwSRN0sifsuNBvX/LDKyXvoW+qwUTBIm
+Z4Fijqt+jnkq8OS+1l/SK4cz3tv9deQKwDQ7L1m2Ox7SvGt5h4vTQLqq/bPM
+hbew5dzJRL855bDFo+eNtloxmMlrtmbcywalBbe/XriaAivnmbiZu+RCmql5
+vcybTKh4OM+sVyINgk9qLR/jlQR/eGuWtpysgAbLoFlfgxrQ584dfXaWlm4z
+CEtNc5SuVcDIegMtlZCHMPzK9bdW2bHgW6jmYNzPgW9vdePVG/mofzA/MGUv
+5k/MXmy8MH3KdWaM9brbCDLumcZ148vhvFdrrrpBKGovpg82Lpgc05OqD9YP
+5mesfywesPmC9Y/Zi/WDyS/9vVwz7YsQFJKECT0+XPDcLm8UfTgMJJOk8qXs
+U2Hbc6Pfs2/ywCpi6diIRc2wUOeff+mg8+/vgn9/Mflvd1275OME0OWtqBx+
+sBQ8pz+9ZPbxCdoeey9h7WU5KyUnjk8B9+CkEQvkiqFA6WV2fxiPrCcmx+ap
+YYh/YsaGdzA14q/8O+cqQVV376Une4LI/VPtjV835ES9djykHx8ocRvHBaO8
+c6f88+sZs/eRX6BvZk8KKD9y3pLVXAXHTQr+1ghrQu3FxhcbF+p4ZUnM1NdI
+aQafmN2XVvVWgGKW5/2c+8Hk+MT8jNmL9YPNF6x/zF6sH0yOfWcdpnqfGvCv
+gymCzUkBocWgEMm50S8egeb/1LyXWq8tsfyN275WAG2aGjOMh5WClFVXl+nO
+p+S8F3vu8nwBX1anEk74a9hMvvoWPCYoPuFfj0XzXsw/mB8Ys5eY9zJVn2L2
+slWfUuOTmvdi8cBW3ou9D4/OK1OavCwBDn0ZEtJZwwXLzY4XJ50WMPbepsqj
+L46KbNdvAm0pZ8U9YeXgkCm2QdHkEfl9iMn/LlnzZFtBDMj6fNums4IDw+VL
+krtX8dH2abbptp62Qqje3rrpwc9cqH8Wa140E88TMPn7xxe7doi1gH3oy/0/
+T6gCu2c3BJMKA0AyXFacb5gMnNohe25/qYDc3f2d5aMaWfM/NR6wccG+j1R9
+qP5vmaaUf3wgFaYPm8CXtqqGAUkpjrUA//6+4El/mt3Hh3Fqp/t+zSqBZ0cP
+5Ty3CSfnh5i9WF6EyZ2GFRTZSdbBN8Ptj9Iti+G42ZF1B6dEoM/N58xuCKyI
+gzNhKineBaXw6FB/D/cmPe8SqEeMUXzXAG1O5h92nC4D8fnVe8+qPwatlcM3
+vrn3Gtwa83KuRpdD7rxJ9a/EGsh5CNZ+iXN/YbPua7iRuW5sgk05hLkdmrsu
+VSjyOMfs9WzWSRmq0QjSTWqKNc/LwCihw8a3PJQc/1h77977agbnBTCy8q7+
+gE4pPD621fqG1lOR+4Ga12F6UvN8LD6pfsbk2HzB4hazF+sHk2P9OFsErxv4
+nADqajtPeXcWw0idzw7v82rIdlH9jOUPeUUxIaO8GkDL9KjXAc0ykHEQjzzp
+8pix+vR18q7CssQ0GBsQfY1zvAZWajuIVWS+Q/NepvxDtVfU9Sn2/sfsxfQR
+dX1K9T/mZ6x/LB7Yqk//9Ftz+aVME/xtv2LklrPloHzn9JJf/B+h9qpMjocF
+VulwPijqeJp1LayxGd0R6tKCtsf6H7pYyUhdOwNWJr0MNXiRDf5P52olaBaR
+44qq/6dFTtN+so+H99p1c1UMuHAlN371pS7m4hyTy3XE+T+zLQFZrtiGjBs5
+MFlgBzc7kkX+3MlXzXJmT4wFY6dqiysOHJggNOV2neTDm02XjKwEAkjzGDI8
+7db379fUplcymU/I/sxtvsg/25YErx+b/jYspgL2/95pt6qqAZVj/a8TyJ/k
+atXD0YZN412+lMACTYkT/qvD6e89NZVnK0a1fc8PJsaWlvLgrG3RrrE5f5H1
+F3V7zA9Ye+x90mbVZWAYkQqfC2td7dp40KsZJzXiMh3vpcqneh8I2xbTCqc3
+R3nWuPIgjWMj/vLQXbR+pNYLmJxaD4YkZy+X+5YKIdXy5yJavr8/S8y6zrdW
+kJ+Lfa+x+oit+jTr2+jOhcHVMC25+ezwS0WQUrtQUczyBRnnZyofOBB0Rmbp
+/XewZcqECvHkSnihnbpRNT6QjNtT8RBsvuyt3lsYqZAOmvHj1EP7akDs2rWw
+zkUtqL1Y/YLJqfUpUzg/1p5aR1DrU6qcij9Q5VR7mcJhmKpTsPGl5nVMretR
+/Uy1F5svWP9M1afUPAfLo6jffSzvEnXey1S+TZWzlW9jeSCWh1PzOmr+hrWn
+1lOYnJo/M5XnizrvpfKRHromHtwUI4Sg4TfiJ1hwYWdEsKR3xvc612wlv/BE
+GszvzjVXnVUIjb5/+jzsL0f5Kr8qpS25VZoOoa0VulkpeXDsjOuLqGoOY3yk
+xM6g+xc4jfDJWItz/pdyWLXI0Umx8xH6XKb4SJgfmLIX8ydmLzZemD5s8ZEw
+Pan6YP0Mdj4SJsfWkTFeFnWeUnl0WqGqMUpqGSCddCclJzgL5LNWbHQvLiDP
+U+y5Uc424/tdU8A1Wstaf00VqGRY6w6d2YTOU8w/mB+Yspc6T5niDWL2ssUb
+pMYndZ5i8cDWPHX7E9S1t7RA7HS1ZovdVeBsu3r59G/+6He8W2uWidXrFFgi
+09Y+0b0KHD5dV8/fRecVvMrhhQTkx8Gob26yTSYlcD881MT3cS25XhtYGCme
+b8aBsq+N2+IX5gK/9vbumnE4jnrs12gdvRl88PP6Zfb5nmIY+dODHR9qRY/P
+YPZS14t1lGHrUM100P7D7/69uALQfZVkxV1Rhrb/6F3oH3qiGQrbT7oEx1XA
+wNudNQ3zH4rcD9i4YHJMz/pFH82izmbCls1p6a0P+HDabVf9CUEbOT6pfsbk
+2HzB4hazF+sHk2O4BFN4JlWO4WZM8UOo+B7Wnik8HMN7qfwoUcup+Kqo8V4q
+/kzFezH8H5sv2DoFW3gvxhuh+hnjw4iaj4TxgkQd55i9ouYjYfwcUfuBivdi
+elLnNRafg52PpJbe9erI/Ta4G9Btvcy4GtT2BHRrd99B9eyJMwpUlU+CpnHL
+1K7IVsCVCUcUYCM+j/aFG0glXIsBd4+YxBnSHFALXOPzSp4P4v3TdzkfrAFj
+/tCK2qwieCM5y8/zaxTZb1j/WPszhoHBS9qbYZ+BrY+ySiV06x9evUyfuXUN
+TP7Ff2KR9++p8OG+4UcJkyJQWFDa9Di1UuTPlS87uGzzt3Q4JxwvaSOdB85W
+t78qDeGA9g2PsbeU/tGnz8BRgQfrX5kd7yttIsfD2jmHtc3f8sFLI6A+xrcE
+vDPa8z7/EY7KsfFK3ORqmHmgDKrUlc/xzuZDldGFGG5zAtneELtu8+dmjbD2
+gK9LQUUZKDwKaz7ij8/HzOKrWVncdFjVxP3cO6IO/tCWOhor18pYe8wPmJ+x
+/qm4NBX3xnBmptYpqPqzxQtiah2KKsfWO7D1KbbWZag8IqbWDQfLuszN8y2n
+Nla0wNu1VoJsThUYlFqHOdo+IPtnRsgq6fU/x0GHT2DmkkWlcGnV9Pc8WdGv
+D4628ru+2iUNXJ7pdvM0amCStJLDSud34PPK1XqkTwtsNLnjfuhuFegEba06
+sA3Hx5iSz92ffHsxpx52fBzfkniTA7o9NyfF5dDrAqqcb8dxWW+eBh0NSbuP
+8avhkDDfq9z4HWv1LBZXTMUbW3Is3qjtMTnmHyreS5VT8UlqfUrFe6lybN8Z
+U/1T7bW7blm9YXoVlAoteoboFILHhh05tnoxjOlDxVex8aXivVj/vgd5Yz4H
+d8DWNXNOTO2ugYxnNZnvZa8z5meqvdh8wfpnCu/F/PCj7T/9yd598ki5DDBo
+e3srcV8uLL2jus9+SQn5PYDJT0m+8E2tbYM+d6vzWperoXDErNSWAC+0PVP7
+TzFe4krNR+1tT7kgmJKU6fIhD44FO4FFTCJr/qfGAzYuTL1nqP6nvm/T93gs
+9hydAR8MXm97aF4HXENz8c5NreT3BmYv9n7A5Bge9WRlkqnz+zow9kr2DC0o
+hjlzItZ/6aSvrzG1r83n8FyN9qRE0Mo1dLAZXg6OjeNnbrMXMravrUZx82ml
+8a3gXhA9WlmKBwr5qpbXzf3QdROm/EO1l619bZi9bO1ro/qfuq8Niwe29rVR
+8T0MP6TiXRjeKGq8lymcmSpnC2fG8E8Mf6bimZj/qXgvdR0Bk1NxY2r8s4X3
+yqxflXz7wAeYl/nSMvpAHZQHHdWTLn+8jOof8Uk3FU7rpECnZ8kZlexKcDh3
+cd/cRNGfE9Jb9FR5nVUDBK396nqhjwtWNjGyw0ofw46gli9HpiXC03uxc2zd
+y+DwuBOqQhmhyPUx03lnvTivCa56tda0q1SA8YgO7kG7EJE/V8rf1L5RowHa
+j0rNVM7jwiGF5tDFKsztG6LK15Xcmil2LBEmNnXcE+aXwZDKvryjIETlPxpe
+hMmltbsuXJTJAo/Zt6KvhdeDefT8I25/dZDjE+sHm4/Yd5/K92BKjvGRfrT9
+p1R+DiYfLPtPqfwrUfORqHw5Ue8/FTUfaaOVTdaSze2wOzJzz2thNSi/PLZC
+VekWa/FwcHPzFuXK19DsM7D+mLAcjnJ/bZFTw/Of3k+rLy8pSgboE1vutb0S
+njcluey2Zu+8L6qcypNx3to/7/mVVhiZK/PnIiseaOoKx+ruu/fD2YWNC3W8
+JGcU6RtEZsHZbfWx+yYL4Hen48KZ696L3M+YHJsvWNxi9mL9YHLsvccUnsmU
+HPveMXXeIPX7xRQejuGQVL6xqOXUeBD1eYNU/1P3+zOVvzF13iC1jqbysjDc
+gCkeHRVHYgq/ItfvLOFXGK6C4Vps8Qap+CQmp+JRg4U3yBQ/hC0eDsbrYIuf
+wxYviy3+FSb/Lx/p/25P5SNR94lj++Wp98tQzzeg7hPH7lvBnsvUPnHMD0zZ
+S71fhqnzHES9T5x6ngM1Pgf7PnGMX/Gj1acYP4cpPhLGPxF1fYrVTRj/arDU
+p6LmI1H9T+UjYfy0H42PxNQ9R/9f74Fi6p6swXIPFGYvW/dAUeNzsN8DRcUN
+qHwPrI5mip9DxZHY2gfKFn6F4SoYrsUWH4mKT2JyKh41WPhI1P0y2Dk2VH9i
+5/OI+nwk7JwiUc8XzF5Rn4+EnRckaj9Q98tgelL3s2DxOdjPR2KKN8gWXw7j
+ZbHFo2OLP8kWTxKT/5c3+L+/TPEGqfvZqfvusf6ZOleBqj9b5yqwdb43dv4G
+dp4GW/fLUM9hwOTU87oH+/0yTPFXqXKMJ/mjnTfIFP95sJw3SOXTiprfS+Ub
+i/q8QVHfL0O9T3x0avZiDdNa8Hhg7Ll0YjHs8DKpzNOPhE9vHN9/0hCC7PNI
+MYvKUojq7ZIrs3+C3jftc14+OHR/PbzYF6RzTZMDU6s1e+0Uwxm7T1ySGyZr
+4ccHte/pg8ShErD7rDJaIgB/LlP3iWN+YMxexJ+Yvdh4YfqwdZ84pidVH6yf
+wX6f+P8AeDeYyw==
+   "], {{0, 0}, {39, 39}}, {0, 1}],
+  Frame->True,
+  FrameLabel->{None, None},
+  FrameTicks->{{{{38.5, 
+       FormBox["1", TraditionalForm]}, {29.5, 
+       FormBox["10", TraditionalForm]}, {19.5, 
+       FormBox["20", TraditionalForm]}, {9.5, 
+       FormBox["30", TraditionalForm]}, {0.5, 
+       FormBox["39", TraditionalForm]}}, {{38.5, 
+       FormBox["1", TraditionalForm]}, {29.5, 
+       FormBox["10", TraditionalForm]}, {19.5, 
+       FormBox["20", TraditionalForm]}, {9.5, 
+       FormBox["30", TraditionalForm]}, {0.5, 
+       FormBox["39", TraditionalForm]}}}, {{{0.5, 
+       FormBox["1", TraditionalForm]}, {9.5, 
+       FormBox["10", TraditionalForm]}, {19.5, 
+       FormBox["20", TraditionalForm]}, {29.5, 
+       FormBox["30", TraditionalForm]}, {38.5, 
+       FormBox["39", TraditionalForm]}}, {{0.5, 
+       FormBox["1", TraditionalForm]}, {9.5, 
+       FormBox["10", TraditionalForm]}, {19.5, 
+       FormBox["20", TraditionalForm]}, {29.5, 
+       FormBox["30", TraditionalForm]}, {38.5, 
+       FormBox["39", TraditionalForm]}}}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "GridLinesInFront" -> True, "AxisPadding" -> Scaled[0.02], 
+    "DefaultBoundaryStyle" -> Automatic, 
+    "DefaultGraphicsInteraction" -> {
+     "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+      "Effects" -> {
+       "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
+        "Droplines" -> {
+         "freeformCursorMode" -> True, 
+          "placement" -> {"x" -> "All", "y" -> "None"}}}}, "DefaultPlotStyle" -> 
+    Automatic, "DomainPadding" -> Scaled[0.02], "RangePadding" -> 
+    Scaled[0.05]}]], "Echo",
+ CellChangeTimes->{
+  3.998573169381514*^9},ExpressionUUID->"fbd23677-8ff4-412c-819a-\
+1093efa90589"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "-", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      FractionBox["1", 
+       RowBox[{
+        SqrtBox["2"], " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "-", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}]},
+     {
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", "0", "0", "0", "0", 
+      FractionBox[
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]], 
+       SqrtBox["2"]], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      FractionBox["1", 
+       RowBox[{
+        SqrtBox["2"], " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", "0", "0", "0", "0", "0", "0", "0", 
+      
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.473\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.47287080450158791578019190637860447168`15.\
+954589770191003, Editable -> False], "approx" -> -0.4728708045015879, 
+        "interp" -> InterpretationBox["", 
+          Root[-1 + 20 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "1"}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-1.06\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -1.05737126344056409088523196260211989284`15.\
+954589770191003, Editable -> False], "approx" -> -1.057371263440564, "interp" -> 
+        InterpretationBox["", 
+          Root[-5 + 4 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "5"}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"]},
+     {
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
+      "0", "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], 
+      FractionBox["1", 
+       SqrtBox["2"]], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "+", 
+         SqrtBox["5"]}], ")"}]}], "0", "0", 
+      FractionBox[
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]], 
+       SqrtBox["2"]], "0", "0", "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.610\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.60971143540217820344651045161299407482`15.954589770191003, 
+          Editable -> False], "approx" -> 0.6097114354021782, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 10 #^4 + 20 #^8& , 3, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"10", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.776\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.77556492636499863024823753221426159143`15.\
+954589770191003, Editable -> False], "approx" -> -0.7755649263649986, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 10 #^4 + 20 #^8& , 1, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"10", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.610\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.60971143540217820344651045161299407482`15.\
+954589770191003, Editable -> False], "approx" -> -0.6097114354021782, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 10 #^4 + 20 #^8& , 2, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"10", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "-", 
+         SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
+         SqrtBox["5"]}], ")"}]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "+", 
+         SqrtBox["5"]}], ")"}]}]},
+     {
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], "0", "0", "0", "0", "0", 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", "0", "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]]},
+     {
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], "0", "0", "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      "0", "0", "0", "0", "0", "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}], "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.473\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.47287080450158791578019190637860447168`15.\
+954589770191003, Editable -> False], "approx" -> -0.4728708045015879, 
+        "interp" -> InterpretationBox["", 
+          Root[-1 + 20 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "1"}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}]},
+     {
+      SqrtBox[
+       RowBox[{"1", "+", 
+        FractionBox["2", 
+         SqrtBox["5"]]}]], "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.946\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.94574160900317583156038381275720894337`15.\
+954589770191003, Editable -> False], "approx" -> -0.9457416090031758, 
+        "interp" -> InterpretationBox["", 
+          Root[-4 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "4"}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      SqrtBox[
+       RowBox[{"1", "-", 
+        FractionBox["2", 
+         SqrtBox["5"]]}]], "0", "0", "0", "0", 
+      FractionBox[
+       SqrtBox["2"], 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", "0", 
+      SqrtBox[
+       RowBox[{"1", "+", 
+        FractionBox["2", 
+         SqrtBox["5"]]}]], "0", 
+      SqrtBox[
+       RowBox[{"1", "-", 
+        FractionBox["2", 
+         SqrtBox["5"]]}]], 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.339\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.33893430082197434360935517361212987453`15.954589770191003, 
+          Editable -> False], "approx" -> 0.33893430082197434`, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 80 #^4 + 320 #^8& , 3, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"80", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"320", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 3|>,
+       "NumericalApproximationInterp"], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{"-", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox["1", "8"], "+", 
+          FractionBox["1", 
+           RowBox[{"4", " ", 
+            SqrtBox["5"]}]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.473\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.47287080450158791578019190637860447168`15.\
+954589770191003, Editable -> False], "approx" -> -0.4728708045015879, 
+        "interp" -> InterpretationBox["", 
+          Root[-1 + 20 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "1"}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.339\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.33893430082197434360935517361212987453`15.954589770191003, 
+          Editable -> False], "approx" -> 0.33893430082197434`, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 80 #^4 + 320 #^8& , 3, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"80", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"320", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{"-", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox["1", "8"], "+", 
+          FractionBox["1", 
+           RowBox[{"4", " ", 
+            SqrtBox["5"]}]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}]},
+     {"1", "0", "0", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}], ")"}], 
+       RowBox[{"1", "/", "4"}]], "0", "0", "0", "0", 
+      RowBox[{"-", "1"}], 
+      RowBox[{"-", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox["1", "2"], "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", "0", "0", 
+      RowBox[{"-", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox["1", "2"], "-", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", "0", "0", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         FractionBox["1", "2"], "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}], ")"}], 
+       RowBox[{"1", "/", "4"}]], "0", "0", "0", "0", "0", "1", "1", "0", "0", 
+      "0", "0", "0", "0", "0", 
+      RowBox[{"-", "1"}], "0", 
+      RowBox[{"-", "1"}], 
+      RowBox[{"-", "1"}], "1"},
+     {
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      "0", "0", "0", "0", "0", "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}], "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}], "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}]},
+     {
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      FractionBox[
+       SqrtBox["2"], 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", "0", "0", "0", "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.946\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.94574160900317583156038381275720894337`15.\
+954589770191003, Editable -> False], "approx" -> -0.9457416090031758, 
+        "interp" -> InterpretationBox["", 
+          Root[-4 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "4"}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"]},
+     {
+      SqrtBox[
+       RowBox[{"1", "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], "0", "0", "0", "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", "0", "0", "0", "0", 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", 
+      SqrtBox[
+       RowBox[{"2", "-", 
+        FractionBox["2", 
+         SqrtBox["5"]]}]], "0", "0", "0", "0", "0", "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"2", "+", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", "0", 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", "0", 
+      SqrtBox[
+       RowBox[{"1", "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      SqrtBox[
+       RowBox[{"1", "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      SqrtBox[
+       RowBox[{"1", "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]]},
+     {
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-1.06\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -1.05737126344056409088523196260211989284`15.\
+954589770191003, Editable -> False], "approx" -> -1.057371263440564, "interp" -> 
+        InterpretationBox["", 
+          Root[-5 + 4 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "5"}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      FractionBox["1", 
+       RowBox[{
+        SqrtBox["2"], " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", "0", "0", "0", "0", "0", "0", "0", 
+      
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.473\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.47287080450158791578019190637860447168`15.\
+954589770191003, Editable -> False], "approx" -> -0.4728708045015879, 
+        "interp" -> InterpretationBox["", 
+          Root[-1 + 20 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "1"}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], 
+      FractionBox[
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]], 
+       SqrtBox["2"]], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"]},
+     {
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "+", 
+         SqrtBox["5"]}], ")"}]}], "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.776\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.77556492636499863024823753221426159143`15.\
+954589770191003, Editable -> False], "approx" -> -0.7755649263649986, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 10 #^4 + 20 #^8& , 1, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"10", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.610\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.60971143540217820344651045161299407482`15.\
+954589770191003, Editable -> False], "approx" -> -0.6097114354021782, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 10 #^4 + 20 #^8& , 2, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"10", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", 
+      FractionBox[
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]], 
+       SqrtBox["2"]], "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.610\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.60971143540217820344651045161299407482`15.954589770191003, 
+          Editable -> False], "approx" -> 0.6097114354021782, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 10 #^4 + 20 #^8& , 3, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"10", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "-", 
+         SqrtBox["5"]}], ")"}]}], "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
+         SqrtBox["5"]}], ")"}]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "-", 
+         SqrtBox["5"]}], ")"}]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "+", 
+         SqrtBox["5"]}], ")"}]}]},
+     {
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], "0", "0", "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      "0", "0", "0", "0", "0", "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}], "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", 
+      FractionBox["1", 
+       RowBox[{
+        SqrtBox["2"], " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}]},
+     {
+      SqrtBox[
+       RowBox[{"1", "+", 
+        FractionBox["2", 
+         SqrtBox["5"]]}]], "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.946\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.94574160900317583156038381275720894337`15.\
+954589770191003, Editable -> False], "approx" -> -0.9457416090031758, 
+        "interp" -> InterpretationBox["", 
+          Root[-4 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "4"}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      SqrtBox[
+       RowBox[{"1", "-", 
+        FractionBox["2", 
+         SqrtBox["5"]]}]], "0", "0", "0", "0", 
+      FractionBox[
+       SqrtBox["2"], 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", "0", 
+      SqrtBox[
+       RowBox[{"1", "+", 
+        FractionBox["2", 
+         SqrtBox["5"]]}]], "0", 
+      SqrtBox[
+       RowBox[{"1", "-", 
+        FractionBox["2", 
+         SqrtBox["5"]]}]], 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}]},
+     {
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], "0", "0", "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], "0", "0", "0", 
+      FractionBox[
+       SqrtBox["2"], 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], "0", 
+      SqrtBox[
+       RowBox[{"1", "-", 
+        FractionBox["2", 
+         SqrtBox["5"]]}]], "0", "0", "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], "0", 
+      SqrtBox[
+       RowBox[{"1", "+", 
+        FractionBox["2", 
+         SqrtBox["5"]]}]], "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]]},
+     {"1", "0", "0", 
+      RowBox[{"-", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox["1", "2"], "-", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", "0", "0", 
+      RowBox[{"-", "1"}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         FractionBox["1", "2"], "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}], ")"}], 
+       RowBox[{"1", "/", "4"}]], "0", "0", "0", "0", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}], ")"}], 
+       RowBox[{"1", "/", "4"}]], "0", "0", "0", "0", 
+      RowBox[{"-", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox["1", "2"], "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", "0", "0", "0", "1", "1", "0", 
+      "0", "0", "0", "0", "0", "0", 
+      RowBox[{"-", "1"}], "0", 
+      RowBox[{"-", "1"}], 
+      RowBox[{"-", "1"}], "1"},
+     {
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], "0", "0", "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
+      "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", "0", "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], 
+      FractionBox["1", 
+       SqrtBox["2"]], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}]},
+     {
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      "0", "0", "0", "0", "0", "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.437\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.43701602444882109432811034821497742087`15.\
+954589770191003, Editable -> False], "approx" -> -0.4370160244488211, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 6 #^2 + 4 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"6", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}], "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}], "0", 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "-", 
+         SqrtBox["5"]}]], "2"], 
+      FractionBox[
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]], "2"], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"3", "+", 
+         SqrtBox["5"]}]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", "0", "0", "0", "0", 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}]},
+     {
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-1.06\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -1.05737126344056409088523196260211989284`15.\
+954589770191003, Editable -> False], "approx" -> -1.057371263440564, "interp" -> 
+        InterpretationBox["", 
+          Root[-5 + 4 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "5"}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      FractionBox["1", 
+       RowBox[{
+        SqrtBox["2"], " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", "0", "0", "0", "0", "0", "0", "0", 
+      
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.473\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.47287080450158791578019190637860447168`15.\
+954589770191003, Editable -> False], "approx" -> -0.4728708045015879, 
+        "interp" -> InterpretationBox["", 
+          Root[-1 + 20 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "1"}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], 
+      FractionBox[
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]], 
+       SqrtBox["2"]], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"]},
+     {
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], "0", "0", "0", "0", "0", 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", "0", "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], "0", 
+      RowBox[{"-", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "-", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "2"], "+", 
+        FractionBox["1", 
+         SqrtBox["5"]]}]]},
+     {
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.339\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.33893430082197434360935517361212987453`15.\
+954589770191003, Editable -> False], "approx" -> -0.33893430082197434`, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 80 #^4 + 320 #^8& , 2, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"80", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"320", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         FractionBox["1", "8"], "+", 
+         FractionBox["1", 
+          RowBox[{"4", " ", 
+           SqrtBox["5"]}]]}], ")"}], 
+       RowBox[{"1", "/", "4"}]], "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.473\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.47287080450158791578019190637860447168`15.\
+954589770191003, Editable -> False], "approx" -> -0.4728708045015879, 
+        "interp" -> InterpretationBox["", 
+          Root[-1 + 20 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "1"}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.339\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.33893430082197434360935517361212987453`15.\
+954589770191003, Editable -> False], "approx" -> -0.33893430082197434`, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 80 #^4 + 320 #^8& , 2, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"80", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"320", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         FractionBox["1", "8"], "+", 
+         FractionBox["1", 
+          RowBox[{"4", " ", 
+           SqrtBox["5"]}]]}], ")"}], 
+       RowBox[{"1", "/", "4"}]], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.339\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.33893430082197434360935517361212987453`15.\
+954589770191003, Editable -> False], "approx" -> -0.33893430082197434`, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 80 #^4 + 320 #^8& , 2, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"80", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"320", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         FractionBox["1", "8"], "+", 
+         FractionBox["1", 
+          RowBox[{"4", " ", 
+           SqrtBox["5"]}]]}], ")"}], 
+       RowBox[{"1", "/", "4"}]], "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.473\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.47287080450158791578019190637860447168`15.\
+954589770191003, Editable -> False], "approx" -> -0.4728708045015879, 
+        "interp" -> InterpretationBox["", 
+          Root[-1 + 20 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "1"}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.339\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.33893430082197434360935517361212987453`15.\
+954589770191003, Editable -> False], "approx" -> -0.33893430082197434`, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 80 #^4 + 320 #^8& , 2, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"80", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"320", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         FractionBox["1", "8"], "+", 
+         FractionBox["1", 
+          RowBox[{"4", " ", 
+           SqrtBox["5"]}]]}], ")"}], 
+       RowBox[{"1", "/", "4"}]], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}]},
+     {
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], "0", "0", "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
+      "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", "0", "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], 
+      FractionBox["1", 
+       SqrtBox["2"]], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.946\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.94574160900317583156038381275720894337`15.\
+954589770191003, Editable -> False], "approx" -> -0.9457416090031758, 
+        "interp" -> InterpretationBox["", 
+          Root[-4 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "4"}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", "0", 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", "0", 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}]},
+     {
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", "0", "0", "0", "0", 
+      FractionBox[
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]], 
+       SqrtBox["2"]], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      FractionBox["1", 
+       RowBox[{
+        SqrtBox["2"], " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", "0", "0", "0", "0", "0", "0", "0", 
+      
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.473\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.47287080450158791578019190637860447168`15.\
+954589770191003, Editable -> False], "approx" -> -0.4728708045015879, 
+        "interp" -> InterpretationBox["", 
+          Root[-1 + 20 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "1"}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-1.06\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -1.05737126344056409088523196260211989284`15.\
+954589770191003, Editable -> False], "approx" -> -1.057371263440564, "interp" -> 
+        InterpretationBox["", 
+          Root[-5 + 4 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "5"}], "+", 
+             RowBox[{"4", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"]},
+     {
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
+      "0", "0", 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], 
+      FractionBox["1", 
+       SqrtBox["2"]], "0", "0", "0", "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}], 
+      FractionBox["1", 
+       SqrtBox["2"]], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SqrtBox["2"]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", 
+      FractionBox["1", 
+       RowBox[{
+        SqrtBox["2"], " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", "0", "0", "0", "0", 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", 
+      FractionBox["1", 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}]},
+     {
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", "0", "0", "0", "0", "0", 
+      FractionBox[
+       SqrtBox["2"], 
+       SuperscriptBox["5", 
+        RowBox[{"1", "/", "4"}]]], "0", "0", "0", "0", "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.946\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.94574160900317583156038381275720894337`15.\
+954589770191003, Editable -> False], "approx" -> -0.9457416090031758, 
+        "interp" -> InterpretationBox["", 
+          Root[-4 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "4"}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"]},
+     {
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "-", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      FractionBox["1", 
+       RowBox[{
+        SqrtBox["2"], " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "-", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.473\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.47287080450158791578019190637860447168`15.\
+954589770191003, Editable -> False], "approx" -> -0.4728708045015879, 
+        "interp" -> InterpretationBox["", 
+          Root[-1 + 20 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "1"}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.52573111211913359230862852200516499579`15.\
+954589770191003, Editable -> False], "approx" -> -0.5257311121191336, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 2, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 2|>,
+       "NumericalApproximationInterp"], "0", "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.526\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.52573111211913359230862852200516499579`15.954589770191003, 
+          Editable -> False], "approx" -> 0.5257311121191336, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 3, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 3|>,
+       "NumericalApproximationInterp"], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "10"], " ", 
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}]}]], "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.851\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.85065080835203987774661982257384806871`15.\
+954589770191003, Editable -> False], "approx" -> -0.8506508083520399, 
+        "interp" -> InterpretationBox["", 
+          Root[1 - 5 #^2 + 5 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "2"]}], "+", 
+             RowBox[{"5", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.339\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.33893430082197434360935517361212987453`15.954589770191003, 
+          Editable -> False], "approx" -> 0.33893430082197434`, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 80 #^4 + 320 #^8& , 3, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"80", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"320", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 3|>,
+       "NumericalApproximationInterp"], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{"-", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox["1", "8"], "+", 
+          FractionBox["1", 
+           RowBox[{"4", " ", 
+            SqrtBox["5"]}]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"-0.473\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> 
+           False], -0.47287080450158791578019190637860447168`15.\
+954589770191003, Editable -> False], "approx" -> -0.4728708045015879, 
+        "interp" -> InterpretationBox["", 
+          Root[-1 + 20 #^4& , 1, 0]], "head" -> "Root", "big" -> RowBox[{
+           RowBox[{
+             RowBox[{"-", "1"}], "+", 
+             RowBox[{"20", " ", 
+               SuperscriptBox["#1", "4"]}]}], "&"}], "degree" -> "4", 
+        "shortDegree" -> "4", "number" -> 1|>,
+       "NumericalApproximationInterp"], "0", 
+      TemplateBox[<|"icon" -> "Root", "small" -> InterpretationBox[
+          StyleBox[
+           TemplateBox[{"\"0.339\"", 
+             DynamicBox[
+              FEPrivate`FrontEndResource[
+              "FEExpressions", "NumericalApproximationElider"]]}, 
+            "RowDefault"], ShowStringCharacters -> False], 
+          0.33893430082197434360935517361212987453`15.954589770191003, 
+          Editable -> False], "approx" -> 0.33893430082197434`, "interp" -> 
+        InterpretationBox["", 
+          Root[1 - 80 #^4 + 320 #^8& , 3, 0]], "head" -> "Root", "big" -> 
+        RowBox[{
+           RowBox[{"1", "-", 
+             RowBox[{"80", " ", 
+               SuperscriptBox["#1", "4"]}], "+", 
+             RowBox[{"320", " ", 
+               SuperscriptBox["#1", "8"]}]}], "&"}], "degree" -> "8", 
+        "shortDegree" -> "8", "number" -> 3|>,
+       "NumericalApproximationInterp"], "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{"-", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox["1", "8"], "+", 
+          FractionBox["1", 
+           RowBox[{"4", " ", 
+            SqrtBox["5"]}]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["2", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", "0", 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "4"], "+", 
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], 
+      RowBox[{"-", 
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         SuperscriptBox["5", 
+          RowBox[{"1", "/", "4"}]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "2"], "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}], 
+      RowBox[{
+       FractionBox["1", "40"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"5", "+", 
+          SqrtBox["5"]}], ")"}], 
+        RowBox[{"3", "/", "2"}]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "-", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      FractionBox["1", 
+       RowBox[{
+        SqrtBox["2"], " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox["1", "2"]}], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "-", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}]},
+     {
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "-", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      FractionBox["1", 
+       RowBox[{
+        SqrtBox["2"], " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"1", "-", 
+          FractionBox["1", 
+           SqrtBox["5"]]}], ")"}], 
+        RowBox[{"1", "/", "4"}]]}], "0", "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["1", "10"], " ", 
+         RowBox[{"(", 
+          RowBox[{"5", "+", 
+           SqrtBox["5"]}], ")"}]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], "0", 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", "0", 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      SqrtBox[
+       RowBox[{
+        FractionBox["1", "8"], "-", 
+        FractionBox["1", 
+         RowBox[{"8", " ", 
+          SqrtBox["5"]}]]}]], "0", 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      FractionBox["1", 
+       RowBox[{"2", " ", 
+        SuperscriptBox["5", 
+         RowBox[{"1", "/", "4"}]]}]], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}], 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       SqrtBox[
+        RowBox[{"1", "-", 
+         FractionBox["1", 
+          SqrtBox["5"]]}]]}]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Echo",
+ CellChangeTimes->{
+  3.998573169825223*^9},ExpressionUUID->"7502c757-dece-44c0-ae29-\
+42424b3ab948"],
+
+Cell[BoxData[
+ RowBox[{
+  TagBox["\<\"Time: \"\>",
+   "EchoLabel"], "  ", "0.878141`"}]], "Echo",
+ CellChangeTimes->{
+  3.9985731700325737`*^9},ExpressionUUID->"116d3e48-575f-42c1-8bda-\
+f4accd9606f4"]
+}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -13375,7 +18160,7 @@ modules/fusion/in/A.txt\"\>"], "Output",
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{754.5, 798},
+WindowSize->{1428, 798},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"15.0 for Linux x86 (64-bit) (July 2, 2026)",
 StyleDefinitions->"Default.nb",
@@ -13397,55 +18182,65 @@ Cell[CellGroupData[{
 Cell[710, 27, 183, 3, 96, "Title",ExpressionUUID->"42cd4b76-6a78-4bbf-999f-803ce6e4175e"],
 Cell[896, 32, 195, 3, 52, "Subtitle",ExpressionUUID->"8317deaa-940f-4599-ab3a-a52513680379"],
 Cell[1094, 37, 1181, 30, 109, "Input",ExpressionUUID->"d4ad5de3-80c1-413e-9daf-4e0edf72a3fd"],
-Cell[2278, 69, 474, 13, 94, "Text",ExpressionUUID->"3edf58dc-65f6-4f7a-943f-a0d8c6b1a9eb"],
+Cell[2278, 69, 472, 13, 94, "Text",ExpressionUUID->"8a6867d3-05a1-4708-86f5-e73a278ed961"],
 Cell[CellGroupData[{
-Cell[2777, 86, 199, 3, 29, "Input",ExpressionUUID->"b77573bc-c383-469f-a938-2c9577a1ae86"],
-Cell[2979, 91, 6913, 162, 142, "Output",ExpressionUUID->"06790624-bf9b-45dc-9a5e-f0970059c3ca"]
+Cell[2775, 86, 199, 3, 29, "Input",ExpressionUUID->"b77573bc-c383-469f-a938-2c9577a1ae86"],
+Cell[2977, 91, 6913, 162, 106, "Output",ExpressionUUID->"06790624-bf9b-45dc-9a5e-f0970059c3ca"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[9929, 258, 1611, 36, 129, "Input",ExpressionUUID->"ee60ced5-dbb4-4388-b387-36b946741d5c"],
+Cell[9927, 258, 4247, 96, 449, "Input",ExpressionUUID->"b0ce5447-ef38-4054-a65e-5f9aa28f723b"],
 Cell[CellGroupData[{
-Cell[11565, 298, 199, 6, 23, "Echo",ExpressionUUID->"240f4aa0-de30-40a0-b3db-1f90f6011979"],
-Cell[11767, 306, 199, 6, 23, "Echo",ExpressionUUID->"60cc1704-b72a-4ead-b1f6-782f5fea2da4"],
-Cell[11969, 314, 199, 6, 23, "Echo",ExpressionUUID->"2002b87f-c379-4a7a-8817-a0aa57603510"]
-}, Open  ]],
-Cell[12183, 323, 93056, 3562, 1006, "Output",ExpressionUUID->"0769a481-214a-466c-80a2-968b8e0bd1d8"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[105276, 3890, 1158, 26, 49, "Input",ExpressionUUID->"5fa7f79d-58af-48b2-8dfc-6436ba6469a0"],
-Cell[106437, 3918, 113665, 2271, 2711, "Output",ExpressionUUID->"ce7b49bb-edca-43b3-8d4f-a6f842124c6a"]
+Cell[14199, 358, 8246, 148, 365, "Echo",ExpressionUUID->"fbd23677-8ff4-412c-819a-1093efa90589"],
+Cell[22448, 508, 164108, 4521, 1158, "Echo",ExpressionUUID->"7502c757-dece-44c0-ae29-42424b3ab948"],
+Cell[186559, 5031, 201, 6, 23, "Echo",ExpressionUUID->"116d3e48-575f-42c1-8bda-f4accd9606f4"]
+}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[220139, 6194, 180, 3, 29, "Input",ExpressionUUID->"fff5ec04-ce7e-4770-a405-31ab1f9d3f32"],
-Cell[220322, 6199, 98100, 3618, 4079, "Output",ExpressionUUID->"484f4a0b-1fad-474d-991a-b430b5f8c399"]
+Cell[186809, 5043, 1611, 36, 129, "Input",ExpressionUUID->"ee60ced5-dbb4-4388-b387-36b946741d5c"],
+Cell[CellGroupData[{
+Cell[188445, 5083, 199, 6, 23, "Echo",ExpressionUUID->"240f4aa0-de30-40a0-b3db-1f90f6011979"],
+Cell[188647, 5091, 199, 6, 23, "Echo",ExpressionUUID->"60cc1704-b72a-4ead-b1f6-782f5fea2da4"],
+Cell[188849, 5099, 199, 6, 23, "Echo",ExpressionUUID->"2002b87f-c379-4a7a-8817-a0aa57603510"]
+}, Open  ]],
+Cell[189063, 5108, 93056, 3562, 1006, "Output",ExpressionUUID->"0769a481-214a-466c-80a2-968b8e0bd1d8"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[318459, 9822, 2117, 47, 152, "Input",ExpressionUUID->"84f4e787-b785-4905-8340-f4b954964085"],
-Cell[320579, 9871, 521, 12, 26, "Message",ExpressionUUID->"c1797a91-4396-4afe-bdf2-9a060333ba52"]
+Cell[282156, 8675, 1158, 26, 70, "Input",ExpressionUUID->"5fa7f79d-58af-48b2-8dfc-6436ba6469a0"],
+Cell[283317, 8703, 113665, 2271, 70, "Output",ExpressionUUID->"ce7b49bb-edca-43b3-8d4f-a6f842124c6a"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[321137, 9888, 1557, 45, 109, "Input",ExpressionUUID->"69d2d8dc-72ec-4111-962e-124f23c01bb5"],
-Cell[322697, 9935, 199, 6, 23, "Echo",ExpressionUUID->"49b0eb9b-7120-4056-9df4-4d795fa6940f"],
-Cell[322899, 9943, 914, 15, 53, "Output",ExpressionUUID->"4f90f907-8754-4714-8681-1e2ed7dc37b5"],
-Cell[323816, 9960, 946, 16, 53, "Output",ExpressionUUID->"db245bbd-8789-423c-9c5d-0fd7af1cc2dc"]
-}, Open  ]],
-Cell[324777, 9979, 131, 3, 29, "Input",ExpressionUUID->"569a82f5-9041-4092-b727-c5ef748c144a"],
-Cell[CellGroupData[{
-Cell[324933, 9986, 247, 5, 29, "Input",ExpressionUUID->"1315cb19-4a32-4ca8-9acc-ee74a3f97534"],
-Cell[325183, 9993, 91941, 3269, 697, "Output",ExpressionUUID->"a76c57dc-3635-4271-bd28-b232bb85d334"]
-}, Open  ]],
-Cell[417139, 13265, 275, 5, 29, "Input",ExpressionUUID->"300c07b3-c1a8-422f-958f-27f8545bcc53"],
-Cell[CellGroupData[{
-Cell[417439, 13274, 2493, 63, 189, "Input",ExpressionUUID->"e810cd40-98b6-41f0-8de5-f070d3e89ff2"],
-Cell[419935, 13339, 201, 6, 23, "Echo",ExpressionUUID->"96af3243-270a-4f4d-a602-0d3035f197ce"],
-Cell[420139, 13347, 319, 6, 33, "Output",ExpressionUUID->"bb729781-b9e8-4a2a-b941-53a2e3716622"]
+Cell[397019, 10979, 180, 3, 70, "Input",ExpressionUUID->"fff5ec04-ce7e-4770-a405-31ab1f9d3f32"],
+Cell[397202, 10984, 98100, 3618, 70, "Output",ExpressionUUID->"484f4a0b-1fad-474d-991a-b430b5f8c399"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[420495, 13358, 479, 7, 29, "Input",ExpressionUUID->"e38c5ccd-3f33-4aa4-91d2-83bf9db9fecf"],
-Cell[420977, 13367, 365, 6, 33, "Output",ExpressionUUID->"972a227c-5bed-42df-96dc-27e12894d6db"]
+Cell[495339, 14607, 2117, 47, 70, "Input",ExpressionUUID->"84f4e787-b785-4905-8340-f4b954964085"],
+Cell[497459, 14656, 521, 12, 70, "Message",ExpressionUUID->"c1797a91-4396-4afe-bdf2-9a060333ba52"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[498017, 14673, 1557, 45, 70, "Input",ExpressionUUID->"69d2d8dc-72ec-4111-962e-124f23c01bb5"],
+Cell[499577, 14720, 199, 6, 70, "Echo",ExpressionUUID->"49b0eb9b-7120-4056-9df4-4d795fa6940f"],
+Cell[499779, 14728, 914, 15, 70, "Output",ExpressionUUID->"4f90f907-8754-4714-8681-1e2ed7dc37b5"],
+Cell[500696, 14745, 946, 16, 70, "Output",ExpressionUUID->"db245bbd-8789-423c-9c5d-0fd7af1cc2dc"]
+}, Open  ]],
+Cell[501657, 14764, 131, 3, 70, "Input",ExpressionUUID->"569a82f5-9041-4092-b727-c5ef748c144a"],
+Cell[CellGroupData[{
+Cell[501813, 14771, 247, 5, 70, "Input",ExpressionUUID->"1315cb19-4a32-4ca8-9acc-ee74a3f97534"],
+Cell[502063, 14778, 91941, 3269, 70, "Output",ExpressionUUID->"a76c57dc-3635-4271-bd28-b232bb85d334"]
+}, Open  ]],
+Cell[594019, 18050, 275, 5, 70, "Input",ExpressionUUID->"300c07b3-c1a8-422f-958f-27f8545bcc53"],
+Cell[CellGroupData[{
+Cell[594319, 18059, 2493, 63, 70, "Input",ExpressionUUID->"e810cd40-98b6-41f0-8de5-f070d3e89ff2"],
+Cell[596815, 18124, 201, 6, 70, "Echo",ExpressionUUID->"96af3243-270a-4f4d-a602-0d3035f197ce"],
+Cell[597019, 18132, 319, 6, 70, "Output",ExpressionUUID->"bb729781-b9e8-4a2a-b941-53a2e3716622"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[597375, 18143, 479, 7, 70, "Input",ExpressionUUID->"e38c5ccd-3f33-4aa4-91d2-83bf9db9fecf"],
+Cell[597857, 18152, 365, 6, 70, "Output",ExpressionUUID->"972a227c-5bed-42df-96dc-27e12894d6db"]
 }, Open  ]]
 }, Open  ]]
 }
 ]
 *)
+
+(* End of internal cache information *)
 
