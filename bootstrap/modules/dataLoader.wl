@@ -15,6 +15,8 @@ ModularDataFoldMinimal::usage           = "Easily fold minimal models";
 ModularDataFoldZ2FixedMinimal::usage    = "Fold minimal models in a smaller voa";
 ModularDataFoldZ2OrbifoldMinimal::usage = "Fold and orbifold the exchange of minimal models";
 
+ModularDataWZWSU2::usage                = "SU(2) WZW modular data";
+
 IshibashiBasis::usage                   = "From a cft get a basis for ishibashi states";
 
 Begin["`Private`"]
@@ -229,6 +231,31 @@ ModularDataFoldZ2Orbifold[md_] := Module[
 
 ModularDataFoldZ2OrbifoldMinimal[p_: 5, pp_: 4] :=
     ModularDataFoldZ2Orbifold[ModularDataMinimal[p, pp, "A"]];
+
+ModularDataWZWSU2[k_] := Module[
+    {
+        labels = Range[0, k], 
+        c = 3 k/(k + 2), 
+        h, s, t
+    },
+    h = #(# + 2)/(4 (k + 2)) & /@ labels;
+    s = Outer[Sqrt[2/(k + 2)] Sin[Pi (#1 + 1)(#2 + 1)/(k + 2)] &, labels, labels];
+    t = DiagonalMatrix[Exp[2 Pi I (# - c/24)] & /@ h];
+
+    ModularData[
+        labels, 
+        h, 
+        s, 
+        t, 
+        IdentityMatrix[k + 1],
+        "su(2)_" <> ToString[k], "su(2)_" <> ToString[k], 
+        c
+    ]
+];
+
+ModularDataReverse[md_]                (* S -> Conjugate[S], T -> Conjugate[T], c -> -c *)
+ModularDataProduct[mds__]              (* generalizes your ModularDataFold *)
+ModularDataSimpleCurrentExtension[md_, j_]   (* the real work *)
 
 
 (* Get the modular data of a theory and output a basis for its ishisbashi states *)
