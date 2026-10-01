@@ -8,4 +8,6 @@
 int parse_algebraic_matrix(gr_mat_t matrix, nf_t field, qqbar_t field_generator, 
                            gr_ctx_t context, char* filename);
 
+int load_ishibashi_indices(slong** indices, char* filename);
+
 #endif

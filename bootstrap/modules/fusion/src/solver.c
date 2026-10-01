@@ -335,3 +335,4 @@ int solve(gr_mat_struct* matrix, nf_t field, qqbar_t field_generator, gr_ctx_str
     fmpq_mat_clear(lhs);
     return 0;
 }
+
