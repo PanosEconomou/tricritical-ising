@@ -21546,4 +21546,5 @@ x = 1 2 3 3 2 1 2 4 4 4 2 1 2 3 3 2 1 2 4 4 4 2 2 4 6 6 4 2 2 4 4 4 2 2 4 6 6 4 
   |b^72| = 0
   |b^74| = 0
   T = 1 - |b^17|/|b^1| = [0.883566178534147 +/- 3.26e-16]
-nodes: 14602  leaves: 798  solutions: 798
+nodes: 14609  leaves: 798  solutions: 798
+certified pruning: LP prunes 1499, elastic 8/9 proven, box fallbacks 0, max LP-vs-certified gap 1.59e-07
