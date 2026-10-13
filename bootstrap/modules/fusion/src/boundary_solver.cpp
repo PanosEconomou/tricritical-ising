@@ -16,6 +16,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <map>
+#include <memory>
 #include <set>
 #include <utility>
 #include <vector>
@@ -29,8 +30,15 @@
                              decision is certified, see certified_lower */
 #define INDEX_BASE 1      /* Ishibashi index files come from Mathematica: 1-based */
 
-/* Transmission coefficient T = 1 - |b^TRANS_NUM| / |b^TRANS_DEN| (labels as in
-   the input files, i.e. with INDEX_BASE) */
+/* Reflection and transmission of the folded interface (Quella-Runkel-Watts), for two
+   copies with equal central charge. Labels as in the input files (with INDEX_BASE):
+   TRANS_DEN is the vacuum (1,1)+, TRANS_NUM the exchange-odd part of the vacuum
+   module (1,1)-, whose lowest state is (L^(1)_{-2} - L^(2)_{-2})|0>. With unit
+   Ishibashi states and r = b^TRANS_NUM / b^TRANS_DEN (signed),
+       R = (1 + r)/2,   T = (1 - r)/2.
+   Only computed after disentangling, where the signs are known (see the note
+   printed with the boundaries). */
+// #define TRANS_NUM  35
 #define TRANS_NUM  17
 #define TRANS_DEN  1
 
@@ -373,25 +381,21 @@ static void leaf(search_t* e)
         flint_printf("\n");
     }
 
-    /* transmission coefficient */
+    /* |r| only: its sign, which decides R and T, is fixed after disentangling */
     slong inum = TRANS_NUM - INDEX_BASE, iden = TRANS_DEN - INDEX_BASE;
     if (inum >= 0 && inum < n && iden >= 0 && iden < n && e->inI[inum] && e->inI[iden]) {
         arb_t bnum, bden;
         arb_init(bnum); arb_init(bden);
-
         row_sign(bnum, e->S, inum, e->x.data(), n, e->Sa, e->field, e->gen, e->ctx);
         row_sign(bden, e->S, iden, e->x.data(), n, e->Sa, e->field, e->gen, e->ctx);
-        arb_sqrt(bnum, bnum, NUM_PREC);
-        arb_sqrt(bden, bden, NUM_PREC);
-
-        arb_div(bnum, bnum, bden, NUM_PREC);   /* |b^num| / |b^den| */
-        arb_neg(bnum, bnum);
-        arb_add_ui(bnum, bnum, 1, NUM_PREC);   /* 1 - ratio */
-
-        flint_printf("  T = 1 - |b^%d|/|b^%d| = ", TRANS_NUM, TRANS_DEN);
-        arb_printn(bnum, 15, 0);
-        flint_printf("\n");
-
+        if (!arb_is_zero(bden)) {
+            arb_sqrt(bnum, bnum, NUM_PREC);
+            arb_sqrt(bden, bden, NUM_PREC);
+            arb_div(bnum, bnum, bden, NUM_PREC);
+            flint_printf("  |b^%d|/|b^%d| = ", TRANS_NUM, TRANS_DEN);
+            arb_printn(bnum, 15, 0);
+            flint_printf("\n");
+        }
         arb_clear(bden); arb_clear(bnum);
     }
     fflush(stdout);
@@ -432,43 +436,75 @@ static void dfs(search_t* e, size_t d)
  * Cardy's condition pairwise:
  *     n_ab = S p_ab  is a nonnegative integer vector,  p_ab^i = <b_a^i, b_b^i>,
  * where b_a^i lives in R^{m_i} and m_i is the number of Ishibashi states with
- * Virasoro (chiral-algebra) label i: the number of times i is listed in the
- * Ishibashi index input. For m_i = 1, p^i = +-|b_a^i||b_b^i|; for m_i = 2 it
- * can be anything with |p^i| <= |b_a^i||b_b^i|. (Real vectors suffice: n real
- * and S real force every p real, and a real Gram matrix of complex rank m is
- * realised in R^m.) m_i <= 2 is supported.
+ * label i: the number of times i is listed in the Ishibashi index input, i.e.
+ * the diagonal mass-matrix entry Z_ii. (Real vectors suffice: n real and S real
+ * force every p real, and a real Gram matrix of complex rank m is realised in R^m.)
  *
  * Facts used, all from S real and S^2 = 1:
- *   - |n_ab|^2 = |p_ab|^2 <= x_a . x_b, with equality when all m_i = 1;
+ *   - |n_ab|^2 = |p_ab|^2 <= x_a . x_b;
  *   - distinct elementary boundaries have n_ab^0 = 0 (Cauchy-Schwarz with
  *     S_0i > 0 and x^0 = 1), so the vectors (sqrt(S_0i) b_a^i)_i of a family are
  *     orthonormal: a family has at most sum_i m_i members over the labels it
  *     uses, and a complete one is a basis.
  *
- * Family search. Each family is searched from an anchor A whose support
- * contains every member's. The gauge (O(m_i) acting on the Ishibashi states of
- * each label) is fixed by putting b_A^i along the first axis, b_A^i = (|b_A^i|, 0).
- * Then for every other state B, n_AB fixes its first component p_AB^i/|b_A^i|
- * and, for m_i = 2, the second up to a sign:  sqrt(q_A q_B - p_AB^2) / |b_A^i|.
- * With those signs chosen, every state is an explicit vector, the family is a
- * clique of size sum_{i in supp A} m_i in a fixed compatibility graph, and two
- * states B, C are compatible iff for every label
- *     (q_A P - p_AB p_AC)^2 = (q_A q_B - p_AB^2)(q_A q_C - p_AC^2),
- *     sign(q_A P - p_AB p_AC) = s_B s_C  (when the right side is nonzero),
- * with P = (S n_BC)^i: exact identities in the number field, no square roots.
- * Families that differ by the leftover reflections are merged (they have the
- * same n_kl). Candidate n are found numerically and always verified exactly.
- * Families in which no member's support contains all the others' are not
- * searched (none occur in the Cardy case: the vacuum boundary has full support).
+ * Gauge-free formulation. A family exists iff for every label i its Gram matrix
+ * G^i_kl = (S n_kl)_i (with G^i_kk = (S x_k)_i) is positive semidefinite of rank
+ * <= m_i. This is checked incrementally with an LDL^T (Gram-Schmidt without
+ * square roots), exactly in the number field: per label, the members that raise
+ * the rank are pivots with D-entries d_j > 0, every state carries its
+ * coordinates y_j along the pivots and its residual r >= 0, and the inner
+ * product of two states s, v is
+ *     <s, v> = sum_j y_s,j y_v,j / d_j  +  (part in the orthogonal complement),
+ * where the complement part is 0 if either residual vanishes or no complement
+ * is left, +-sqrt(r_s r_v) if one dimension is left, and anything in between if
+ * more are left. All acceptance tests are polynomial identities or exact sign
+ * tests in the field; candidate n are only found numerically.
+ *
+ * Search. Families are searched per support pattern U (the labels their members
+ * use): U = I for complete families, and the support of each candidate for
+ * families complete on a subset. Members are added one at a time, starting from
+ * none. The remaining states are kept as classes: states that are
+ * indistinguishable given the members so far (same candidate, same overlaps).
+ * Adding a member refines every class by its possible overlaps with it,
+ * including the member's own class, which yields the states related to it by a
+ * reflection (e.g. the three fixed boundaries of the Potts model). A class
+ * whose states have residuals in a complement of total dimension k can supply
+ * at most k + 1 members, and candidate B at most min_i m_i / (S_0i |b_B^i|^2)
+ * (from the trace condition below).
+ *
+ * Trace condition. A complete family is an orthonormal basis, so for every
+ * label sum_k S_0i b_k^i b_k^iT = 1_{m_i}; taking traces and applying S,
+ *     sum_{k in F} x_k = S w,   w_i = m_i / S_0i on U.
+ * This integer target is computed exactly; a partial family may only take
+ * states whose x fits in what is left of it, and the remaining classes must be
+ * able to cover what is left, component by component. The search branches on
+ * the component still owed that the fewest classes can supply (as in exact
+ * cover): every completion contains one of them, and the t-th branch drops the
+ * classes before it, so each family is still found exactly once.
+ *
+ * Exactness. The search runs in floating point: candidate overlaps are found
+ * numerically, and states are updated numerically (residuals below ZERO_TOL are
+ * taken as 0). Integer conditions (Z n = 0 for labels outside I) are exact. Every
+ * family the search returns is then replayed in the number field with its overlaps
+ * fixed, which checks every Gram condition exactly; only families that pass are
+ * reported. Soundness is therefore exact; completeness relies on the numerics,
+ * as the candidate overlaps always did.
+ *
+ * NIM-rep budgets. In a family complete on its support, n^j = Psi diag(S_ij/S_0i)
+ * Psi^T with Psi orthogonal, so (n^j)^2 = sum_r N_jj^r n^r (Verlinde) and, on the
+ * diagonal, sum_{l != k} (n^j_kl)^2 = sum_r N_jj^r x_k^r - (x_k^j)^2 =: cap_k^j,
+ * which depends on x_k alone. Every overlap search is boxed by
+ * n^j_kl <= sqrt(what is left of cap_k^j and cap_l^j), and members' budgets are
+ * tracked during the search. (Not used in the closure test, which is about
+ * states outside the family.)
  */
 
 #define DISENTANGLE        1
 #define MAX_FAMILIES_SHOWN 10
-#define CLIQUE_NODE_LIMIT  50000000  /* per run; a warning is printed if hit */
-#define DIS_TOL            1e-7      /* numeric pre-filter only; acceptance is exact */
+#define SEARCH_NODE_LIMIT  20000000  /* per run; a warning is printed if hit */
+#define DIS_TOL            1e-7      /* numeric tolerance in the search; families are verified exactly */
+#define ZERO_TOL           1e-9      /* residuals below this (relative) are taken as 0 in the search */
 #define PROGRESS_SECONDS   2.0       /* minimum time between progress lines */
-
-typedef std::vector<signed char> signs_t;
 
 /* owning array of number-field elements */
 struct nf_vec {
@@ -497,52 +533,109 @@ struct nf_vec {
         flint_free(v);
         v = nullptr;
     }
+    nf_vec clone() const
+    {
+        nf_vec c(len, K);
+        for (slong i = 0; i < len; i++) nf_elem_set(c.v + i, v + i, K);
+        return c;
+    }
     nf_elem_struct* operator[](slong i) const { return v + i; }
 };
 
-struct pair_opt_t {
-    std::vector<slong> n;      /* open-string multiplicities n_ab^j, with n^0 = 0 */
-    signs_t            sg;     /* sign of p_ab^i = (S n)_i, exact */
+/* Per-label storage: label i owns slots off[i] .. off[i] + m_i (m_i coordinates, then r). */
+
+/* A state (or class of indistinguishable states) relative to the members so far. */
+struct dstate {
+    slong                           cand;
+    std::vector<std::vector<slong>> nh;     /* n with each member, in order of addition */
+    nf_vec                          ex;     /* exact y_j and r per label */
+    std::vector<double>             nd;     /* the same, numerically */
+    std::vector<char>               rz;     /* per label: r == 0 exactly */
+    slong                           bound;  /* at most this many members from this class */
+    std::vector<slong>              used;   /* sum over members of (n^j)^2 */
+
+    dstate clone() const
+    {
+        dstate c;
+        c.cand = cand; c.nh = nh; c.ex = ex.clone(); c.nd = nd; c.rz = rz; c.bound = bound;
+        c.used = used;
+        return c;
+    }
 };
 
-/* a boundary state in the gauge of an anchor A */
-struct vtx_t {
-    slong               cand;
-    std::vector<slong>  nA;    /* n_{A, this}; x_A for the anchor itself */
-    signs_t             s2;    /* sign of the second component (m_i = 2, residual > 0), else 0 */
-    std::vector<double> w1, w2;
-    nf_vec              p;     /* p_{A, this}^i, exact */
-    nf_vec              res;   /* q_A^i q_this^i - (p^i)^2, exact */
+/* Pivot structure per label: count c_i and D-entries d_ij (exact, inverted, numeric).
+   Inverses are kept because every projection divides by them. */
+struct dframe {
+    std::vector<slong>  c;
+    nf_vec              d, dinv;
+    std::vector<double> dd;
+
+    dframe clone() const
+    {
+        dframe f;
+        f.c = c; f.d = d.clone(); f.dinv = dinv.clone(); f.dd = dd;
+        return f;
+    }
 };
 
+/* a member of a found family */
 struct member_t {
-    slong               cand, anchor;
-    std::vector<slong>  nA;
-    signs_t             s2;
-    std::vector<double> w1, w2;
+    slong                           cand;
+    std::vector<std::vector<slong>> nh;
+    nf_vec                          ex;     /* y, r relative to the frame when it was added */
+    std::vector<slong>              c_at;   /* pivot counts at that time */
+    member_t() {}
+    member_t(member_t&&) = default;
+    member_t& operator=(member_t&&) = default;
 };
 
 typedef std::vector<std::vector<std::vector<slong>>> nmat_t;   /* n[k][l] = n_{kl} */
 
+struct family_t {
+    std::vector<char>     U;                 /* support pattern */
+    int                   kind;              /* 2: complete for I, 1: closed on a subset */
+    std::vector<member_t> mem;
+    nmat_t                N;
+    dframe                frame;             /* final pivots, for coordinates */
+};
+
+/* Integer lattice {n : (S n)_i = 0 for i in a set of labels}, row-reduced over Q
+   (each such label gives one rational equation per power-basis coefficient). */
+struct dlattice {
+    fmpz_mat_struct*    Z = nullptr;
+    std::vector<slong>  piv, fcol;
+    std::vector<std::vector<double>> W;    /* W[i][t]: (S n)_i = sum_t W[i][t] n_{fcol[t]} */
+    std::vector<std::vector<double>> PR;   /* PR[r][t]: n_{piv[r]} = sum_t PR[r][t] n_{fcol[t]} */
+    ~dlattice() { if (Z) { fmpz_mat_clear(Z); flint_free(Z); } }
+};
+
 struct dis_t {
     search_t*  e;
-    slong      n, M;
+    slong      n, M, L;
+    std::vector<slong>  off, mult;
     nf_elem_struct* q;                 /* q[a*n + i] = (S x_a)_i = |b_a^i|^2 exactly */
+    std::vector<double> qd;            /* the same, numerically */
+    int                 exact;         /* 1 while replaying a family in the number field */
+    slong               rejected;      /* families that failed the exact replay */
     std::vector<double> Sd;            /* all of S, numerically */
     std::vector<double> Qs;            /* Qs[j*n + i] = sqrt(sum_{k >= j} S_ik^2) */
-    std::vector<double> r;             /* r[a*n + i] = |b_a^i| */
     std::vector<char>   supp;          /* supp[a*n + i] = (b_a^i != 0), exact */
-    std::vector<std::vector<pair_opt_t>> opts;
-    std::vector<char>   have;
-    slong      checked, accepted;
+    std::vector<char>   inA;           /* the current support pattern U */
+    std::vector<slong>  cnt;           /* trace bound on members per candidate */
+    std::map<std::pair<slong, slong>, std::vector<std::vector<slong>>> rawpair[2];  /* [use_caps] */
+    arb_t               gball;         /* enclosure of the field generator */
 
-    std::vector<std::vector<member_t>> found;      /* complete families, up to gauge */
-    std::vector<nmat_t>    found_n;
-    std::vector<int>       found_kind;             /* 2: complete for I, 1: closed on a subset */
-    slong      nodes, edges, open_subset;
+    /* lattices of n with (S n)_i = 0 on a set of labels, by that set */
+    std::map<std::vector<char>, std::unique_ptr<dlattice>> lattices;
+
+    std::vector<slong>  cap;           /* cap[a*n + j]: NIM-rep budget of candidate a */
+    int                 use_caps;
+
+    std::vector<family_t> found;
+    slong      checked, accepted, refinements, nodes, open_subset;
     int        truncated;
-
-    slong      pairs_done, anchors_done;
+    slong      patterns_done, npatterns;
+    slong      root_at, root_of;     /* first-member branch being explored, of how many */
     double     t0, t_last;
 };
 
@@ -557,12 +650,11 @@ static void dis_progress(dis_t& D, int force)
     double t = dis_now();
     if (!force && t - D.t_last < PROGRESS_SECONDS) return;
     D.t_last = t;
-    printf("  [%6.1fs] anchors %ld/%ld, pairs %ld/%ld, exact checks %ld (%ld accepted), "
-           "edges %ld, clique nodes %ld, families %ld\n",
-           t - D.t0, (long) D.anchors_done, (long) D.M,
-           (long) D.pairs_done, (long) (D.M * (D.M + 1) / 2),
-           (long) D.checked, (long) D.accepted, (long) D.edges, (long) D.nodes,
-           (long) D.found.size());
+    printf("  [%6.1fs] support patterns %ld/%ld (first member %ld/%ld), refinements %ld, "
+           "overlap checks %ld (%ld accepted), search nodes %ld, families %ld\n",
+           t - D.t0, (long) D.patterns_done, (long) D.npatterns, (long) D.root_at, (long) D.root_of,
+           (long) D.refinements,
+           (long) D.checked, (long) D.accepted, (long) D.nodes, (long) D.found.size());
     fflush(stdout);
 }
 
@@ -590,36 +682,16 @@ static int dis_sign(const nf_elem_t a, dis_t& D)
     return s;
 }
 
-/* Exact test of a numerically found n for the pair (a, b):
-   p = S n with p_i^2 = q_a q_b (m_i <= 1) or p_i^2 <= q_a q_b (m_i = 2). */
-static int dis_verify(dis_t& D, slong a, slong b, const std::vector<slong>& nv, pair_opt_t& out)
+static double dis_d(const nf_elem_t a, dis_t& D)
 {
-    search_t* e = D.e;
-    const slong n = D.n;
-    D.checked++;
-    nf_vec P(n, e->field);
-    dis_Sn(P, D, nv);
-    nf_elem_t u, w; nf_elem_init(u, e->field); nf_elem_init(w, e->field);
-    out.n = nv;
-    out.sg.assign(n, 0);
-    int ok = 1;
-    for (slong i = 0; i < n && ok; i++) {
-        nf_elem_mul(u, P[i], P[i], e->field);
-        nf_elem_mul(w, D.q + a * n + i, D.q + b * n + i, e->field);
-        if (e->mult[i] == 2) {
-            nf_elem_sub(w, w, u, e->field);
-            ok = (dis_sign(w, D) >= 0);
-        } else {
-            ok = nf_elem_equal(u, w, e->field);
-        }
-        if (ok) out.sg[i] = (signed char) dis_sign(P[i], D);
-    }
-    nf_elem_clear(w, e->field); nf_elem_clear(u, e->field);
-    D.accepted += ok;
-    return ok;
+    arb_t v; arb_init(v);
+    nf_elem_get_arb(v, a, D.gball, D.e->field, NUM_PREC);
+    double d = arf_get_d(arb_midref(v), ARF_RND_NEAR);
+    arb_clear(v);
+    return d;
 }
 
-/* Number of nonnegative integer vectors of length n with sum of squares c (as a double). */
+/* Number of nonnegative integer vectors of length n with sum of squares <= c. */
 static double count_sq(slong c, slong n)
 {
     std::vector<double> w(c + 1, 0.0), w2(c + 1);
@@ -630,17 +702,228 @@ static double count_sq(slong c, slong n)
             for (slong v = 0; v * v <= s; v++) w2[s] += w[s - v * v];
         w.swap(w2);
     }
-    return w[c];
+    double t = 0.0;
+    for (slong s = 0; s <= c; s++) t += w[s];
+    return t;
 }
 
-/* Strategy 1 (all m_i = 1 on the common support): choose the signs of
-   p_i = +-|b_a^i||b_b^i|. */
-static void dis_sign_dfs(dis_t& D, slong a, slong b, const std::vector<slong>& C,
-                         const std::vector<double>& rr, const std::vector<double>& tail,
-                         size_t d, std::vector<double>& v, std::vector<pair_opt_t>& out)
+/* Allowed values of p_i = <s^i, v^i>: kind 0 = cen, 1 = cen +- rad, 2 = [cen - rad, cen + rad]. */
+struct target_t {
+    std::vector<int>    kind;
+    std::vector<double> cen, rad;
+    std::vector<slong>  nmax;       /* n^j <= nmax[j] */
+    std::vector<char>   zero;       /* p_i = 0 structurally (a state has no component there) */
+};
+
+static double dis_gap(const target_t& T, slong i, double p)
+{
+    if (T.kind[i] == 0) return std::fabs(p - T.cen[i]);
+    if (T.kind[i] == 1) return std::min(std::fabs(p - T.cen[i] - T.rad[i]), std::fabs(p - T.cen[i] + T.rad[i]));
+    double lo = T.cen[i] - T.rad[i], hi = T.cen[i] + T.rad[i];
+    return p < lo ? lo - p : (p > hi ? p - hi : 0.0);
+}
+
+static dlattice* dis_lattice(dis_t& D, const std::vector<char>& zero)
+{
+    auto it = D.lattices.find(zero);
+    if (it != D.lattices.end()) return it->second.get();
+    search_t* e = D.e;
+    const slong n = D.n, degree = fmpq_poly_degree(e->field->pol);
+    slong extra = 0;
+    for (slong i = 0; i < n; i++) if (zero[i] && e->inI[i]) extra++;
+    const slong rz = (slong) e->piv.size();
+    const slong rows = FLINT_MAX(rz + extra * degree, 1);
+
+    fmpq_mat_t A, R; fmpq_mat_init(A, rows, n); fmpq_mat_init(R, rows, n);
+    fmpz_t one; fmpz_init_set_ui(one, 1);
+    for (slong r = 0; r < rz; r++)                     /* the search's equations (i not in I) */
+        for (slong j = 0; j < n; j++)
+            fmpq_set_fmpz_frac(fmpq_mat_entry(A, r, j), fmpz_mat_entry(e->Z, r, j), one);
+    fmpq_poly_t p; fmpq_poly_init(p);
+    for (slong i = 0, r = rz; i < n; i++) {
+        if (!zero[i] || !e->inI[i]) continue;
+        for (slong j = 0; j < n; j++) {
+            nf_elem_get_fmpq_poly(p, entry(e->S, i, j, e->ctx), e->field);
+            for (slong l = 0; l < degree; l++)
+                fmpq_poly_get_coeff_fmpq(fmpq_mat_entry(A, r + l, j), p, l);
+        }
+        r += degree;
+    }
+    fmpq_poly_clear(p);
+    fmpz_clear(one);
+    slong rank = fmpq_mat_rref(R, A);
+
+    std::unique_ptr<dlattice> L(new dlattice);
+    L->Z = (fmpz_mat_struct*) flint_malloc(sizeof(fmpz_mat_struct));
+    fmpz_mat_init(L->Z, FLINT_MAX(rank, 1), n);
+    fmpq_mat_t Wn; fmpq_mat_window_init(Wn, R, 0, 0, FLINT_MAX(rank, 1), n);
+    fmpq_mat_get_fmpz_mat_rowwise(L->Z, NULL, Wn);
+    fmpq_mat_window_clear(Wn);
+    fmpq_mat_clear(R); fmpq_mat_clear(A);
+
+    std::vector<char> isp(n, 0);
+    for (slong r = 0; r < rank; r++) {
+        slong j = 0;
+        while (j < n && fmpz_is_zero(fmpz_mat_entry(L->Z, r, j))) j++;
+        L->piv.push_back(j);
+        isp[j] = 1;
+    }
+    for (slong j = 0; j < n; j++) if (!isp[j]) L->fcol.push_back(j);
+    const slong k = (slong) L->fcol.size();
+    L->PR.assign(rank, std::vector<double>(k));
+    for (slong r = 0; r < rank; r++) {
+        double dz = fmpz_get_d(fmpz_mat_entry(L->Z, r, L->piv[r]));
+        for (slong t = 0; t < k; t++)
+            L->PR[r][t] = -fmpz_get_d(fmpz_mat_entry(L->Z, r, L->fcol[t])) / dz;
+    }
+    L->W.assign(n, std::vector<double>(k, 0.0));
+    for (slong i = 0; i < n; i++)
+        for (slong t = 0; t < k; t++) {
+            double w = D.Sd[i * n + L->fcol[t]];
+            for (slong r = 0; r < rank; r++) w += D.Sd[i * n + L->piv[r]] * L->PR[r][t];
+            L->W[i][t] = w;
+        }
+    dlattice* out = L.get();
+    D.lattices[zero] = std::move(L);
+    return out;
+}
+
+/* Numeric search for n_sv: n >= 0, n^0 = 0, |n|^2 <= c, on the lattice Z n = 0
+   (which encodes (S n)_i = 0 for i not in I exactly), with each (S n)_i inside
+   the hull of its allowed values. Depth-first over the free coordinates; every
+   linear row bounds the next coordinate given the rest's range (interval
+   propagation). Pivot coordinates are recovered exactly at the leaves. */
+struct drow { const double* w; double lo, hi; std::vector<double> rmin, rmax; std::vector<double> wo; };
+
+static void dis_lat_dfs(dis_t& D, const dlattice& L, const target_t& T, slong c, std::vector<drow>& rows,
+                        const std::vector<slong>& box, const std::vector<slong>& ord, slong d,
+                        std::vector<double>& part, std::vector<slong>& f,
+                        std::vector<std::vector<slong>>& out)
+{
+    const slong n = D.n, k = (slong) L.fcol.size();
+    if (d == k) {
+        std::vector<slong> nv(n, 0);
+        for (slong t = 0; t < k; t++) nv[L.fcol[ord[t]]] = f[t];
+        fmpz_t acc; fmpz_init(acc);
+        int ok = 1;
+        for (size_t r = 0; r < L.piv.size() && ok; r++) {         /* as in leaf() */
+            slong p = L.piv[r];
+            fmpz_zero(acc);
+            for (slong j = 0; j < n; j++)
+                if (j != p && nv[j] != 0) fmpz_addmul_si(acc, fmpz_mat_entry(L.Z, r, j), nv[j]);
+            const fmpz* dz = fmpz_mat_entry(L.Z, r, p);
+            if (!fmpz_divisible(acc, dz)) { ok = 0; break; }
+            fmpz_divexact(acc, acc, dz);
+            fmpz_neg(acc, acc);
+            if (!fmpz_fits_si(acc) || fmpz_sgn(acc) < 0) { ok = 0; break; }
+            nv[p] = fmpz_get_si(acc);
+        }
+        fmpz_clear(acc);
+        if (!ok || nv[0] != 0) return;
+        for (slong j = 0; j < n; j++) if (nv[j] > T.nmax[j]) return;
+        slong nn = 0;
+        for (slong j = 0; j < n; j++) nn += nv[j] * nv[j];
+        if (nn > c) return;
+        for (slong i = 0; i < n; i++) {                           /* allowed values, numerically */
+            double p = 0.0;
+            for (slong j = 0; j < n; j++) if (nv[j]) p += D.Sd[i * n + j] * nv[j];
+            if (dis_gap(T, i, p) > DIS_TOL) return;
+        }
+        out.push_back(nv);
+        return;
+    }
+    /* range of f_d allowed by every row, given the remaining coordinates' boxes */
+    double lo = 0.0, hi = (double) box[d];
+    for (size_t r = 0; r < rows.size(); r++) {
+        const drow& R = rows[r];
+        double w = R.w[d];
+        double a = R.lo - part[r] - R.rmax[d + 1];
+        double b = R.hi - part[r] - R.rmin[d + 1];
+        if (std::fabs(w) < 1e-12) {
+            if (a > DIS_TOL || b < -DIS_TOL) return;
+            continue;
+        }
+        double u = a / w, v = b / w;
+        if (w < 0) std::swap(u, v);
+        lo = std::max(lo, u); hi = std::min(hi, v);
+        if (lo > hi + 1e-9) return;
+    }
+    slong a = (slong) std::ceil(lo - 1e-9), b = (slong) std::floor(hi + 1e-9);
+    for (slong val = a; val <= b; val++) {
+        f[d] = val;
+        for (size_t r = 0; r < rows.size(); r++) part[r] += rows[r].w[d] * val;
+        dis_lat_dfs(D, L, T, c, rows, box, ord, d + 1, part, f, out);
+        for (size_t r = 0; r < rows.size(); r++) part[r] -= rows[r].w[d] * val;
+    }
+    f[d] = 0;
+}
+
+static void dis_find_lattice(dis_t& D, const dlattice& L, const target_t& T, slong c,
+                             std::vector<std::vector<slong>>& out)
+{
+    search_t* e = D.e;
+    const slong n = D.n, k = (slong) L.fcol.size();
+    double pmax = 0.0;
+    for (slong i = 0; i < n; i++) {
+        double m = std::fabs(T.cen[i]) + (T.kind[i] ? T.rad[i] : 0.0);
+        pmax += m * m;
+    }
+    c = FLINT_MIN(c, (slong) std::floor(pmax + 1e-6));        /* |n|^2 = |p|^2 */
+    if (c < 0) return;
+    const slong B = (slong) std::floor(std::sqrt((double) c) + 1e-9);
+
+    std::vector<slong> box(k);
+    for (slong t = 0; t < k; t++) box[t] = (L.fcol[t] == 0) ? 0 : FLINT_MIN(B, T.nmax[L.fcol[t]]);   /* n^0 = 0 */
+
+    std::vector<drow> rows;
+    for (slong i = 0; i < n; i++) {
+        if (!e->inI[i] || T.zero[i]) continue;                    /* exact via the lattice */
+        drow R; R.w = L.W[i].data();
+        R.lo = T.cen[i] - (T.kind[i] ? T.rad[i] : 0.0) - DIS_TOL;
+        R.hi = T.cen[i] + (T.kind[i] ? T.rad[i] : 0.0) + DIS_TOL;
+        rows.push_back(R);
+    }
+    for (size_t r = 0; r < L.piv.size(); r++) {
+        drow R; R.w = L.PR[r].data();
+        R.lo = -DIS_TOL;
+        R.hi = (L.piv[r] == 0) ? DIS_TOL : FLINT_MIN(B, T.nmax[L.piv[r]]) + DIS_TOL;
+        rows.push_back(R);
+    }
+    /* fix the most constrained coordinates first: weight relative to row width */
+    std::vector<double> score(k, 0.0);
+    for (const drow& R : rows)
+        for (slong t = 0; t < k; t++)
+            score[t] += std::fabs(R.w[t]) * box[t] / (R.hi - R.lo + 1e-3);
+    std::vector<slong> ord(k);
+    for (slong t = 0; t < k; t++) ord[t] = t;
+    std::stable_sort(ord.begin(), ord.end(), [&](slong a, slong b) { return score[a] > score[b]; });
+    std::vector<slong> boxo(k);
+    for (slong t = 0; t < k; t++) boxo[t] = box[ord[t]];
+    for (drow& R : rows) {
+        R.wo.resize(k);
+        for (slong t = 0; t < k; t++) R.wo[t] = R.w[ord[t]];
+        R.w = R.wo.data();
+    }
+    for (drow& R : rows) {                                        /* rest ranges over boxes */
+        R.rmin.assign(k + 1, 0.0); R.rmax.assign(k + 1, 0.0);
+        for (slong t = k - 1; t >= 0; t--) {
+            double x = R.w[t] * boxo[t];
+            R.rmin[t] = R.rmin[t + 1] + std::min(0.0, x);
+            R.rmax[t] = R.rmax[t + 1] + std::max(0.0, x);
+        }
+    }
+    std::vector<double> part(rows.size(), 0.0);
+    std::vector<slong> f(k, 0);
+    dis_lat_dfs(D, L, T, c, rows, boxo, ord, 0, part, f, out);
+}
+
+/* Numeric search 1 (no interval labels): choose the point for every two-point label. */
+static void dis_label_dfs(dis_t& D, const std::vector<slong>& Lb, const std::vector<double>& rr,
+                          const std::vector<double>& tail, const std::vector<slong>& nmax,
+                          size_t d, std::vector<double>& v, std::vector<std::vector<slong>>& out)
 {
     const slong n = D.n;
-    if (d == C.size()) {
+    if (d == Lb.size()) {
         std::vector<slong> nv(n);
         for (slong j = 0; j < n; j++) {
             double k = std::nearbyint(v[j]);
@@ -648,230 +931,464 @@ static void dis_sign_dfs(dis_t& D, slong a, slong b, const std::vector<slong>& C
             nv[j] = (slong) k;
         }
         if (nv[0] != 0) return;                        /* distinct boundaries */
-        pair_opt_t o;
-        if (dis_verify(D, a, b, nv, o)) out.push_back(o);
+        for (slong j = 0; j < n; j++) if (nv[j] > nmax[j]) return;
+        out.push_back(nv);
         return;
     }
-    for (slong j = 0; j < n; j++) {                    /* can column j still land on an integer >= 0? */
+    for (slong j = 0; j < n; j++) {
         double lo = v[j] - tail[d * n + j], hi = v[j] + tail[d * n + j];
         if (hi < -DIS_TOL) return;
         if (std::floor(hi + DIS_TOL) < std::ceil(lo - DIS_TOL)) return;
-        if (j == 0 && (lo > DIS_TOL || hi < -DIS_TOL)) return;   /* n^0 = 0 */
+        if (j == 0 && (lo > DIS_TOL || hi < -DIS_TOL)) return;
+        if (lo > nmax[j] + DIS_TOL) return;
     }
-    const slong i = C[d];
+    const slong i = Lb[d];
     for (int eps = 1; eps >= -1; eps -= 2) {
         for (slong j = 0; j < n; j++) v[j] += eps * rr[d] * D.Sd[i * n + j];
-        dis_sign_dfs(D, a, b, C, rr, tail, d + 1, v, out);
+        dis_label_dfs(D, Lb, rr, tail, nmax, d + 1, v, out);
         for (slong j = 0; j < n; j++) v[j] -= eps * rr[d] * D.Sd[i * n + j];
     }
 }
 
-/* Strategy 2: n >= 0 with n^0 = 0 and |n|^2 = x_a.x_b (all m_i = 1) or <= x_a.x_b.
-   p = S n must reach +-|b_a^i||b_b^i| (m_i <= 1) or stay within it (m_i = 2);
-   coordinates not yet chosen move p_i by at most sqrt(budget) * Qs_i. */
-static void dis_norm_dfs(dis_t& D, slong a, slong b, int exact_norm, slong j, slong budget,
+/* Numeric search 2: n >= 0 with n^0 = 0 and |n|^2 <= c; coordinates not yet
+   chosen move p_i by at most sqrt(budget) * Qs_i (Cauchy-Schwarz). */
+static void dis_norm_dfs(dis_t& D, const target_t& T, slong j, slong budget,
                          std::vector<slong>& nv, std::vector<double>& p,
-                         std::vector<pair_opt_t>& out)
+                         std::vector<std::vector<slong>>& out)
 {
     const slong n = D.n;
-    const std::vector<int>& mult = D.e->mult;
     if (budget > 0 && j < n) {
         const double sb = std::sqrt((double) budget);
-        for (slong i = 0; i < n; i++) {
-            double target = D.r[a * n + i] * D.r[b * n + i];
-            double rad = sb * D.Qs[j * n + i] + DIS_TOL;
-            if (mult[i] == 2) { if (std::fabs(p[i]) - rad > target) return; }
-            else if (std::fabs(p[i] - target) > rad && std::fabs(p[i] + target) > rad) return;
-        }
+        for (slong i = 0; i < n; i++)
+            if (dis_gap(T, i, p[i]) > sb * D.Qs[j * n + i] + DIS_TOL) return;
     }
     if (j == n || budget == 0) {
-        if (exact_norm && budget != 0) return;
-        for (slong i = 0; i < n; i++) {
-            double target = D.r[a * n + i] * D.r[b * n + i];
-            if (mult[i] == 2) { if (std::fabs(p[i]) > target + DIS_TOL) return; }
-            else if (std::fabs(std::fabs(p[i]) - target) > DIS_TOL) return;
-        }
+        for (slong i = 0; i < n; i++) if (dis_gap(T, i, p[i]) > DIS_TOL) return;
         std::vector<slong> full(nv);
         std::fill(full.begin() + j, full.end(), 0);
-        pair_opt_t o;
-        if (dis_verify(D, a, b, full, o)) out.push_back(o);
-        if (budget == 0 || j == n) return;
+        out.push_back(full);
+        return;
     }
-    for (slong val = 0; val * val <= budget; val++) {
+    for (slong val = 0; val * val <= budget && val <= T.nmax[j]; val++) {
         nv[j] = val;
         if (val) for (slong i = 0; i < n; i++) p[i] += val * D.Sd[i * n + j];
-        dis_norm_dfs(D, a, b, exact_norm, j + 1, budget - val * val, nv, p, out);
+        dis_norm_dfs(D, T, j + 1, budget - val * val, nv, p, out);
         if (val) for (slong i = 0; i < n; i++) p[i] -= val * D.Sd[i * n + j];
     }
     nv[j] = 0;
 }
 
-/* All verified n_ab between distinct states (n^0 = 0), cached; n_ab = n_ba. */
-static const std::vector<pair_opt_t>& dis_options(dis_t& D, slong a, slong b)
+/* Numeric search 4 (few interval labels): n = S p with p fixed on pinned labels,
+   +-rad on two-point labels and p_i = t_i free in an interval on the f interval
+   labels. Since the columns S_.i are orthonormal, n runs over an f-dimensional
+   affine set: enumerate the integers on f well-conditioned coordinates, solve
+   for t, and check the rest. Returns 0 (doing nothing) if that would be too many. */
+#define AFFINE_MAX_FREE   6
+#define AFFINE_MAX_SIGNS 12
+#define AFFINE_MAX_POINTS 2000000
+
+static void dis_affine_rec(dis_t& D, const target_t& T, slong c, const std::vector<slong>& Fi,
+                           const std::vector<slong>& J, const std::vector<double>& Minv,
+                           const std::vector<double>& base, const std::vector<slong>& lo,
+                           const std::vector<slong>& hi, size_t d, std::vector<slong>& nJ,
+                           std::vector<std::vector<slong>>& out)
 {
-    if (a > b) std::swap(a, b);
-    const slong n = D.n, idx = a * D.M + b;
-    if (D.have[idx]) return D.opts[idx];
-    D.have[idx] = 1;
-    D.pairs_done++;
-    dis_progress(D, 0);
-    std::vector<pair_opt_t>& out = D.opts[idx];
-
-    const std::vector<slong>& xa = D.e->sols[a];
-    const std::vector<slong>& xb = D.e->sols[b];
-    slong c = 0;
-    for (slong j = 0; j < n; j++) c += xa[j] * xb[j];
-
-    std::vector<slong> C;
-    int any2 = 0;
-    for (slong i = 0; i < n; i++)
-        if (D.supp[a * n + i] && D.supp[b * n + i]) { C.push_back(i); any2 |= (D.e->mult[i] == 2); }
-
-    if (C.empty()) {                                   /* then p = 0, so n = 0 */
-        pair_opt_t o; o.n.assign(n, 0); o.sg.assign(n, 0);
-        out.push_back(o);
-        return out;
+    const slong n = D.n, f = (slong) Fi.size();
+    if (d < J.size()) {
+        for (slong v = lo[d]; v <= hi[d]; v++) {
+            nJ[d] = v;
+            dis_affine_rec(D, T, c, Fi, J, Minv, base, lo, hi, d + 1, nJ, out);
+        }
+        return;
     }
+    std::vector<double> t(f, 0.0);
+    for (slong a = 0; a < f; a++)
+        for (slong b = 0; b < f; b++) t[a] += Minv[a * f + b] * (nJ[b] - base[J[b]]);
+    for (slong a = 0; a < f; a++) {
+        slong i = Fi[a];
+        if (t[a] < T.cen[i] - T.rad[i] - DIS_TOL || t[a] > T.cen[i] + T.rad[i] + DIS_TOL) return;
+    }
+    std::vector<slong> nv(n);
+    slong nn = 0;
+    for (slong j = 0; j < n; j++) {
+        double x = base[j];
+        for (slong a = 0; a < f; a++) x += D.Sd[Fi[a] * n + j] * t[a];
+        double k = std::nearbyint(x);
+        if (std::fabs(x - k) > DIS_TOL || k < 0 || k > T.nmax[j]) return;
+        nv[j] = (slong) k;
+        nn += nv[j] * nv[j];
+    }
+    if (nv[0] != 0 || nn > c) return;
+    out.push_back(nv);
+}
 
-    if (any2 || count_sq(c, n) < std::ldexp(1.0, (int) FLINT_MIN((slong) C.size(), 1000))) {
+static int dis_find_affine(dis_t& D, const target_t& T, slong c, std::vector<std::vector<slong>>& out)
+{
+    const slong n = D.n;
+    std::vector<slong> Fi, Tw;
+    for (slong i = 0; i < n; i++) {
+        if (T.kind[i] == 2) Fi.push_back(i);
+        if (T.kind[i] == 1) Tw.push_back(i);
+    }
+    const slong f = (slong) Fi.size();
+    if (f == 0 || f > AFFINE_MAX_FREE || (slong) Tw.size() > AFFINE_MAX_SIGNS) return 0;
+    const slong B = (slong) std::floor(std::sqrt((double) c) + 1e-9);
+
+    /* f coordinates of n by greedy elimination on A = (S_ji), j rows, i in Fi */
+    std::vector<double> A(n * f);
+    for (slong j = 0; j < n; j++) for (slong a = 0; a < f; a++) A[j * f + a] = D.Sd[Fi[a] * n + j];
+    std::vector<slong> J;
+    std::vector<char> used(n, 0);
+    std::vector<double> W(A);
+    for (slong a = 0; a < f; a++) {
+        slong best = -1;
+        for (slong j = 0; j < n; j++)
+            if (!used[j] && (best < 0 || std::fabs(W[j * f + a]) > std::fabs(W[best * f + a]))) best = j;
+        if (best < 0 || std::fabs(W[best * f + a]) < 1e-9) return 0;
+        used[best] = 1; J.push_back(best);
+        for (slong j = 0; j < n; j++) {
+            if (j == best) continue;
+            double r = W[j * f + a] / W[best * f + a];
+            for (slong b = a; b < f; b++) W[j * f + b] -= r * W[best * f + b];
+        }
+    }
+    /* Minv = (A restricted to rows J)^-1 */
+    std::vector<double> G(f * 2 * f, 0.0);
+    for (slong a = 0; a < f; a++) {
+        for (slong b = 0; b < f; b++) G[a * 2 * f + b] = A[J[a] * f + b];
+        G[a * 2 * f + f + a] = 1.0;
+    }
+    for (slong col = 0; col < f; col++) {
+        slong pr = col;
+        for (slong r = col + 1; r < f; r++)
+            if (std::fabs(G[r * 2 * f + col]) > std::fabs(G[pr * 2 * f + col])) pr = r;
+        if (std::fabs(G[pr * 2 * f + col]) < 1e-12) return 0;
+        for (slong k = 0; k < 2 * f; k++) std::swap(G[col * 2 * f + k], G[pr * 2 * f + k]);
+        double pv = G[col * 2 * f + col];
+        for (slong k = 0; k < 2 * f; k++) G[col * 2 * f + k] /= pv;
+        for (slong r = 0; r < f; r++) {
+            if (r == col) continue;
+            double m = G[r * 2 * f + col];
+            for (slong k = 0; k < 2 * f; k++) G[r * 2 * f + k] -= m * G[col * 2 * f + k];
+        }
+    }
+    std::vector<double> Minv(f * f);
+    for (slong a = 0; a < f; a++) for (slong b = 0; b < f; b++) Minv[a * f + b] = G[a * 2 * f + f + b];
+
+    for (ulong mask = 0; mask < (1ul << Tw.size()); mask++) {
+        std::vector<double> base(n, 0.0);
+        for (slong i = 0; i < n; i++) {
+            if (T.kind[i] == 2) continue;
+            double p = T.cen[i];
+            if (T.kind[i] == 1) {
+                size_t k = std::find(Tw.begin(), Tw.end(), i) - Tw.begin();
+                p += ((mask >> k) & 1) ? -T.rad[i] : T.rad[i];
+            }
+            if (p != 0.0) for (slong j = 0; j < n; j++) base[j] += p * D.Sd[i * n + j];
+        }
+        std::vector<slong> lo(f), hi(f);
+        double points = 1.0;
+        int empty = 0;
+        for (slong b = 0; b < f; b++) {
+            slong j = J[b];
+            double l = base[j], h = base[j];
+            for (slong a = 0; a < f; a++) {
+                double w = A[j * f + a], tl = T.cen[Fi[a]] - T.rad[Fi[a]], th = T.cen[Fi[a]] + T.rad[Fi[a]];
+                l += std::min(w * tl, w * th);
+                h += std::max(w * tl, w * th);
+            }
+            lo[b] = FLINT_MAX(0, (slong) std::ceil(l - DIS_TOL));
+            hi[b] = FLINT_MIN(j == 0 ? 0 : FLINT_MIN(B, T.nmax[j]), (slong) std::floor(h + DIS_TOL));
+            if (lo[b] > hi[b]) empty = 1;
+            points *= (double) (hi[b] - lo[b] + 1);
+        }
+        if (empty) continue;
+        if (points > AFFINE_MAX_POINTS) { out.clear(); return 0; }
+        std::vector<slong> nJ(f);
+        dis_affine_rec(D, T, c, Fi, J, Minv, base, lo, hi, 0, nJ, out);
+    }
+    return 1;
+}
+
+static void dis_find(dis_t& D, const target_t& T, slong c, std::vector<std::vector<slong>>& out)
+{
+    const slong n = D.n;
+    int interval = 0;
+    std::vector<slong> Lb;
+    double pmax = 0.0;
+    for (slong i = 0; i < n; i++) {
+        if (T.kind[i] == 2) interval = 1;
+        if (T.kind[i] == 1) Lb.push_back(i);
+        double m = std::fabs(T.cen[i]) + (T.kind[i] ? T.rad[i] : 0.0);
+        pmax += m * m;
+    }
+    c = FLINT_MIN(c, (slong) std::floor(pmax + 1e-6));    /* |n|^2 = |p|^2 */
+    if (c < 0) return;
+    /* With labels whose overlap is only bounded (several Ishibashi states), the
+       lattice of the search's equations is the better space when it is much
+       smaller than all of n; otherwise enumerate n by norm, or the two-point
+       labels by sign, whichever is fewer. */
+    if (interval && dis_find_affine(D, T, c, out)) return;
+    if (interval) {
+        dlattice* L = dis_lattice(D, T.zero);
+        if (2 * (slong) L->fcol.size() <= n) { dis_find_lattice(D, *L, T, c, out); return; }
+    }
+    if (interval || count_sq(c, n - 1) < std::ldexp(1.0, (int) FLINT_MIN((slong) Lb.size(), 1000))) {
         std::vector<slong> nv(n, 0);
         std::vector<double> p(n, 0.0);
-        dis_norm_dfs(D, a, b, !any2, 1, c, nv, p, out);    /* starts at j = 1: n^0 = 0 */
+        dis_norm_dfs(D, T, 1, c, nv, p, out);                 /* starts at j = 1: n^0 = 0 */
     } else {
-        std::sort(C.begin(), C.end(), [&](slong u, slong w) {
-            return D.r[a*n+u] * D.r[b*n+u] > D.r[a*n+w] * D.r[b*n+w];
-        });
-        std::vector<double> rr(C.size()), tail((C.size() + 1) * n, 0.0), v(n, 0.0);
-        for (size_t t = 0; t < C.size(); t++) rr[t] = D.r[a * n + C[t]] * D.r[b * n + C[t]];
-        for (slong d = (slong) C.size() - 1; d >= 0; d--)
+        std::sort(Lb.begin(), Lb.end(), [&](slong u, slong w) { return T.rad[u] > T.rad[w]; });
+        std::vector<double> rr(Lb.size()), tail((Lb.size() + 1) * n, 0.0), v(n, 0.0);
+        for (slong i = 0; i < n; i++)
+            if (T.cen[i] != 0.0) for (slong j = 0; j < n; j++) v[j] += T.cen[i] * D.Sd[i * n + j];
+        for (size_t t = 0; t < Lb.size(); t++) rr[t] = T.rad[Lb[t]];
+        for (slong d = (slong) Lb.size() - 1; d >= 0; d--)
             for (slong j = 0; j < n; j++)
-                tail[d * n + j] = tail[(d + 1) * n + j] + std::fabs(D.Sd[C[d] * n + j]) * rr[d];
-        dis_sign_dfs(D, a, b, C, rr, tail, 0, v, out);
+                tail[d * n + j] = tail[(d + 1) * n + j] + std::fabs(D.Sd[Lb[d] * n + j]) * rr[d];
+        dis_label_dfs(D, Lb, rr, tail, T.nmax, 0, v, out);
     }
-    return out;
 }
 
-/* The anchor itself: b_A^i = (|b_A^i|, 0). */
-static vtx_t dis_anchor_vertex(dis_t& D, slong A)
+/* the state of candidate B before any member: no coordinates, r = |b_B|^2 */
+static dstate dis_raw(dis_t& D, slong B)
 {
     const slong n = D.n;
-    vtx_t a;
-    a.cand = A;
-    a.nA = D.e->sols[A];
-    a.s2.assign(n, 0);
-    a.w1.assign(n, 0.0); a.w2.assign(n, 0.0);
-    a.p = nf_vec(n, D.e->field);
-    a.res = nf_vec(n, D.e->field);
+    dstate s;
+    s.cand = B;
+    s.ex = nf_vec(D.exact ? D.L : 0, D.e->field);
+    s.nd.assign(D.L, 0.0);
+    s.rz.assign(n, 1);
     for (slong i = 0; i < n; i++) {
-        nf_elem_set(a.p[i], D.q + A * n + i, D.e->field);
-        nf_elem_zero(a.res[i], D.e->field);
-        a.w1[i] = D.r[A * n + i];
+        slong ri = D.off[i] + D.mult[i];
+        if (D.exact) nf_elem_set(s.ex[ri], D.q + B * n + i, D.e->field);
+        s.rz[i] = !D.supp[B * n + i];
+        if (!s.rz[i]) s.nd[ri] = D.qd[B * n + i];
     }
-    return a;
+    s.bound = 0;
+    s.used.assign(n, 0);
+    return s;
 }
 
-/* States of candidate B with overlap n_AB with the anchor: one per sign choice of the
-   second component on labels with m_i = 2 and positive residual. Labels outside
-   supp A get zero components (no member of the family is supported there). */
-static void dis_make_vertices(dis_t& D, slong A, slong B, const pair_opt_t& o, std::vector<vtx_t>& out)
+/* Does v raise the rank at label i (given frame F)? */
+static int dis_pivot(dis_t& D, const dframe& F, const dstate& v, slong i)
+{
+    return D.inA[i] && F.c[i] < D.mult[i] && !v.rz[i];
+}
+
+/* Refine class s against the new member v (frame F before v, Fn after):
+   every verified overlap n_sv gives one refined class, appended to out. */
+static void dis_refine(dis_t& D, const dframe& F, const dframe& Fn, const dstate& s,
+                       const dstate& v, std::vector<dstate>& out,
+                       const std::vector<slong>* forced = nullptr)
 {
     search_t* e = D.e;
     const slong n = D.n;
-    nf_vec P(n, e->field), R(n, e->field);
-    dis_Sn(P, D, o.n);
-    nf_elem_t t; nf_elem_init(t, e->field);
-    std::vector<slong> two;                          /* labels with a free second-component sign */
-    arb_t g, v; arb_init(g); arb_init(v);
-    qqbar_get_arb(g, e->gen, NUM_PREC);
-    std::vector<double> w1(n, 0.0), rabs(n, 0.0);
-    for (slong i = 0; i < n; i++) {
-        nf_elem_mul(R[i], D.q + A * n + i, D.q + B * n + i, e->field);
-        nf_elem_mul(t, P[i], P[i], e->field);
-        nf_elem_sub(R[i], R[i], t, e->field);
-        if (!D.supp[A * n + i]) continue;
-        nf_elem_get_arb(v, P[i], g, e->field, NUM_PREC);
-        w1[i] = arf_get_d(arb_midref(v), ARF_RND_NEAR) / D.r[A * n + i];
-        if (e->mult[i] == 2 && dis_sign(R[i], D) > 0) {
-            two.push_back(i);
-            nf_elem_get_arb(v, R[i], g, e->field, NUM_PREC);
-            arb_sqrt(v, v, NUM_PREC);
-            rabs[i] = arf_get_d(arb_midref(v), ARF_RND_NEAR) / D.r[A * n + i];
-        }
-    }
-    arb_clear(v); arb_clear(g);
-    nf_elem_clear(t, e->field);
+    D.refinements++;
+    dis_progress(D, 0);
 
-    for (ulong mask = 0; mask < (1ul << two.size()); mask++) {
-        vtx_t x;
-        x.cand = B;
-        x.nA = o.n;
-        x.s2.assign(n, 0);
-        x.w1 = w1;
-        x.w2.assign(n, 0.0);
-        for (size_t k = 0; k < two.size(); k++) {
-            slong i = two[k];
-            x.s2[i] = ((mask >> k) & 1) ? -1 : 1;
-            x.w2[i] = x.s2[i] * rabs[i];
+    /* targets */
+    target_t T;
+    T.kind.assign(n, 0); T.cen.assign(n, 0.0); T.rad.assign(n, 0.0);
+    T.nmax.assign(n, WORD_MAX);
+    T.zero.assign(n, 0);
+    for (slong i = 0; i < n; i++)
+        T.zero[i] = !e->inI[i] || !D.inA[i] || !D.supp[s.cand * n + i] || !D.supp[v.cand * n + i];
+    if (D.use_caps)
+        for (slong j = 0; j < n; j++) {
+            slong left = FLINT_MIN(D.cap[s.cand * n + j] - s.used[j], D.cap[v.cand * n + j] - v.used[j]);
+            if (left < 0) return;
+            slong m = (slong) std::floor(std::sqrt((double) left) + 1e-9);
+            while (m * m > left) m--;
+            while ((m + 1) * (m + 1) <= left) m++;
+            T.nmax[j] = m;
         }
-        x.p = nf_vec(n, e->field);
-        x.res = nf_vec(n, e->field);
+    for (slong i = 0; i < n; i++) {
+        if (!D.inA[i]) continue;                                   /* p_i = 0 */
+        const slong o = D.off[i], m = D.mult[i];
+        double pr = 0.0;
+        for (slong j = 0; j < F.c[i]; j++) pr += s.nd[o + j] * v.nd[o + j] / F.dd[o + j];
+        T.cen[i] = pr;
+        if (F.c[i] == m || s.rz[i] || v.rz[i]) continue;
+        T.rad[i] = std::sqrt(std::max(0.0, s.nd[o + m] * v.nd[o + m]));
+        T.kind[i] = (m - F.c[i] == 1) ? 1 : 2;
+    }
+    slong c = 0;
+    for (slong j = 0; j < n; j++) c += e->sols[s.cand][j] * e->sols[v.cand][j];
+    /* two candidates before any other member: the answer depends on them alone */
+    const int raw = s.nh.empty() && v.nh.empty();
+    const std::pair<slong, slong> key(FLINT_MIN(s.cand, v.cand), FLINT_MAX(s.cand, v.cand));
+    std::vector<std::vector<slong>> cands;
+    if (forced) cands.push_back(*forced);
+    else if (raw && D.rawpair[D.use_caps].count(key)) cands = D.rawpair[D.use_caps][key];
+    else {
+        dis_find(D, T, c, cands);
+        if (raw) D.rawpair[D.use_caps][key] = cands;
+    }
+    if (cands.empty()) return;
+
+    if (!D.exact) {
+        /* numeric acceptance and update; integer conditions exact */
+        fmpz_t acc; fmpz_init(acc);
+        std::vector<double> P(n), proj(n, 0.0), rr(n, 0.0);
         for (slong i = 0; i < n; i++) {
-            nf_elem_set(x.p[i], P[i], e->field);
-            nf_elem_set(x.res[i], R[i], e->field);
+            if (!D.inA[i]) continue;
+            const slong o = D.off[i], m = D.mult[i];
+            for (slong j = 0; j < F.c[i]; j++) proj[i] += s.nd[o + j] * v.nd[o + j] / F.dd[o + j];
+            rr[i] = s.nd[o + m] * v.nd[o + m];
         }
+        for (const std::vector<slong>& nv : cands) {
+            D.checked++;
+            int ok = 1;
+            for (slong r = 0; r < (slong) e->piv.size() && ok; r++) {
+                fmpz_zero(acc);
+                for (slong j = 0; j < n; j++)
+                    if (nv[j]) fmpz_addmul_si(acc, fmpz_mat_entry(e->Z, r, j), nv[j]);
+                ok = fmpz_is_zero(acc);
+            }
+            if (!ok) continue;
+            for (slong i = 0; i < n && ok; i++) {
+                if (!e->inI[i]) continue;
+                double p = 0.0;
+                for (slong j = 0; j < n; j++) if (nv[j]) p += D.Sd[i * n + j] * nv[j];
+                P[i] = p;
+                if (!D.inA[i]) { ok = std::fabs(p) < DIS_TOL; continue; }
+                double dl = p - proj[i];
+                if (T.kind[i] == 0) ok = std::fabs(dl) < DIS_TOL;
+                else if (T.kind[i] == 1) ok = std::fabs(dl * dl - rr[i]) < DIS_TOL * (1.0 + rr[i]);
+                else ok = dl * dl <= rr[i] + DIS_TOL * (1.0 + rr[i]);
+            }
+            if (!ok) continue;
+            D.accepted++;
+
+            dstate x = s.clone();
+            x.nh.push_back(nv);
+            for (slong j = 0; j < n; j++) x.used[j] += nv[j] * nv[j];
+            for (slong i = 0; i < n; i++) {
+                if (!dis_pivot(D, F, v, i)) continue;
+                const slong o = D.off[i], m = D.mult[i], k = F.c[i];
+                double y = P[i] - proj[i];
+                double r = x.nd[o + m] - y * y / v.nd[o + m];
+                x.nd[o + k] = y;
+                x.rz[i] = (r <= ZERO_TOL * (1.0 + D.qd[x.cand * n + i]));
+                x.nd[o + m] = x.rz[i] ? 0.0 : r;
+            }
+            x.bound = 1;
+            for (slong i = 0; i < n; i++)
+                if (D.inA[i] && !x.rz[i]) x.bound += D.mult[i] - Fn.c[i];
+            x.bound = FLINT_MIN(x.bound, D.cnt[x.cand]);
+            out.push_back(std::move(x));
+        }
+        fmpz_clear(acc);
+        return;
+    }
+
+    /* exact projections once per pair */
+    nf_vec proj(n, e->field), rr(n, e->field), P(n, e->field);
+    nf_elem_t t, u; nf_elem_init(t, e->field); nf_elem_init(u, e->field);
+    for (slong i = 0; i < n; i++) {
+        nf_elem_zero(proj[i], e->field);
+        if (!D.inA[i]) continue;
+        const slong o = D.off[i], m = D.mult[i];
+        for (slong j = 0; j < F.c[i]; j++) {
+            nf_elem_mul(t, s.ex[o + j], v.ex[o + j], e->field);
+            nf_elem_mul(t, t, F.dinv[o + j], e->field);
+            nf_elem_add(proj[i], proj[i], t, e->field);
+        }
+        nf_elem_mul(rr[i], s.ex[o + m], v.ex[o + m], e->field);
+    }
+
+    fmpz_t acc; fmpz_init(acc);
+    for (const std::vector<slong>& nv : cands) {
+        D.checked++;
+        int ok = 1;
+        /* (S n)_i = 0 for i not in I  <=>  Z n = 0, in integers */
+        for (slong r = 0; r < (slong) e->piv.size() && ok; r++) {
+            fmpz_zero(acc);
+            for (slong j = 0; j < n; j++)
+                if (nv[j]) fmpz_addmul_si(acc, fmpz_mat_entry(e->Z, r, j), nv[j]);
+            ok = fmpz_is_zero(acc);
+        }
+        if (!ok) continue;
+        for (slong i = 0; i < n; i++) {                           /* (S n)_i for i in I only */
+            nf_elem_zero(P[i], e->field);
+            if (!e->inI[i]) continue;
+            for (slong j = 0; j < n; j++) {
+                if (!nv[j]) continue;
+                nf_elem_scalar_mul_si(t, entry(e->S, i, j, e->ctx), nv[j], e->field);
+                nf_elem_add(P[i], P[i], t, e->field);
+            }
+        }
+        for (slong i = 0; i < n && ok; i++) {
+            if (!e->inI[i]) continue;
+            if (!D.inA[i]) { ok = nf_elem_is_zero(P[i], e->field); continue; }
+            nf_elem_sub(t, P[i], proj[i], e->field);               /* Delta = P - proj */
+            if (T.kind[i] == 0) { ok = nf_elem_is_zero(t, e->field); continue; }
+            nf_elem_mul(u, t, t, e->field);
+            if (T.kind[i] == 1) ok = nf_elem_equal(u, rr[i], e->field);
+            else { nf_elem_sub(u, rr[i], u, e->field); ok = (dis_sign(u, D) >= 0); }
+        }
+        if (!ok) continue;
+        D.accepted++;
+
+        dstate x = s.clone();
+        x.nh.push_back(nv);
+        for (slong j = 0; j < n; j++) x.used[j] += nv[j] * nv[j];
+        for (slong i = 0; i < n; i++) {
+            if (!dis_pivot(D, F, v, i)) continue;
+            const slong o = D.off[i], m = D.mult[i], k = F.c[i];
+            nf_elem_sub(x.ex[o + k], P[i], proj[i], e->field);           /* new coordinate */
+            nf_elem_mul(t, x.ex[o + k], x.ex[o + k], e->field);
+            nf_elem_mul(t, t, Fn.dinv[o + k], e->field);                 /* 1 / r_v */
+            nf_elem_sub(x.ex[o + m], x.ex[o + m], t, e->field);          /* new residual */
+            x.nd[o + k] = dis_d(x.ex[o + k], D);
+            x.rz[i] = nf_elem_is_zero(x.ex[o + m], e->field);
+            x.nd[o + m] = x.rz[i] ? 0.0 : dis_d(x.ex[o + m], D);
+        }
+        x.bound = 1;
+        for (slong i = 0; i < n; i++)
+            if (D.inA[i] && !x.rz[i]) x.bound += D.mult[i] - Fn.c[i];
+        x.bound = FLINT_MIN(x.bound, D.cnt[x.cand]);
         out.push_back(std::move(x));
     }
+    fmpz_clear(acc);
+    nf_elem_clear(u, e->field); nf_elem_clear(t, e->field);
 }
 
-/* Cardy's condition between two states in the gauge of anchor A:
-   cheap numeric tests, then the exact identities above. */
-static int dis_compatible(dis_t& D, slong A, const vtx_t& u, const vtx_t& v)
+/* frame after adding v */
+static dframe dis_empty_frame(dis_t& D)
 {
-    search_t* e = D.e;
-    const slong n = D.n;
-    std::vector<double> p(n);
-    for (slong i = 0; i < n; i++) p[i] = u.w1[i] * v.w1[i] + u.w2[i] * v.w2[i];
-    std::vector<slong> nv(n);
-    for (slong j = 0; j < n; j++) {
-        double s = 0.0;
-        for (slong i = 0; i < n; i++) s += D.Sd[i * n + j] * p[i];
-        double k = std::nearbyint(s);
-        if (k < 0 || std::fabs(s - k) > DIS_TOL) return 0;
-        if (j == 0 && k != 0) return 0;               /* distinct elementary boundaries */
-        nv[j] = (slong) k;
+    dframe F;
+    F.c.assign(D.n, 0);
+    F.d = nf_vec(D.exact ? D.L : 0, D.e->field);
+    F.dinv = nf_vec(D.exact ? D.L : 0, D.e->field);
+    F.dd.assign(D.L, 0.0);
+    return F;
+}
+
+static dframe dis_extend_frame(dis_t& D, const dframe& F, const dstate& v)
+{
+    dframe G = F.clone();
+    for (slong i = 0; i < D.n; i++) {
+        if (!dis_pivot(D, F, v, i)) continue;
+        const slong o = D.off[i], m = D.mult[i];
+        if (D.exact) {
+            nf_elem_set(G.d[o + G.c[i]], v.ex[o + m], D.e->field);
+            nf_elem_inv(G.dinv[o + G.c[i]], v.ex[o + m], D.e->field);
+        }
+        G.dd[o + G.c[i]] = v.nd[o + m];
+        G.c[i]++;
     }
-    D.checked++;
-    nf_vec P(n, e->field);
-    dis_Sn(P, D, nv);
-    nf_elem_t X, Y, Z; nf_elem_init(X, e->field); nf_elem_init(Y, e->field); nf_elem_init(Z, e->field);
-    int ok = 1;
-    for (slong i = 0; i < n && ok; i++) {
-        if (!D.supp[A * n + i]) { ok = nf_elem_is_zero(P[i], e->field); continue; }
-        nf_elem_mul(X, D.q + A * n + i, P[i], e->field);          /* q_A P - p_AB p_AC */
-        nf_elem_mul(Y, u.p[i], v.p[i], e->field);
-        nf_elem_sub(X, X, Y, e->field);
-        nf_elem_mul(Y, u.res[i], v.res[i], e->field);             /* residual product */
-        nf_elem_mul(Z, X, X, e->field);
-        if (!nf_elem_equal(Z, Y, e->field)) { ok = 0; break; }
-        if (!nf_elem_is_zero(Y, e->field)) ok = (dis_sign(X, D) == u.s2[i] * v.s2[i]);
-    }
-    nf_elem_clear(Z, e->field); nf_elem_clear(Y, e->field); nf_elem_clear(X, e->field);
-    D.accepted += ok;
-    return ok;
+    return G;
 }
 
 static nmat_t dis_nmatrix(dis_t& D, const std::vector<member_t>& F)
 {
-    const slong n = D.n;
-    nmat_t N(F.size(), std::vector<std::vector<slong>>(F.size(), std::vector<slong>(n)));
-    for (size_t k = 0; k < F.size(); k++)
-        for (size_t l = 0; l < F.size(); l++)
-            for (slong j = 0; j < n; j++) {
-                double v = 0.0;
-                for (slong i = 0; i < n; i++)
-                    v += D.Sd[i * n + j] * (F[k].w1[i] * F[l].w1[i] + F[k].w2[i] * F[l].w2[i]);
-                N[k][l][j] = (slong) std::nearbyint(v);   /* exact integers, already verified */
-            }
+    nmat_t N(F.size(), std::vector<std::vector<slong>>(F.size()));
+    for (size_t k = 0; k < F.size(); k++) {
+        N[k][k] = D.e->sols[F[k].cand];
+        for (size_t l = 0; l < k; l++) { N[k][l] = F[k].nh[l]; N[l][k] = F[k].nh[l]; }
+    }
     return N;
 }
 
@@ -882,7 +1399,7 @@ static int dis_iso_rec(const std::vector<member_t>& F, const nmat_t& NF,
 {
     if (k == F.size()) return 1;
     for (size_t g = 0; g < G.size(); g++) {
-        if (used[g] || G[g].cand != F[k].cand || NG[g][g] != NF[k][k]) continue;
+        if (used[g] || G[g].cand != F[k].cand) continue;
         int ok = 1;
         for (size_t l = 0; l < k && ok; l++) ok = (NF[k][l] == NG[g][pi[l]]);
         if (!ok) continue;
@@ -893,140 +1410,341 @@ static int dis_iso_rec(const std::vector<member_t>& F, const nmat_t& NF,
     return 0;
 }
 
-typedef std::vector<uint64_t> bits_t;
+typedef std::shared_ptr<dstate> sp_t;    /* pool entries are immutable once made */
 
-static slong bits_count(const bits_t& b)
-{
-    slong c = 0;
-    for (uint64_t w : b) c += __builtin_popcountll(w);
-    return c;
-}
+struct dsearch {
+    slong                 T;
+    std::vector<dframe>   frames;     /* frames[k]: the frame before member k */
+    std::vector<std::vector<slong>> mused;   /* members' budgets used so far */
+    std::vector<slong>    Xrem;       /* S w minus the members' x so far */
+    std::vector<dstate>   R;          /* members, as states relative to the frame when added */
+    std::vector<std::vector<slong>> c_at;
+};
 
-/* All cliques of size T: vertices taken in increasing order, |R| + |cand| >= T. */
-static void dis_cliques(dis_t& D, const std::vector<bits_t>& adj, std::vector<slong>& R,
-                        bits_t cand, slong T, std::vector<std::vector<slong>>& out)
+/* closed: no state of any candidate (any support) fits with every member */
+static int dis_closed(dis_t& D, dsearch& S)
 {
-    if (D.truncated) return;
-    if (++D.nodes > CLIQUE_NODE_LIMIT) { D.truncated = 1; return; }
-    if ((D.nodes & 0xFFF) == 0) dis_progress(D, 0);
-    if ((slong) R.size() == T) { out.push_back(R); return; }
-    slong have = bits_count(cand);
-    for (size_t w = 0; w < cand.size() && (slong) R.size() + have >= T; w++) {
-        while (cand[w] && (slong) R.size() + have >= T) {
-            slong v = (slong) (w * 64 + __builtin_ctzll(cand[w]));
-            cand[w] &= cand[w] - 1;
-            have--;
-            bits_t c2(cand.size());
-            for (size_t k = 0; k < cand.size(); k++) c2[k] = cand[k] & adj[v][k];
-            R.push_back(v);
-            dis_cliques(D, adj, R, c2, T, out);
-            R.pop_back();
+    const slong M = D.M;
+    std::vector<char> saveA = D.inA;
+    int saved_caps = D.use_caps;
+    D.use_caps = 0;
+    int closed = 1;
+    for (slong X = 0; X < M && closed; X++) {
+        D.inA = saveA;
+        dframe F = dis_empty_frame(D);
+        std::vector<dstate> cur;
+        cur.push_back(dis_raw(D, X));
+        for (size_t k = 0; k < S.R.size() && !cur.empty(); k++) {
+            dframe Fn = dis_extend_frame(D, F, S.R[k]);
+            std::vector<dstate> nxt;
+            for (const dstate& s : cur) {
+                /* X's labels outside U carry no overlap with the members */
+                dis_refine(D, F, Fn, s, S.R[k], nxt);
+            }
+            cur.swap(nxt);
+            F = std::move(Fn);
         }
+        if (!cur.empty()) closed = 0;
     }
+    D.inA = saveA;
+    D.use_caps = saved_caps;
+    return closed;
 }
 
-static member_t dis_member(const vtx_t& v, slong A)
+static void dis_record(dis_t& D, dsearch& S)
 {
-    return member_t{v.cand, A, v.nA, v.s2, v.w1, v.w2};
-}
-
-/* Store a complete family (dropping gauge-equivalent repeats) and announce it. */
-static void dis_add_family(dis_t& D, const std::vector<member_t>& F, int kind)
-{
-    nmat_t N = dis_nmatrix(D, F);
-    for (size_t f = 0; f < D.found.size(); f++) {
-        if (D.found[f].size() != F.size()) continue;
-        std::vector<slong> pi(F.size());
-        std::vector<char> used(F.size(), 0);
-        if (dis_iso_rec(F, N, D.found[f], D.found_n[f], pi, used, 0)) return;
+    family_t fam;
+    fam.U = D.inA;
+    slong N = 0;
+    for (slong i = 0; i < D.n; i++) if (D.inA[i]) N += D.mult[i];
+    fam.kind = (N == D.e->dimI) ? 2 : 1;
+    for (size_t k = 0; k < S.R.size(); k++) {
+        member_t m;
+        m.cand = S.R[k].cand; m.nh = S.R[k].nh; m.c_at = S.c_at[k];
+        fam.mem.push_back(std::move(m));
     }
-    D.found.push_back(F);
-    D.found_n.push_back(N);
-    D.found_kind.push_back(kind);
+    fam.N = dis_nmatrix(D, fam.mem);
+    for (const family_t& g : D.found) {
+        if (g.mem.size() != fam.mem.size()) continue;
+        std::vector<slong> pi(fam.mem.size());
+        std::vector<char> used(fam.mem.size(), 0);
+        if (dis_iso_rec(fam.mem, fam.N, g.mem, g.N, pi, used, 0)) return;
+    }
+    if (fam.kind == 1 && !dis_closed(D, S)) { D.open_subset++; return; }
+
+    /* exact replay: rebuild every member in the number field with its overlaps
+       fixed; this checks all Gram conditions exactly */
+    {
+        int saved_caps = D.use_caps;
+        D.exact = 1; D.use_caps = 0;
+        std::vector<dframe> fr;
+        fr.push_back(dis_empty_frame(D));
+        std::vector<dstate> Rx;
+        int ok = 1;
+        for (size_t k = 0; k < fam.mem.size() && ok; k++) {
+            std::vector<dstate> cur;
+            cur.push_back(dis_raw(D, fam.mem[k].cand));
+            for (size_t l = 0; l < k && ok; l++) {
+                std::vector<dstate> nxt;
+                dis_refine(D, fr[l], fr[l + 1], cur[0], Rx[l], nxt, &fam.mem[k].nh[l]);
+                if (nxt.size() != 1) ok = 0;
+                else cur.swap(nxt);
+            }
+            if (!ok) break;
+            fam.mem[k].ex = cur[0].ex.clone();
+            fam.mem[k].c_at = fr[k].c;
+            fr.push_back(dis_extend_frame(D, fr[k], cur[0]));
+            Rx.push_back(std::move(cur[0]));
+        }
+        D.exact = 0; D.use_caps = saved_caps;
+        if (!ok) {
+            D.rejected++;
+            printf("  [%6.1fs] a %ld-member family failed the exact check and was discarded\n",
+                   dis_now() - D.t0, (long) fam.mem.size());
+            fflush(stdout);
+            return;
+        }
+        fam.frame = fr.back().clone();
+    }
     printf("  [%6.1fs] family %ld: %ld boundaries, %s\n", dis_now() - D.t0,
-           (long) D.found.size(), (long) F.size(),
-           kind == 2 ? "complete for I" : "complete and closed on a subset of I");
+           (long) D.found.size() + 1, (long) fam.mem.size(),
+           fam.kind == 2 ? "complete for I" : "complete and closed on a subset of I");
     fflush(stdout);
+    D.found.push_back(std::move(fam));
 }
 
-/* Complete families anchored at candidate A. */
-static void dis_anchor(dis_t& D, slong A)
+static int dis_fits(dis_t& D, const std::vector<slong>& Xrem, slong cand)
+{
+    const std::vector<slong>& x = D.e->sols[cand];
+    for (slong j = 0; j < D.n; j++) if (x[j] > Xrem[j]) return 0;
+    return 1;
+}
+
+/* Knapsack: can the classes not dropped, each supplying at most its bound, sum
+   exactly to Xrem? LP relaxation, and optionally the integer problem (with a time
+   limit). Returns 0 only if infeasibility is established. */
+static int dis_knapsack(dis_t& D, const std::vector<sp_t>& P, const std::vector<char>& dropped,
+                        const std::vector<slong>& Xrem, int integer = 0)
+{
+    const slong n = D.n;
+    std::map<slong, slong> cap;                    /* candidate -> total bound */
+    for (size_t t = 0; t < P.size(); t++) if (!dropped[t]) cap[P[t]->cand] += P[t]->bound;
+    for (slong j = 0; j < n; j++) if (Xrem[j] < 0) return 0;
+    if (cap.empty()) { for (slong j = 0; j < n; j++) if (Xrem[j]) return 0; return 1; }
+    glp_prob* lp = glp_create_prob();
+    glp_add_rows(lp, (int) n);
+    for (slong j = 0; j < n; j++) glp_set_row_bnds(lp, (int) j + 1, GLP_FX, (double) Xrem[j], (double) Xrem[j]);
+    glp_add_cols(lp, (int) cap.size());
+    std::vector<int> ia(1, 0), ja(1, 0);
+    std::vector<double> ar(1, 0.0);
+    int col = 0;
+    for (const auto& kv : cap) {
+        col++;
+        glp_set_col_bnds(lp, col, GLP_DB, 0.0, (double) kv.second);
+        const std::vector<slong>& x = D.e->sols[kv.first];
+        for (slong j = 0; j < n; j++)
+            if (x[j]) { ia.push_back((int) j + 1); ja.push_back(col); ar.push_back((double) x[j]); }
+    }
+    glp_load_matrix(lp, (int) ia.size() - 1, ia.data(), ja.data(), ar.data());
+    glp_smcp parm; glp_init_smcp(&parm);
+    parm.msg_lev = GLP_MSG_OFF;
+    parm.presolve = GLP_ON;
+    int ret = glp_simplex(lp, &parm);
+    int feasible = 1;
+    if (ret == GLP_ENOPFS || (ret == 0 && glp_get_status(lp) == GLP_NOFEAS)) feasible = 0;
+    if (feasible && integer) {                     /* integer knapsack, with a time limit */
+        for (int c = 1; c <= col; c++) glp_set_col_kind(lp, c, GLP_IV);
+        glp_iocp ip; glp_init_iocp(&ip);
+        ip.msg_lev = GLP_MSG_OFF;
+        ip.presolve = GLP_ON;
+        ip.tm_lim = 10000;                         /* ms; inconclusive counts as feasible */
+        int r2 = glp_intopt(lp, &ip);
+        if (r2 == GLP_ENOPFS || (r2 == 0 && glp_mip_status(lp) == GLP_NOFEAS)) feasible = 0;
+    }
+    glp_delete_prob(lp);
+    return feasible;
+}
+
+/* Bring a pool state up to date: refine it against the members it has not seen
+   (it has seen s.nh.size() of them). */
+static void dis_catchup(dis_t& D, dsearch& S, const dframe& Fcur, const sp_t& s, std::vector<sp_t>& out)
+{
+    if (s->nh.size() == S.R.size()) { out.push_back(s); return; }
+    std::vector<dstate> cur;
+    cur.push_back(s->clone());
+    for (size_t k = s->nh.size(); k < S.R.size() && !cur.empty(); k++) {
+        const dframe& Fk = S.frames[k];
+        const dframe& Fk1 = (k + 1 < S.R.size()) ? S.frames[k + 1] : Fcur;
+        std::vector<dstate> nxt;
+        for (const dstate& st : cur) dis_refine(D, Fk, Fk1, st, S.R[k], nxt);
+        cur.swap(nxt);
+    }
+    for (dstate& x : cur)
+        if (dis_fits(D, S.Xrem, x.cand)) out.push_back(std::make_shared<dstate>(std::move(x)));
+}
+
+/* Exact-cover search over classes. Pool states may lag behind the members (their
+   bounds stay valid upper bounds, since refinement only splits or removes); a state
+   is brought up to date only when the branching column selects it. */
+static void dis_rec(dis_t& D, dsearch& S, const dframe& F, const std::vector<sp_t>& P0)
+{
+    const slong n = D.n;
+    if (D.truncated) return;
+    if (++D.nodes > SEARCH_NODE_LIMIT) { D.truncated = 1; return; }
+    if ((D.nodes & 0xFF) == 0) dis_progress(D, 0);
+    if ((slong) S.R.size() == S.T) { dis_record(D, S); return; }
+
+    /* coverage: what the classes can still supply, per component of x
+       (component 0 is the size bound, since x^0 = 1) */
+    std::vector<slong> cov(n, 0), opts(n, 0);
+    for (const sp_t& s : P0) {
+        const std::vector<slong>& x = D.e->sols[s->cand];
+        for (slong j = 0; j < n; j++) if (x[j]) { cov[j] += s->bound * x[j]; opts[j]++; }
+    }
+    for (slong j = 0; j < n; j++) if (cov[j] < S.Xrem[j]) return;
+    if (!dis_knapsack(D, P0, std::vector<char>(P0.size(), 0), S.Xrem)) return;
+
+    /* Branch on the component still owed with the fewest classes able to supply it:
+       every completion contains one of them (exact-cover column choice). With no
+       members yet, branch on component 0 (every class) instead: first members with
+       small x make every later comparison cheap, and each branch drops the earlier
+       ones. Within a branch list, classes with small x come first. */
+    slong jb = 0;
+    if (!S.R.empty())
+        for (slong j = 1; j < n; j++)
+            if (S.Xrem[j] > 0 && (jb == 0 || opts[j] < opts[jb])) jb = j;
+
+    std::vector<sp_t> P;                 /* the column's states brought up to date */
+    for (const sp_t& s : P0) {
+        if (D.e->sols[s->cand][jb]) dis_catchup(D, S, F, s, P);
+        else P.push_back(s);
+    }
+    std::vector<size_t> list;
+    for (size_t k = 0; k < P.size(); k++) if (D.e->sols[P[k]->cand][jb]) list.push_back(k);
+    auto norm2 = [&](size_t k) {
+        slong s = 0;
+        for (slong j = 0; j < n; j++) s += D.e->sols[P[k]->cand][j] * D.e->sols[P[k]->cand][j];
+        return s;
+    };
+    std::stable_sort(list.begin(), list.end(), [&](size_t a, size_t b) { return norm2(a) < norm2(b); });
+
+    std::vector<char> dropped(P.size(), 0);
+    if (S.R.empty()) D.root_of = (slong) list.size();
+    for (size_t li = 0; li < list.size() && !D.truncated; li++) {
+        const size_t k = list[li];
+        if (S.R.empty()) D.root_at = (slong) li + 1;
+        if (li > 0) {                   /* what is left must still cover the remainder */
+            std::vector<slong> c2(n, 0);
+            for (size_t t = 0; t < P.size(); t++) {
+                if (dropped[t]) continue;
+                const std::vector<slong>& x = D.e->sols[P[t]->cand];
+                for (slong j = 0; j < n; j++) c2[j] += P[t]->bound * x[j];
+            }
+            int enough = 1;
+            for (slong j = 0; j < n && enough; j++) enough = (c2[j] >= S.Xrem[j]);
+            if (!enough) break;
+            if (!dis_knapsack(D, P, dropped, S.Xrem, S.R.empty())) break;   /* nothing later completes */
+        }
+        const dstate& v = *P[k];
+        const std::vector<slong>& xv = D.e->sols[v.cand];
+        std::vector<slong> Xn(S.Xrem);
+        for (slong j = 0; j < n; j++) Xn[j] -= xv[j];
+
+        /* the members' NIM-rep budgets with v added */
+        std::vector<std::vector<slong>> saved(S.mused);
+        int within = 1;
+        for (size_t m = 0; m < S.R.size() && within; m++)
+            for (slong j = 0; j < n; j++) {
+                S.mused[m][j] += v.nh[m][j] * v.nh[m][j];
+                if (S.mused[m][j] > D.cap[S.R[m].cand * n + j]) within = 0;
+            }
+        if (within) {
+            std::vector<sp_t> P2;       /* everything not dropped that still fits; v's own
+                                           entry stays, and yields its class-mates later */
+            for (size_t t = 0; t < P.size(); t++)
+                if (!dropped[t] && dis_fits(D, Xn, P[t]->cand)) P2.push_back(P[t]);
+            dframe Fn = dis_extend_frame(D, F, v);
+            S.mused.push_back(v.used);
+            S.R.push_back(v.clone());
+            S.c_at.push_back(F.c);
+            S.frames.push_back(F.clone());
+            std::swap(S.Xrem, Xn);
+            dis_rec(D, S, Fn, P2);
+            std::swap(S.Xrem, Xn);
+            S.frames.pop_back();
+            S.c_at.pop_back();
+            S.R.pop_back();
+        }
+        S.mused.swap(saved);
+        dropped[k] = 1;                 /* later branches contain no state of this class */
+    }
+}
+
+/* S w with w_i = m_i / S_0i on the support pattern U; 0 if it is not a vector of
+   nonnegative integers (then no complete family has this support). */
+static int dis_trace_target(dis_t& D, std::vector<slong>& X)
+{
+    search_t* e = D.e;
+    const slong n = D.n;
+    nf_vec w(n, e->field);
+    for (slong i = 0; i < n; i++) {
+        if (!D.inA[i]) continue;
+        nf_elem_set_si(w[i], D.mult[i], e->field);
+        nf_elem_div(w[i], w[i], entry(e->S, 0, i, e->ctx), e->field);
+    }
+    nf_elem_t s, t; nf_elem_init(s, e->field); nf_elem_init(t, e->field);
+    fmpq_poly_t p; fmpq_poly_init(p);
+    int ok = 1;
+    X.assign(n, 0);
+    for (slong j = 0; j < n && ok; j++) {
+        nf_elem_zero(s, e->field);
+        for (slong i = 0; i < n; i++) {
+            if (!D.inA[i]) continue;
+            nf_elem_mul(t, entry(e->S, j, i, e->ctx), w[i], e->field);
+            nf_elem_add(s, s, t, e->field);
+        }
+        if (!nf_elem_is_integer(s, e->field)) { ok = 0; break; }
+        nf_elem_get_fmpq_poly(p, s, e->field);
+        fmpz_t z; fmpz_init(z);
+        fmpq_poly_get_coeff_fmpz(z, p, 0);
+        if (fmpz_sgn(z) < 0 || !fmpz_fits_si(z)) ok = 0;
+        else X[j] = fmpz_get_si(z);
+        fmpz_clear(z);
+    }
+    fmpq_poly_clear(p);
+    nf_elem_clear(t, e->field); nf_elem_clear(s, e->field);
+    return ok;
+}
+
+/* Families complete on the support pattern U, from no members. */
+static void dis_pattern(dis_t& D, const std::vector<char>& U)
 {
     const slong n = D.n, M = D.M;
-    slong N = 0;                                      /* states in a basis over supp A */
-    for (slong i = 0; i < n; i++) if (D.supp[A * n + i]) N += D.e->mult[i];
+    D.inA = U;
+    slong N = 0;
+    for (slong i = 0; i < n; i++) if (U[i]) N += D.mult[i];
 
-    std::vector<vtx_t> V;
-    V.push_back(dis_anchor_vertex(D, A));
+    std::vector<slong> Xtot;
+    if (!dis_trace_target(D, Xtot) || Xtot[0] != N) return;
+
+    std::vector<sp_t> P;
     for (slong B = 0; B < M; B++) {
-        int inside = 1, equal = 1;
-        for (slong i = 0; i < n; i++) {
-            if (D.supp[B * n + i] && !D.supp[A * n + i]) inside = 0;
-            if (D.supp[B * n + i] != D.supp[A * n + i]) equal = 0;
-        }
-        if (!inside || (equal && B < A)) continue;    /* such families have an earlier anchor */
-        for (const pair_opt_t& o : dis_options(D, A, B)) dis_make_vertices(D, A, B, o, V);
+        int inside = 1;
+        for (slong i = 0; i < n; i++) if (D.supp[B * n + i] && !U[i]) inside = 0;
+        if (!inside || !dis_fits(D, Xtot, B)) continue;
+        dstate b = dis_raw(D, B);
+        b.bound = D.cnt[B];
+        P.push_back(std::make_shared<dstate>(std::move(b)));
     }
-    if ((slong) V.size() < N) return;                 /* too few states for a basis */
+    slong total = 0;
+    for (const sp_t& s : P) total += s->bound;
+    if (total < N) return;
 
-    /* graph on V[1..]; every vertex is already compatible with the anchor */
-    const slong nv = (slong) V.size() - 1, nw = (nv + 63) / 64, T = N - 1;
-    std::vector<bits_t> adj(nv, bits_t(nw, 0));
-    std::vector<slong> deg(nv, 0);
-    for (slong k = 0; k < nv; k++)
-        for (slong l = k + 1; l < nv; l++)
-            if (dis_compatible(D, A, V[k + 1], V[l + 1])) {
-                adj[k][l / 64] |= 1ull << (l % 64);
-                adj[l][k / 64] |= 1ull << (k % 64);
-                deg[k]++; deg[l]++; D.edges++;
-            }
-
-    /* k-core: a member of a T-clique has T - 1 neighbours inside it */
-    bits_t alive(nw, 0);
-    for (slong k = 0; k < nv; k++) alive[k / 64] |= 1ull << (k % 64);
-    for (int changed = 1; changed; ) {
-        changed = 0;
-        for (slong k = 0; k < nv; k++) {
-            if (!((alive[k / 64] >> (k % 64)) & 1) || deg[k] >= T - 1) continue;
-            alive[k / 64] &= ~(1ull << (k % 64));
-            for (slong l = 0; l < nv; l++)
-                if ((adj[k][l / 64] >> (l % 64)) & 1) deg[l]--;
-            changed = 1;
-        }
-    }
-    if (bits_count(alive) < T) return;
-
-    std::vector<std::vector<slong>> cliques;
-    std::vector<slong> R;
-    dis_cliques(D, adj, R, alive, T, cliques);
-
-    for (const std::vector<slong>& c : cliques) {
-        std::vector<member_t> F;
-        F.push_back(dis_member(V[0], A));
-        for (slong k : c) F.push_back(dis_member(V[k + 1], A));
-        int kind = (N == D.e->dimI) ? 2 : 1;
-        if (kind == 1) {
-            /* closed: no other state, of any support, is compatible with all of F */
-            int closed = 1;
-            for (slong X = 0; X < M && closed; X++)
-                for (const pair_opt_t& o : dis_options(D, A, X)) {
-                    std::vector<vtx_t> xs;
-                    dis_make_vertices(D, A, X, o, xs);
-                    for (const vtx_t& x : xs) {
-                        int member = 0;
-                        for (slong k : c)
-                            if (V[k + 1].cand == X && V[k + 1].nA == x.nA && V[k + 1].s2 == x.s2) member = 1;
-                        if (member) continue;
-                        int fits = 1;
-                        for (size_t k = 0; k < c.size() && fits; k++) fits = dis_compatible(D, A, x, V[c[k] + 1]);
-                        if (fits) { closed = 0; break; }
-                    }
-                    if (!closed) break;
-                }
-            if (!closed) { D.open_subset++; continue; }
-        }
-        dis_add_family(D, F, kind);
-    }
+    dframe F0 = dis_empty_frame(D);
+    dsearch S;
+    S.T = N;
+    S.Xrem = Xtot;
+    dis_rec(D, S, F0, P);
 }
 
 static void disentangle(search_t* e)
@@ -1034,100 +1752,140 @@ static void disentangle(search_t* e)
     const slong n = e->n, M = (slong) e->sols.size();
     flint_printf("\n--- disentangling %wd candidates with the mutual Cardy condition ---\n", M);
     if (M == 0) return;
-    for (slong i = 0; i < n; i++)
-        if (e->mult[i] > 2) {
-            flint_printf("label %wd is listed %d times; disentangling supports at most two "
-                         "Ishibashi states per label, skipped\n", i + INDEX_BASE, e->mult[i]);
-            return;
-        }
 
     dis_t D;
     D.e = e; D.n = n; D.M = M;
-    D.checked = D.accepted = D.nodes = D.edges = D.open_subset = 0;
+    D.checked = D.accepted = D.refinements = D.nodes = D.open_subset = 0;
+    D.exact = 0; D.rejected = 0;
     D.truncated = 0;
-    D.pairs_done = D.anchors_done = 0;
+    D.patterns_done = D.npatterns = 0;
+    D.root_at = D.root_of = 0;
     D.t0 = D.t_last = dis_now();
-    D.opts.assign(M * M, std::vector<pair_opt_t>());
-    D.have.assign(M * M, 0);
+    arb_init(D.gball);
+    qqbar_get_arb(D.gball, e->gen, NUM_PREC);
+    D.mult.assign(n, 0); D.off.assign(n, 0);
+    D.L = 0;
+    for (slong i = 0; i < n; i++) { D.mult[i] = e->mult[i]; D.off[i] = D.L; D.L += e->mult[i] + 1; }
 
     /* exact |b_a^i|^2 for every i (it is exactly 0 for i not in I) */
     D.q = (nf_elem_struct*) flint_malloc(M * n * sizeof(nf_elem_struct));
     for (slong k = 0; k < M * n; k++) nf_elem_init(D.q + k, e->field);
-    D.r.assign(M * n, 0.0);
     D.supp.assign(M * n, 0);
-    arb_t g, v; arb_init(g); arb_init(v);
-    qqbar_get_arb(g, e->gen, NUM_PREC);
+    D.qd.assign(M * n, 0.0);
     {
         nf_vec P(n, e->field);
         for (slong a = 0; a < M; a++) {
             dis_Sn(P, D, e->sols[a]);
             for (slong i = 0; i < n; i++) {
                 nf_elem_set(D.q + a * n + i, P[i], e->field);
-                if (nf_elem_is_zero(P[i], e->field)) continue;
-                D.supp[a * n + i] = 1;
-                nf_elem_get_arb(v, P[i], g, e->field, NUM_PREC);
-                arb_sqrt(v, v, NUM_PREC);
-                D.r[a * n + i] = arf_get_d(arb_midref(v), ARF_RND_NEAR);
+                D.supp[a * n + i] = !nf_elem_is_zero(P[i], e->field);
+                if (D.supp[a * n + i]) D.qd[a * n + i] = dis_d(P[i], D);
             }
         }
     }
+    arb_t g, v; arb_init(g); arb_init(v);
+    qqbar_get_arb(g, e->gen, NUM_PREC);
     D.Sd.assign(n * n, 0.0);
     for (slong i = 0; i < n; i++)
         for (slong j = 0; j < n; j++) {
             nf_elem_get_arb(v, entry(e->S, i, j, e->ctx), g, e->field, NUM_PREC);
             D.Sd[i * n + j] = arf_get_d(arb_midref(v), ARF_RND_NEAR);
         }
+    arb_clear(v); arb_clear(g);
     D.Qs.assign((n + 1) * n, 0.0);
     for (slong j = n - 1; j >= 0; j--)
         for (slong i = 0; i < n; i++)
             D.Qs[j * n + i] = std::sqrt(D.Qs[(j + 1) * n + i] * D.Qs[(j + 1) * n + i]
                                         + D.Sd[i * n + j] * D.Sd[i * n + j]);
-    arb_clear(v); arb_clear(g);
+    /* NIM-rep budgets: N_jj^r by Verlinde (numerically, they are integers) */
+    D.use_caps = 1;
+    D.cap.assign(M * n, 0);
+    {
+        std::vector<slong> Njj(n * n, 0);
+        for (slong j = 0; j < n && D.use_caps; j++)
+            for (slong r = 0; r < n; r++) {
+                double s = 0.0;
+                for (slong i = 0; i < n; i++)
+                    s += D.Sd[j * n + i] * D.Sd[j * n + i] * D.Sd[r * n + i] / D.Sd[i];
+                double k = std::nearbyint(s);
+                if (std::fabs(s - k) > 1e-6 || k < 0) { D.use_caps = 0; break; }
+                Njj[j * n + r] = (slong) k;
+            }
+        if (!D.use_caps) printf("  fusion rules from S are not integral; NIM-rep budgets not used\n");
+        else
+            for (slong a = 0; a < M; a++)
+                for (slong j = 0; j < n; j++) {
+                    slong y = 0;
+                    for (slong r = 0; r < n; r++) y += Njj[j * n + r] * e->sols[a][r];
+                    D.cap[a * n + j] = y - e->sols[a][j] * e->sols[a][j];
+                }
+    }
 
+    slong mmax = 0;
+    for (slong i = 0; i < n; i++) mmax = FLINT_MAX(mmax, D.mult[i]);
     printf("  [%6.1fs] |b|^2 computed exactly for %ld candidates, %ld Ishibashi states "
-           "over %ld labels, searching families\n",
-           dis_now() - D.t0, (long) M, (long) e->dimI, (long) e->nI);
+           "over %ld labels (at most %ld per label), searching families\n",
+           dis_now() - D.t0, (long) M, (long) e->dimI, (long) e->nI, (long) mmax);
     fflush(stdout);
-    for (slong A = 0; A < M && !D.truncated; A++) {
-        dis_anchor(D, A);
-        D.anchors_done++;
+    /* trace bound per candidate: members of candidate B in a complete family */
+    D.cnt.assign(M, 0);
+    for (slong a = 0; a < M; a++) {
+        double best = 1e300;
+        for (slong i = 0; i < n; i++) {
+            if (!D.supp[a * n + i]) continue;
+            double w = D.Sd[i] * dis_d(D.q + a * n + i, D);
+            best = std::min(best, D.mult[i] / w);
+        }
+        D.cnt[a] = FLINT_MAX(1, (slong) std::floor(best + 1e-6));
+    }
+
+    /* support patterns: all of I first, then each candidate's support */
+    std::vector<std::vector<char>> pats;
+    pats.push_back(std::vector<char>(e->inI, e->inI + n));
+    for (slong a = 0; a < M; a++) {
+        std::vector<char> u(D.supp.begin() + a * n, D.supp.begin() + (a + 1) * n);
+        if (std::find(pats.begin(), pats.end(), u) == pats.end()) pats.push_back(u);
+    }
+    D.npatterns = (slong) pats.size();
+    for (size_t k = 0; k < pats.size() && !D.truncated; k++) {
+        dis_pattern(D, pats[k]);
+        D.patterns_done++;
         dis_progress(D, 0);
     }
     dis_progress(D, 1);
 
     /* report: complete for I first, then closed subset families, larger first */
-    std::vector<int>&  kind = D.found_kind;
     std::vector<slong> ncov(D.found.size(), 0), in_complete(M, 0);
     for (size_t f = 0; f < D.found.size(); f++) {
         for (slong i = 0; i < n; i++)
-            if (D.supp[D.found[f][0].anchor * n + i]) ncov[f] += e->mult[i];
-        if (kind[f] == 2) for (const member_t& m : D.found[f]) in_complete[m.cand]++;
+            if (D.found[f].U[i]) ncov[f] += D.mult[i];
+        if (D.found[f].kind == 2) for (const member_t& m : D.found[f].mem) in_complete[m.cand]++;
     }
     std::vector<size_t> ord(D.found.size());
     for (size_t f = 0; f < ord.size(); f++) ord[f] = f;
     std::stable_sort(ord.begin(), ord.end(), [&](size_t u, size_t w) {
-        if (kind[u] != kind[w]) return kind[u] > kind[w];
-        return D.found[u].size() > D.found[w].size();
+        if (D.found[u].kind != D.found[w].kind) return D.found[u].kind > D.found[w].kind;
+        return D.found[u].mem.size() > D.found[w].mem.size();
     });
     slong nk[3] = {0, 0, 0};
-    for (size_t f = 0; f < D.found.size(); f++) nk[kind[f]]++;
+    for (const family_t& f : D.found) nk[f.kind]++;
 
-    flint_printf("pair checks: %wd exact, %wd accepted; compatibility edges: %wd; clique nodes: %wd%s\n",
-                 D.checked, D.accepted, D.edges, D.nodes,
-                 D.truncated ? "  (CLIQUE NODE LIMIT HIT: list below may be incomplete)" : "");
+    flint_printf("refinements: %wd; overlap checks: %wd, %wd accepted; search nodes: %wd; "
+                 "families failing the exact check: %wd%s\n",
+                 D.refinements, D.checked, D.accepted, D.nodes, D.rejected,
+                 D.truncated ? "  (SEARCH NODE LIMIT HIT: list below may be incomplete)" : "");
     flint_printf("complete families (up to gauge): %wd for I, %wd closed on a subset of I"
                  " (%wd more on a subset but extendable, not listed)\n",
                  nk[2], nk[1], D.open_subset);
-    flint_printf("(searched: families containing a member whose support covers all the others')\n");
 
     for (size_t c = 0; c < ord.size() && c < (size_t) MAX_FAMILIES_SHOWN; c++) {
-        const std::vector<member_t>& F = D.found[ord[c]];
-        if (kind[ord[c]] == 2)
-            flint_printf("\nfamily %wd: %wd boundaries, complete for I\n", (slong) c + 1, (slong) F.size());
+        const family_t& F = D.found[ord[c]];
+        if (F.kind == 2)
+            flint_printf("\nfamily %wd: %wd boundaries, complete for I\n", (slong) c + 1, (slong) F.mem.size());
         else
             flint_printf("\nfamily %wd: %wd boundaries, complete on %wd of the %wd Ishibashi states\n",
-                         (slong) c + 1, (slong) F.size(), ncov[ord[c]], e->dimI);
-        for (const member_t& m : F) {
+                         (slong) c + 1, (slong) F.mem.size(), ncov[ord[c]], e->dimI);
+        for (const member_t& m : F.mem) {
             flint_printf("  cand %wd  x = ", m.cand + 1);
             for (slong j = 0; j < n; j++) flint_printf("%wd ", e->sols[m.cand][j]);
             flint_printf("\n");
@@ -1142,102 +1900,127 @@ static void disentangle(search_t* e)
     flint_printf(any ? "\n" : " none\n");
 
     /* Full list of boundaries in the notation of the search output: b^i for labels
-       with one Ishibashi state, (b^{i,1}, b^{i,2}) for labels with two, in the basis
-       where the family's first boundary (its anchor) lies along the first axis. */
-    int has2 = 0;
-    for (slong i = 0; i < n; i++) has2 |= (e->mult[i] == 2);
-    arb_t gb, c1, c2, t1, bnum, bden;
-    arb_init(gb); arb_init(c1); arb_init(c2); arb_init(t1); arb_init(bnum); arb_init(bden);
+       with one Ishibashi state, (b^{i,1}, ..., b^{i,m}) for labels with m, in the
+       Gram-Schmidt basis of the family's members in the order listed. */
+    slong mx = 0;
+    for (slong i = 0; i < n; i++) mx = FLINT_MAX(mx, D.mult[i]);
+    arb_t gb, c1, t1, bnum, bden;
+    arb_init(gb); arb_init(c1); arb_init(t1); arb_init(bnum); arb_init(bden);
     qqbar_get_arb(gb, e->gen, NUM_PREC);
     const slong inum = TRANS_NUM - INDEX_BASE, iden = TRANS_DEN - INDEX_BASE;
     const int have_T = inum >= 0 && inum < n && iden >= 0 && iden < n
                        && e->inI[inum] && e->inI[iden];
-    auto absb = [&](arb_t out, slong cand, slong i) {
-        nf_elem_get_arb(out, D.q + cand * n + i, gb, e->field, NUM_PREC);
-        arb_sqrt(out, out, NUM_PREC);
+    const int have_RT = have_T && D.mult[inum] == 1 && D.mult[iden] == 1;
+
+    /* coordinate j of member m at label i, in the printed basis: y_j / sqrt(d_j) along
+       earlier pivots, sqrt(r) on its own new axis if it raised the rank, 0 beyond */
+    auto coord = [&](arb_t out, const family_t& F, const member_t& m, slong i, slong j) {
+        const slong o = D.off[i], mi = D.mult[i], ck = m.c_at[i];
+        if (j < ck) {
+            nf_elem_get_arb(out, m.ex[o + j], gb, e->field, NUM_PREC);
+            nf_elem_get_arb(t1, F.frame.d[o + j], gb, e->field, NUM_PREC);
+            arb_sqrt(t1, t1, NUM_PREC);
+            arb_div(out, out, t1, NUM_PREC);
+        } else if (j == ck && F.U[i] && ck < mi && !nf_elem_is_zero(m.ex[o + mi], e->field)) {
+            nf_elem_get_arb(out, m.ex[o + mi], gb, e->field, NUM_PREC);
+            arb_sqrt(out, out, NUM_PREC);
+        } else arb_zero(out);
     };
 
     flint_printf("\n=== boundaries ===\n");
-    if (has2)
-        flint_printf("labels with two Ishibashi states are printed as (b^{i,1}, b^{i,2}), in the basis\n"
-                     "where the first boundary of the family lies along the first axis\n");
+    if (mx > 1)
+        flint_printf("labels with m > 1 Ishibashi states are printed as (b^{i,1}, ..., b^{i,m}), in the\n"
+                     "Gram-Schmidt basis of the family's boundaries in the order listed\n");
+    if (have_RT)
+        flint_printf("R = (1 + r)/2, T = (1 - r)/2 with r = b^%d/b^%d. Flipping the sign of the\n"
+                     "Ishibashi state of label %d for every boundary leaves all Cardy overlaps\n"
+                     "unchanged and exchanges R and T, so the data cannot fix that sign. Convention\n"
+                     "used: in each family, the boundary with the smallest open spectrum (smallest\n"
+                     "|x|^2, ties to the first listed) has r >= 0; it is marked [reference]\n",
+                     TRANS_NUM, TRANS_DEN, TRANS_NUM);
     if (nk[2] + nk[1] == 0) flint_printf("no complete family found\n");
     if (nk[2] == 0 && e->dimI == e->nI)
         flint_printf("note: every label was given one Ishibashi state. For a non-diagonal modular\n"
                      "invariant, list each label as many times as it has Ishibashi states in the\n"
-                     "Ishibashi index input (e.g. sigma and psi twice for Potts under Virasoro)\n");
+                     "Ishibashi index input (its diagonal mass-matrix entry Z_ii)\n");
     slong shown = 0;
-    nf_vec P(n, e->field), R(n, e->field);
-    nf_elem_t t; nf_elem_init(t, e->field);
     for (size_t c = 0; c < ord.size(); c++) {
         if (shown++ >= MAX_FAMILIES_SHOWN) {
             flint_printf("... further complete families not shown\n");
             break;
         }
-        const std::vector<member_t>& F = D.found[ord[c]];
-        if (kind[ord[c]] == 2)
-            flint_printf("\nfamily %wd (complete for I): %wd boundaries\n", (slong) c + 1, (slong) F.size());
+        const family_t& F = D.found[ord[c]];
+        if (F.kind == 2)
+            flint_printf("\nfamily %wd (complete for I): %wd boundaries\n", (slong) c + 1, (slong) F.mem.size());
         else
             flint_printf("\nfamily %wd (complete on %wd of the %wd Ishibashi states): %wd boundaries\n",
-                         (slong) c + 1, ncov[ord[c]], e->dimI, (slong) F.size());
-        for (size_t k = 0; k < F.size(); k++) {
-            const member_t& m = F[k];
-            const slong A = m.anchor;
-            dis_Sn(P, D, m.nA);                       /* p_A,m; for the anchor, q_A */
-            flint_printf("boundary %wd.%wd (candidate %wd)\nx = ", (slong) c + 1, (slong) k + 1, m.cand + 1);
+                         (slong) c + 1, ncov[ord[c]], e->dimI, (slong) F.mem.size());
+        /* reference for the sign of r */
+        slong ref = -1, refn = WORD_MAX;
+        int sref = 1;
+        if (have_RT) {
+            for (size_t k = 0; k < F.mem.size(); k++) {
+                if (!D.supp[F.mem[k].cand * n + iden]) continue;
+                slong nn = 0;
+                for (slong j = 0; j < n; j++) nn += e->sols[F.mem[k].cand][j] * e->sols[F.mem[k].cand][j];
+                if (nn < refn) { refn = nn; ref = (slong) k; }
+            }
+            if (ref >= 0) {
+                coord(bnum, F, F.mem[ref], inum, 0);
+                coord(bden, F, F.mem[ref], iden, 0);
+                arb_div(bnum, bnum, bden, NUM_PREC);
+                if (arb_is_negative(bnum)) sref = -1;
+            }
+        }
+        for (size_t k = 0; k < F.mem.size(); k++) {
+            const member_t& m = F.mem[k];
+            flint_printf("boundary %wd.%wd (candidate %wd)%s\nx = ", (slong) c + 1, (slong) k + 1, m.cand + 1,
+                         (slong) k == ref ? " [reference]" : "");
             for (slong j = 0; j < n; j++) flint_printf("%wd ", e->sols[m.cand][j]);
             flint_printf("\n");
             for (slong i = 0; i < n; i++) {
                 if (!e->inI[i]) continue;
-                if (!D.supp[m.cand * n + i]) { arb_zero(c1); arb_zero(c2); }
-                else {
-                    absb(t1, A, i);                                      /* |b_A^i| */
-                    nf_elem_get_arb(c1, P[i], gb, e->field, NUM_PREC);
-                    arb_div(c1, c1, t1, NUM_PREC);
-                    nf_elem_mul(R[i], D.q + A * n + i, D.q + m.cand * n + i, e->field);
-                    nf_elem_mul(t, P[i], P[i], e->field);
-                    nf_elem_sub(R[i], R[i], t, e->field);
-                    if (nf_elem_is_zero(R[i], e->field)) arb_zero(c2);
-                    else {
-                        nf_elem_get_arb(c2, R[i], gb, e->field, NUM_PREC);
-                        arb_sqrt(c2, c2, NUM_PREC);
-                        arb_div(c2, c2, t1, NUM_PREC);
-                        if (m.s2[i] < 0) arb_neg(c2, c2);
-                    }
-                }
+                const slong mi = D.mult[i];
                 flint_printf("  b^%wd = ", i + INDEX_BASE);
-                if (e->mult[i] == 2) {
-                    flint_printf("(");
-                    arb_printn(c1, 15, 0);
-                    flint_printf(", ");
-                    arb_printn(c2, 15, 0);
-                    flint_printf(")");
-                } else {
+                if (mi > 1) flint_printf("(");
+                for (slong j = 0; j < mi; j++) {
+                    coord(c1, F, m, i, j);
+                    if (j) flint_printf(", ");
                     arb_printn(c1, 15, 0);
                 }
+                if (mi > 1) flint_printf(")");
                 flint_printf("\n");
             }
-            if (have_T) {
-                flint_printf("  T = 1 - |b^%d|/|b^%d| = ", TRANS_NUM, TRANS_DEN);
-                if (!D.supp[m.cand * n + iden]) flint_printf("undefined (b^%d = 0)\n", TRANS_DEN);
+            if (have_RT) {
+                if (!D.supp[m.cand * n + iden]) flint_printf("  R, T undefined (b^%d = 0)\n", TRANS_DEN);
                 else {
-                    absb(bnum, m.cand, inum);
-                    absb(bden, m.cand, iden);
-                    arb_div(bnum, bnum, bden, NUM_PREC);
+                    coord(bnum, F, m, inum, 0);
+                    coord(bden, F, m, iden, 0);
+                    arb_div(bnum, bnum, bden, NUM_PREC);           /* r */
+                    if (sref < 0) arb_neg(bnum, bnum);
+                    arb_add_ui(bden, bnum, 1, NUM_PREC);           /* R = (1 + r)/2 */
+                    arb_mul_2exp_si(bden, bden, -1);
+                    arb_sub_ui(bnum, bnum, 1, NUM_PREC);           /* T = (1 - r)/2 */
                     arb_neg(bnum, bnum);
-                    arb_add_ui(bnum, bnum, 1, NUM_PREC);
+                    arb_mul_2exp_si(bnum, bnum, -1);
+                    flint_printf("  R = ");
+                    arb_printn(bden, 15, 0);
+                    flint_printf(",  T = ");
                     arb_printn(bnum, 15, 0);
                     flint_printf("\n");
                 }
+            } else if (have_T) {
+                flint_printf("  R, T not computed: label %d or %d has several Ishibashi states\n",
+                             TRANS_NUM, TRANS_DEN);
             }
         }
     }
-    nf_elem_clear(t, e->field);
-    arb_clear(bden); arb_clear(bnum); arb_clear(t1); arb_clear(c2); arb_clear(c1); arb_clear(gb);
+    arb_clear(bden); arb_clear(bnum); arb_clear(t1); arb_clear(c1); arb_clear(gb);
     fflush(stdout);
 
     for (slong k = 0; k < M * n; k++) nf_elem_clear(D.q + k, e->field);
     flint_free(D.q);
+    arb_clear(D.gball);
 }
 
 /*
