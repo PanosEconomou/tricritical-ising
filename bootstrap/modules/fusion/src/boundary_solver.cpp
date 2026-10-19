@@ -38,8 +38,8 @@
        R = (1 + r)/2,   T = (1 - r)/2.
    Only computed after disentangling, where the signs are known (see the note
    printed with the boundaries). */
-// #define TRANS_NUM  35
-#define TRANS_NUM  17
+#define TRANS_NUM  35
+// #define TRANS_NUM  17
 #define TRANS_DEN  1
 
 /* 1: every Ishibashi state in I must appear, |b^i| > 0 ("= 0 iff i not in I").

@@ -7,8 +7,8 @@
 #include "interface.h"
 #include "solver.h"
 
-#define S_MATRIX_INPUT_FILE "in/S_B_DE.txt"
-#define INDEX_INPUT_FILE "in/I_B_DE.txt"
+#define S_MATRIX_INPUT_FILE "in/S_A_E.txt"
+#define INDEX_INPUT_FILE "in/I_A_E.txt"
 #define OUTPUT_DIR "out/"
 
 int main() {
