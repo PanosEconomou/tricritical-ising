@@ -490,6 +490,13 @@ static void dfs(search_t* e, size_t d)
  * reported. Soundness is therefore exact; completeness relies on the numerics,
  * as the candidate overlaps always did.
  *
+ * Completion LP. At every node, with c_t the number of members still to be taken from
+ * class t, three families of identities of a complete family are linear in c: the
+ * trace identity, the Perron-Frobenius identity sum_l n^j_kl g_l = d_j g_k for each
+ * member k (the vacuum column of Psi is an eigenvector of every n^j), and the NIM-rep
+ * budget below as an equality. An infeasible LP prunes the node. The PF identity also
+ * bounds every overlap: n^j_kl g_l <= d_j g_k - (what k already owes), so x^j <= d_j.
+ *
  * NIM-rep budgets. In a family complete on its support, n^j = Psi diag(S_ij/S_0i)
  * Psi^T with Psi orthogonal, so (n^j)^2 = sum_r N_jj^r n^r (Verlinde) and, on the
  * diagonal, sum_{l != k} (n^j_kl)^2 = sum_r N_jj^r x_k^r - (x_k^j)^2 =: cap_k^j,
@@ -500,6 +507,7 @@ static void dfs(search_t* e, size_t d)
  */
 
 #define DISENTANGLE        1
+#define SUBSET_FAMILIES    0         /* 0: search only families complete for all of I (faster) */
 #define MAX_FAMILIES_SHOWN 10
 #define SEARCH_NODE_LIMIT  20000000  /* per run; a warning is printed if hit */
 #define DIS_TOL            1e-7      /* numeric tolerance in the search; families are verified exactly */
@@ -553,12 +561,13 @@ struct dstate {
     std::vector<char>               rz;     /* per label: r == 0 exactly */
     slong                           bound;  /* at most this many members from this class */
     std::vector<slong>              used;   /* sum over members of (n^j)^2 */
+    std::vector<double>             pf;     /* sum over members l of n^j g_l */
 
     dstate clone() const
     {
         dstate c;
         c.cand = cand; c.nh = nh; c.ex = ex.clone(); c.nd = nd; c.rz = rz; c.bound = bound;
-        c.used = used;
+        c.used = used; c.pf = pf;
         return c;
     }
 };
@@ -629,6 +638,10 @@ struct dis_t {
     std::map<std::vector<char>, std::unique_ptr<dlattice>> lattices;
 
     std::vector<slong>  cap;           /* cap[a*n + j]: NIM-rep budget of candidate a */
+    std::vector<double> dj;            /* quantum dimensions S_j0 / S_00 */
+    std::vector<double> g;             /* g = vacuum coefficient of each candidate */
+    std::vector<char>   pf_ok;         /* x^j <= d_j for all j (else in no complete family) */
+    slong               lp_prunes, lp_rows, lp_calls;
     int                 use_caps;
 
     std::vector<family_t> found;
@@ -793,12 +806,12 @@ static dlattice* dis_lattice(dis_t& D, const std::vector<char>& zero)
    the hull of its allowed values. Depth-first over the free coordinates; every
    linear row bounds the next coordinate given the rest's range (interval
    propagation). Pivot coordinates are recovered exactly at the leaves. */
-struct drow { const double* w; double lo, hi; std::vector<double> rmin, rmax; std::vector<double> wo; };
+struct drow { const double* w; double lo, hi; std::vector<double> rmin, rmax, p2, n2; std::vector<double> wo; };
 
 static void dis_lat_dfs(dis_t& D, const dlattice& L, const target_t& T, slong c, std::vector<drow>& rows,
                         const std::vector<slong>& box, const std::vector<slong>& ord, slong d,
                         std::vector<double>& part, std::vector<slong>& f,
-                        std::vector<std::vector<slong>>& out)
+                        std::vector<std::vector<slong>>& out, slong sq = 0)
 {
     const slong n = D.n, k = (slong) L.fcol.size();
     if (d == k) {
@@ -832,13 +845,17 @@ static void dis_lat_dfs(dis_t& D, const dlattice& L, const target_t& T, slong c,
         out.push_back(nv);
         return;
     }
-    /* range of f_d allowed by every row, given the remaining coordinates' boxes */
+    /* range of f_d allowed by every row, given the remaining coordinates: each in its
+       box, all >= 0, and sum of squares <= c - sq (Cauchy-Schwarz on the row) */
     double lo = 0.0, hi = (double) box[d];
+    const double budget = (double) (c - sq);
     for (size_t r = 0; r < rows.size(); r++) {
         const drow& R = rows[r];
         double w = R.w[d];
-        double a = R.lo - part[r] - R.rmax[d + 1];
-        double b = R.hi - part[r] - R.rmin[d + 1];
+        double rmx = std::min(R.rmax[d + 1], std::sqrt(budget * R.p2[d + 1]) + 1e-12);
+        double rmn = std::max(R.rmin[d + 1], -std::sqrt(budget * R.n2[d + 1]) - 1e-12);
+        double a = R.lo - part[r] - rmx;
+        double b = R.hi - part[r] - rmn;
         if (std::fabs(w) < 1e-12) {
             if (a > DIS_TOL || b < -DIS_TOL) return;
             continue;
@@ -849,10 +866,11 @@ static void dis_lat_dfs(dis_t& D, const dlattice& L, const target_t& T, slong c,
         if (lo > hi + 1e-9) return;
     }
     slong a = (slong) std::ceil(lo - 1e-9), b = (slong) std::floor(hi + 1e-9);
+    while (b >= a && sq + b * b > c) b--;                        /* |n|^2 <= c */
     for (slong val = a; val <= b; val++) {
         f[d] = val;
         for (size_t r = 0; r < rows.size(); r++) part[r] += rows[r].w[d] * val;
-        dis_lat_dfs(D, L, T, c, rows, box, ord, d + 1, part, f, out);
+        dis_lat_dfs(D, L, T, c, rows, box, ord, d + 1, part, f, out, sq + val * val);
         for (size_t r = 0; r < rows.size(); r++) part[r] -= rows[r].w[d] * val;
     }
     f[d] = 0;
@@ -906,10 +924,14 @@ static void dis_find_lattice(dis_t& D, const dlattice& L, const target_t& T, slo
     }
     for (drow& R : rows) {                                        /* rest ranges over boxes */
         R.rmin.assign(k + 1, 0.0); R.rmax.assign(k + 1, 0.0);
+        R.p2.assign(k + 1, 0.0); R.n2.assign(k + 1, 0.0);
         for (slong t = k - 1; t >= 0; t--) {
             double x = R.w[t] * boxo[t];
             R.rmin[t] = R.rmin[t + 1] + std::min(0.0, x);
             R.rmax[t] = R.rmax[t + 1] + std::max(0.0, x);
+            double w = boxo[t] > 0 ? R.w[t] : 0.0;
+            R.p2[t] = R.p2[t + 1] + (w > 0 ? w * w : 0.0);
+            R.n2[t] = R.n2[t + 1] + (w < 0 ? w * w : 0.0);
         }
     }
     std::vector<double> part(rows.size(), 0.0);
@@ -1131,7 +1153,7 @@ static void dis_find(dis_t& D, const target_t& T, slong c, std::vector<std::vect
     if (interval && dis_find_affine(D, T, c, out)) return;
     if (interval) {
         dlattice* L = dis_lattice(D, T.zero);
-        if (2 * (slong) L->fcol.size() <= n) { dis_find_lattice(D, *L, T, c, out); return; }
+        dis_find_lattice(D, *L, T, c, out); return;
     }
     if (interval || count_sq(c, n - 1) < std::ldexp(1.0, (int) FLINT_MIN((slong) Lb.size(), 1000))) {
         std::vector<slong> nv(n, 0);
@@ -1167,6 +1189,7 @@ static dstate dis_raw(dis_t& D, slong B)
     }
     s.bound = 0;
     s.used.assign(n, 0);
+    s.pf.assign(n, 0.0);
     return s;
 }
 
@@ -1194,15 +1217,23 @@ static void dis_refine(dis_t& D, const dframe& F, const dframe& Fn, const dstate
     T.zero.assign(n, 0);
     for (slong i = 0; i < n; i++)
         T.zero[i] = !e->inI[i] || !D.inA[i] || !D.supp[s.cand * n + i] || !D.supp[v.cand * n + i];
-    if (D.use_caps)
+    if (D.use_caps) {
+        const double gs = D.g[s.cand], gv = D.g[v.cand];
         for (slong j = 0; j < n; j++) {
             slong left = FLINT_MIN(D.cap[s.cand * n + j] - s.used[j], D.cap[v.cand * n + j] - v.used[j]);
             if (left < 0) return;
             slong m = (slong) std::floor(std::sqrt((double) left) + 1e-9);
             while (m * m > left) m--;
             while ((m + 1) * (m + 1) <= left) m++;
+            /* Perron-Frobenius: sum_l n^j_kl g_l = d_j g_k, all terms >= 0 */
+            double ss = (D.dj[j] - e->sols[s.cand][j]) * gs - s.pf[j];
+            double sv = (D.dj[j] - e->sols[v.cand][j]) * gv - v.pf[j];
+            double bnd = std::min(ss / gv, sv / gs);
+            if (bnd < -1e-7) return;
+            m = FLINT_MIN(m, (slong) std::floor(bnd + 1e-7));
             T.nmax[j] = m;
         }
+    }
     for (slong i = 0; i < n; i++) {
         if (!D.inA[i]) continue;                                   /* p_i = 0 */
         const slong o = D.off[i], m = D.mult[i];
@@ -1263,7 +1294,7 @@ static void dis_refine(dis_t& D, const dframe& F, const dframe& Fn, const dstate
 
             dstate x = s.clone();
             x.nh.push_back(nv);
-            for (slong j = 0; j < n; j++) x.used[j] += nv[j] * nv[j];
+            for (slong j = 0; j < n; j++) { x.used[j] += nv[j] * nv[j]; x.pf[j] += nv[j] * D.g[v.cand]; }
             for (slong i = 0; i < n; i++) {
                 if (!dis_pivot(D, F, v, i)) continue;
                 const slong o = D.off[i], m = D.mult[i], k = F.c[i];
@@ -1583,6 +1614,120 @@ static void dis_catchup(dis_t& D, dsearch& S, const dframe& Fcur, const sp_t& s,
         if (dis_fits(D, S.Xrem, x.cand)) out.push_back(std::make_shared<dstate>(std::move(x)));
 }
 
+/* Completion LP. For a complete family F the matrices n^j = Psi diag(S_ji/S_0i) Psi^T
+   satisfy, for every member k and label j,
+     (PF)   sum_{l in F} n^j_kl g_l    = d_j g_k             (g = vacuum coefficient,
+                                                               d_j = S_j0/S_00: the vacuum
+                                                               column of Psi is an eigenvector)
+     (NIM)  sum_{l in F} (n^j_kl)^2    = sum_r N_jj^r x_k^r  (diagonal of (n^j)^2)
+   and the trace identity sum_{l in F} x_l = S w. With c_t = number of members still to be
+   taken from class t (0 <= c_t <= bound_t), the parts not yet fixed are linear in c, with
+   coefficients from each class's overlaps with member k. Infeasible LP: no completion.
+   Needs every class refined against every member. */
+static int dis_completion_lp(dis_t& D, dsearch& S, const std::vector<sp_t>& P)
+{
+    const slong n = D.n, R = (slong) S.R.size(), np = (slong) P.size();
+    if (np == 0) {
+        for (slong j = 0; j < n; j++) if (S.Xrem[j]) return 0;
+        return 1;
+    }
+    auto gof = [&](slong cand) { return D.g[cand]; };
+    auto nkl = [&](slong k, slong l) -> const std::vector<slong>& {
+        if (k == l) return D.e->sols[S.R[k].cand];
+        return k > l ? S.R[k].nh[l] : S.R[l].nh[k];
+    };
+    struct lrow { double lo, hi; std::vector<std::pair<int, double>> c; };
+    std::vector<lrow> rows;
+    const double tol = 1e-6;
+    int bad = 0;
+    auto push = [&](double lo, double hi, std::vector<std::pair<int, double>>& c) {
+        if (c.empty()) { if (lo > 0 || hi < 0) bad = 1; return; }      /* constant row */
+        double mx = 0.0;                                                 /* range over the box */
+        double mn = 0.0;
+        for (auto& pr : c) {
+            double b = pr.second * P[pr.first]->bound;
+            if (b > 0) mx += b; else mn += b;
+        }
+        if (mx < lo || mn > hi) { bad = 1; return; }
+        if (mn >= lo && mx <= hi) return;                                /* never binding */
+        rows.push_back({lo, hi, std::move(c)});
+    };
+    std::vector<std::pair<int, double>> c;
+    /* trace */
+    for (slong j = 0; j < n && !bad; j++) {
+        c.clear();
+        for (slong t = 0; t < np; t++) {
+            slong a = D.e->sols[P[t]->cand][j];
+            if (a) c.push_back({(int) t, (double) a});
+        }
+        push((double) S.Xrem[j], (double) S.Xrem[j], c);
+    }
+    for (slong k = 0; k < R && !bad; k++) {
+        const double gk = gof(S.R[k].cand);
+        for (slong j = 0; j < n && !bad; j++) {
+            /* PF */
+            double rhs = D.dj[j] * gk;
+            for (slong l = 0; l < R; l++) rhs -= nkl(k, l)[j] * gof(S.R[l].cand);
+            c.clear();
+            for (slong t = 0; t < np; t++) {
+                slong a = P[t]->nh[k][j];
+                if (a) c.push_back({(int) t, a * gof(P[t]->cand)});
+            }
+            push(rhs - tol * (1 + std::fabs(rhs)), rhs + tol * (1 + std::fabs(rhs)), c);
+            /* NIM */
+            if (D.use_caps && !bad) {
+                slong left = D.cap[S.R[k].cand * n + j] - S.mused[k][j];
+                c.clear();
+                for (slong t = 0; t < np; t++) {
+                    slong a = P[t]->nh[k][j];
+                    if (a) c.push_back({(int) t, (double) (a * a)});
+                }
+                push((double) left, (double) left, c);
+            }
+        }
+    }
+    if (bad) return 0;
+    if (rows.empty()) return 1;
+    /* drop exact duplicate rows */
+    std::sort(rows.begin(), rows.end(), [](const lrow& a, const lrow& b) {
+        if (a.c != b.c) return a.c < b.c;
+        return a.lo < b.lo;
+    });
+    std::vector<lrow> uniq;
+    for (auto& r : rows) {
+        if (!uniq.empty() && uniq.back().c == r.c) {
+            uniq.back().lo = std::max(uniq.back().lo, r.lo);
+            uniq.back().hi = std::min(uniq.back().hi, r.hi);
+            if (uniq.back().lo > uniq.back().hi) return 0;
+            continue;
+        }
+        uniq.push_back(std::move(r));
+    }
+    D.lp_rows += (slong) uniq.size(); D.lp_calls++;
+
+    glp_prob* lp = glp_create_prob();
+    glp_add_cols(lp, (int) np);
+    for (slong t = 0; t < np; t++) glp_set_col_bnds(lp, (int) t + 1, GLP_DB, 0.0, (double) P[t]->bound);
+    glp_add_rows(lp, (int) uniq.size());
+    std::vector<int> ia(1, 0), ja(1, 0);
+    std::vector<double> ar(1, 0.0);
+    for (size_t r = 0; r < uniq.size(); r++) {
+        const lrow& L = uniq[r];
+        if (L.hi - L.lo < 1e-300) glp_set_row_bnds(lp, (int) r + 1, GLP_FX, L.lo, L.lo);
+        else glp_set_row_bnds(lp, (int) r + 1, GLP_DB, L.lo, L.hi);
+        for (auto& pr : L.c) { ia.push_back((int) r + 1); ja.push_back(pr.first + 1); ar.push_back(pr.second); }
+    }
+    glp_load_matrix(lp, (int) ia.size() - 1, ia.data(), ja.data(), ar.data());
+    glp_smcp parm; glp_init_smcp(&parm);
+    parm.msg_lev = GLP_MSG_OFF;
+    parm.presolve = GLP_ON;
+    int ret = glp_simplex(lp, &parm);
+    int feasible = 1;
+    if (ret == GLP_ENOPFS || (ret == 0 && glp_get_status(lp) == GLP_NOFEAS)) feasible = 0;
+    glp_delete_prob(lp);
+    return feasible;
+}
+
 /* Exact-cover search over classes. Pool states may lag behind the members (their
    bounds stay valid upper bounds, since refinement only splits or removes); a state
    is brought up to date only when the branching column selects it. */
@@ -1604,6 +1749,14 @@ static void dis_rec(dis_t& D, dsearch& S, const dframe& F, const std::vector<sp_
     for (slong j = 0; j < n; j++) if (cov[j] < S.Xrem[j]) return;
     if (!dis_knapsack(D, P0, std::vector<char>(P0.size(), 0), S.Xrem)) return;
 
+    /* bring every class up to date and test the completion LP */
+    std::vector<sp_t> Pc;
+    if (!S.R.empty()) {
+        for (const sp_t& s : P0) dis_catchup(D, S, F, s, Pc);
+        if (!dis_completion_lp(D, S, Pc)) { D.lp_prunes++; return; }
+    }
+    const std::vector<sp_t>& Pu = S.R.empty() ? P0 : Pc;
+
     /* Branch on the component still owed with the fewest classes able to supply it:
        every completion contains one of them (exact-cover column choice). With no
        members yet, branch on component 0 (every class) instead: first members with
@@ -1615,7 +1768,7 @@ static void dis_rec(dis_t& D, dsearch& S, const dframe& F, const std::vector<sp_
             if (S.Xrem[j] > 0 && (jb == 0 || opts[j] < opts[jb])) jb = j;
 
     std::vector<sp_t> P;                 /* the column's states brought up to date */
-    for (const sp_t& s : P0) {
+    for (const sp_t& s : Pu) {
         if (D.e->sols[s->cand][jb]) dis_catchup(D, S, F, s, P);
         else P.push_back(s);
     }
@@ -1643,7 +1796,7 @@ static void dis_rec(dis_t& D, dsearch& S, const dframe& F, const std::vector<sp_
             int enough = 1;
             for (slong j = 0; j < n && enough; j++) enough = (c2[j] >= S.Xrem[j]);
             if (!enough) break;
-            if (!dis_knapsack(D, P, dropped, S.Xrem, S.R.empty())) break;   /* nothing later completes */
+            if (!dis_knapsack(D, P, dropped, S.Xrem, 0)) break;   /* nothing later completes */
         }
         const dstate& v = *P[k];
         const std::vector<slong>& xv = D.e->sols[v.cand];
@@ -1731,7 +1884,7 @@ static void dis_pattern(dis_t& D, const std::vector<char>& U)
     for (slong B = 0; B < M; B++) {
         int inside = 1;
         for (slong i = 0; i < n; i++) if (D.supp[B * n + i] && !U[i]) inside = 0;
-        if (!inside || !dis_fits(D, Xtot, B)) continue;
+        if (!inside || !D.pf_ok[B] || !dis_fits(D, Xtot, B)) continue;
         dstate b = dis_raw(D, B);
         b.bound = D.cnt[B];
         P.push_back(std::make_shared<dstate>(std::move(b)));
@@ -1797,6 +1950,21 @@ static void disentangle(search_t* e)
         for (slong i = 0; i < n; i++)
             D.Qs[j * n + i] = std::sqrt(D.Qs[(j + 1) * n + i] * D.Qs[(j + 1) * n + i]
                                         + D.Sd[i * n + j] * D.Sd[i * n + j]);
+    D.dj.assign(n, 0.0);
+    for (slong j = 0; j < n; j++) D.dj[j] = D.Sd[j * n] / D.Sd[0];
+    D.g.assign(M, 0.0);
+    D.pf_ok.assign(M, 1);
+    slong npf = 0;
+    for (slong a = 0; a < M; a++) {
+        D.g[a] = std::sqrt(std::max(0.0, D.qd[a * n]));
+        for (slong j = 0; j < n; j++)
+            if (e->sols[a][j] > D.dj[j] + 1e-7) { D.pf_ok[a] = 0; break; }
+        npf += D.pf_ok[a];
+    }
+    printf("  candidates with x^j <= d_j for all j (others are in no complete family): %ld of %ld\n",
+           (long) npf, (long) M);
+    D.lp_prunes = D.lp_rows = D.lp_calls = 0;
+
     /* NIM-rep budgets: N_jj^r by Verlinde (numerically, they are integers) */
     D.use_caps = 1;
     D.cap.assign(M * n, 0);
@@ -1842,7 +2010,7 @@ static void disentangle(search_t* e)
     /* support patterns: all of I first, then each candidate's support */
     std::vector<std::vector<char>> pats;
     pats.push_back(std::vector<char>(e->inI, e->inI + n));
-    for (slong a = 0; a < M; a++) {
+    for (slong a = 0; a < M && SUBSET_FAMILIES; a++) {
         std::vector<char> u(D.supp.begin() + a * n, D.supp.begin() + (a + 1) * n);
         if (std::find(pats.begin(), pats.end(), u) == pats.end()) pats.push_back(u);
     }
