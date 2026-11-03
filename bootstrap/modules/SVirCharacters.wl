@@ -59,6 +59,13 @@ SVirProductTable::usage =
   "SVirProductTable[m, nmax, opts] gives an Association {{r1,s1},{r2,s2}} -> \
 product for every unordered pair of irreps of model m. Extra option \
 \"Sector\" -> \"Matched\" (NS x NS and R x R only, default) | All.";
+SVirDecompose::usage =
+  "SVirDecompose[aList, bList] writes each character in aList as an integer \
+combination of the characters in bList, a = K.b. Entries may be \"List\" \
+associations (from SVirCharacter/SVirProduct with \"Output\" -> \"List\") or \
+SeriesData. Returns an Association with \"K\" (rows: a, columns: b) and \
+\"Rows\" (per-row diagnostics: \"Status\", \"Rank\", \"KnownThrough\", \
+\"Untested\" = indices of b whose leading power lies beyond what a determines).";
 SVirSelfTest::usage =
   "SVirSelfTest[nmax:20] checks m = 3 against independent Virasoro M(5,4) \
 characters and the m = 10 Ramond fixed point. All entries should be True.";
@@ -237,6 +244,70 @@ SVirProductTable[m_Integer /; m >= 3, nmax_Integer?NonNegative,
          SVirProduct[m, {#[[1]]["Label"], #[[2]]["Label"]}, nmax,
            FilterRules[{opts}, Options[SVirProduct]]]) & /@ pairs]];
 
+(* ---------- decomposition a = K . b ---------- *)
+(* Each b starts with a single power q^(h_n - c/24) and the weights are distinct
+   within a sector, so the coefficient-matching system is triangular: K is
+   unique whenever it exists. Nonnegativity and integrality are therefore
+   checks on the answer, not constraints to optimize over (no LP needed). *)
+
+SVirDecompose::input =
+  "Entries must be \"List\" associations from SVirCharacter/SVirProduct or SeriesData objects.";
+SVirDecompose::cmismatch =
+  "The characters have different central charges `1`; the q^(-c/24) offsets will not line up.";
+
+(* {exponent -> coefficient, highest exponent known exactly, c (if recorded)} *)
+termsOf[a_Association] := Module[
+   {cs = a["Coefficients"], off = a["Offset"], st = a["Step"]},
+   {AssociationThread[off + st Range[0, Length[cs] - 1], cs],
+    off + st (Length[cs] - 1), Lookup[a, "c", Missing[]]}];
+termsOf[s_SeriesData] := Module[
+   {cs = s[[3]], nmin = s[[4]], nmax = s[[5]], den = s[[6]]},
+   {AssociationThread[(nmin + Range[0, Length[cs] - 1])/den, cs],
+    (nmax - 1)/den, Missing[]}];
+termsOf[_] := $Failed;
+
+leadingExp[assoc_] := Min[Keys[Select[assoc, # != 0 &]]];
+
+decomposeOne[{ta_, topA_, _}, bt_, bLead_] := Module[
+   {nb = Length[bt], cand, effTop, cols, exps, mat, rhs, sol, rank = 0,
+    row, status = {}},
+   (* only b's whose leading power is visible in a can be tested *)
+   cand = Flatten @ Position[bLead, l_ /; l <= topA, {1}];
+   effTop = Min[Prepend[bt[[cand, 2]], topA]];
+   If[effTop < topA,
+     AppendTo[status, "some b known to lower order than a: raise nmax for b"]];
+   cols = Flatten @ Position[bLead, l_ /; l <= effTop, {1}];
+   exps = Select[Union @@ Join[{Keys[ta]}, (Keys[bt[[#, 1]]] & /@ cols)],
+     # <= effTop &];
+   rhs = Lookup[ta, exps, 0];
+   row = ConstantArray[0, nb];
+   If[cols === {},
+     If[AnyTrue[rhs, # != 0 &],
+       AppendTo[status, "no b can match the leading term"]],
+     mat = Table[Lookup[bt[[c, 1]], e, 0], {e, exps}, {c, cols}];
+     rank = MatrixRank[mat];
+     If[rank < Length[cols],
+       AppendTo[status, "b characters dependent at this order: K not unique"]];
+     sol = Quiet @ Check[LinearSolve[mat, rhs], $Failed];
+     If[sol === $Failed,
+       AppendTo[status, "no exact solution: a is not a combination of b"],
+       row[[cols]] = sol;
+       If[! AllTrue[sol, IntegerQ], AppendTo[status, "non-integer multiplicity"]];
+       If[AnyTrue[sol, # < 0 &], AppendTo[status, "negative multiplicity"]]]];
+   <|"Row" -> row, "Status" -> If[status === {}, "OK", status],
+     "Rank" -> rank, "KnownThrough" -> effTop,
+     "Untested" -> Complement[Range[nb], cols]|>];
+
+SVirDecompose[as_List, bs_List] := Module[{at, bt, cs, bLead, rows},
+   at = termsOf /@ as;
+   bt = termsOf /@ bs;
+   If[MemberQ[Join[at, bt], $Failed], Message[SVirDecompose::input]; Return[$Failed]];
+   cs = Union @ DeleteMissing[Join[at[[All, 3]], bt[[All, 3]]]];
+   If[Length[cs] > 1, Message[SVirDecompose::cmismatch, cs]];
+   bLead = leadingExp[#[[1]]] & /@ bt;
+   rows = decomposeOne[#, bt, bLead] & /@ at;
+   <|"K" -> rows[[All, "Row"]], "Rows" -> rows|>];
+
 (* ---------- self test ---------- *)
 
 (* Rocha-Caridi character of Virasoro M(p,p'), integer levels 0..n *)
@@ -277,7 +348,14 @@ SVirSelfTest[n_Integer : 20] := Module[{vir, sv},
     "SVirProduct = SeriesData product (R x R, mixed grading)" ->
       (Normal[SVirProduct[3, {{1, 2}, {1, 4}}, n, "Grading" -> {"Ungraded", "Full"}] -
           SVirCharacter[3, {1, 2}, n, "Grading" -> "Ungraded"] *
-          SVirCharacter[3, {1, 4}, n]] === 0)
+          SVirCharacter[3, {1, 4}, n]] === 0),
+    (* synthetic decomposition with a known answer: a = 2 (1,1) + (1,5) at m = 10 *)
+    "SVirDecompose recovers a known K" ->
+      Module[{bs, a, res},
+        bs = SVirCharacter[10, #, n, "Output" -> "List"] & /@ {{1, 1}, {1, 3}, {1, 5}};
+        a = 2 SVirCharacter[10, {1, 1}, n] + SVirCharacter[10, {1, 5}, n];
+        res = SVirDecompose[{a}, bs];
+        res["K"] === {{2, 0, 1}} && res["Rows"][[1, "Status"]] === "OK"]
    |>];
 
 End[];
