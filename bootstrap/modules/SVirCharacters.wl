@@ -23,6 +23,8 @@
                   NS: integer / half-integer levels.
                   R, h != c/24: both equal Ungraded.
                   R, h == c/24 (fixed point): (Ungraded +- q^0 term)/2.
+     "Tilde"    : trace with (-1)^F inserted (Even - Odd). Zero for R unless
+                  h == c/24, where it is the constant 1 (Witten index).
      "Both"     : {Even, Odd}.
 
    Run SVirSelfTest[] once: it checks m = 3 against the Virasoro M(5,4)
@@ -43,7 +45,7 @@ SVirCharacter::usage =
 through level nmax above its ground state. Options: \"Output\" -> \"Series\" \
 (SeriesData, default), \"Expression\" (plain sum), \"List\" (coefficients of \
 q^(h-c/24+j/2), j=0..2 nmax); \"Grading\" -> \"Full\" | \"Ungraded\" | \"Even\" | \
-\"Odd\" | \"Both\"; \"Variable\" -> q. SVirCharacter[\"k\" -> k, ...] uses m = k+2.";
+\"Odd\" | \"Tilde\" | \"Both\"; \"Variable\" -> q. SVirCharacter[\"k\" -> k, ...] uses m = k+2.";
 SVirCharacters::usage =
   "SVirCharacters[m, nmax, opts] gives an Association {r,s} -> character for \
 every irrep. Extra option \"Sector\" -> All | \"NS\" | \"R\". \
@@ -66,6 +68,13 @@ associations (from SVirCharacter/SVirProduct with \"Output\" -> \"List\") or \
 SeriesData. Returns an Association with \"K\" (rows: a, columns: b) and \
 \"Rows\" (per-row diagnostics: \"Status\", \"Rank\", \"KnownThrough\", \
 \"Untested\" = indices of b whose leading power lies beyond what a determines).";
+SVirModularData::usage =
+  "SVirModularData[m] gives the modular data of the fermionic super-Virasoro \
+minimal model in the dataLoader layout: \"irreps\" (labels {\"NS\"|\"NS~\"|\"R\", \
+{r,s}}, index, weights, sectors), \"S\", \"T\", \"Z\" (one coupling matrix per \
+spin structure: \"NS\", \"NS~\", \"R\"), \"modules\" (local operators = NS \
+sector), \"fixed\", \"c\", \"theory\", \"algebra\", \"conventions\". \
+SVirModularData[\"k\" -> k] uses m = k+2.";
 SVirSelfTest::usage =
   "SVirSelfTest[nmax:20] checks m = 3 against independent Virasoro M(5,4) \
 characters and the m = 10 Ramond fixed point. All entries should be True.";
@@ -75,7 +84,7 @@ Begin["`Private`"];
 SVirCharacter::badlabel =
   "`1` is not a Kac label for m = `2`: need 1 <= r <= m-1, 1 <= s <= m+1.";
 SVirCharacter::badgrading =
-  "Unknown grading `1`. Use \"Full\", \"Ungraded\", \"Even\", \"Odd\" or \"Both\".";
+  "Unknown grading `1`. Use \"Full\", \"Ungraded\", \"Even\", \"Odd\", \"Tilde\" or \"Both\".";
 SVirCharacter::badoutput =
   "Unknown output `1`. Use \"Series\", \"Expression\" or \"List\".";
 
@@ -177,6 +186,9 @@ SVirCharacter[m_Integer /; m >= 3, {r_Integer, s_Integer},
      {"R", "Full"}, If[fixedQ, base, 2 base],
      {"R", "Even"}, If[fixedQ, (base + delta)/2, base],
      {"R", "Odd"}, If[fixedQ, (base - delta)/2, base],
+     (* trace with (-1)^F inserted, ground state even *)
+     {"NS", "Tilde"}, base Table[(-1)^j, {j, 0, kx}],
+     {"R", "Tilde"}, If[fixedQ, delta, 0 base],
      _, Message[SVirCharacter::badgrading, grading]; Return[$Failed]];
    var = OptionValue["Variable"] /. Automatic -> Global`q;
    formatOut[coeffs, h - c/24, OptionValue["Output"],
@@ -308,6 +320,85 @@ SVirDecompose[as_List, bs_List] := Module[{at, bt, cs, bLead, rows},
    rows = decomposeOne[#, bt, bLead] & /@ at;
    <|"K" -> rows[[All, "Row"]], "Rows" -> rows|>];
 
+(* ---------- modular data ---------- *)
+(* Basis: NS_a = Tr_NS q^..., NS~_a = Tr_NS (-1)^F q^... (ground state even),
+   R_rho = full graded Ramond irrep ("Full").  With chi(-1/tau) = S.chi(tau):
+     NS  -> NS  : 4 Shat
+     NS~ -> R   : 2 Sqrt[2] eps_a Shat_{a rho}
+     R   -> NS~ : 2 Sqrt[2] d_rho eps_a Shat_{a rho},   d = 2 (h != c/24), 1 (fixed point)
+   Shat_{ab} = sin(pi r r'/m) sin(pi s s'/(m+2)) / Sqrt[m(m+2)], and eps_a = +-1 records
+   which coset branching function holds the NS ground state.  The NS~/R blocks come
+   from the GKO coset; all three were checked against the q-series at m = 3,...,6, 10. *)
+
+SVirModularData["k" -> k_Integer] := SVirModularData[k + 2];
+
+SVirModularData[m_Integer /; m >= 3] := SVirModularData[m] = Module[
+   {c = SVirCentralCharge[m], tab = SVirKacTable[m], ns, rr, n, nr, labels,
+    weights, sh, eps, d, shNR, z, sMat, ph, tMat, zMats},
+   ns = Select[tab, #["Sector"] === "NS" &][[All, "Label"]];
+   rr = Select[tab, #["Sector"] === "R" &][[All, "Label"]];
+   n = Length[ns]; nr = Length[rr];
+   labels = Join[{"NS", #} & /@ ns, {"NS~", #} & /@ ns, {"R", #} & /@ rr];
+   weights = SVirWeight[m, Last[#]] & /@ labels;
+
+   sh[a_, b_] := Sin[Pi a[[1]] b[[1]]/m] Sin[Pi a[[2]] b[[2]]/(m + 2)]/Sqrt[m (m + 2)];
+   eps = If[IntegerQ[SVirWeight[m, #] -
+         ((#[[1]] - 1) (#[[1]] + 1)/(4 m) - (#[[2]] - 1) (#[[2]] + 1)/(4 (m + 2)))],
+       1, -1] & /@ ns;
+   d = If[SVirWeight[m, #] == c/24, 1, 2] & /@ rr;
+   shNR = eps Outer[sh, ns, rr, 1];                      (* eps_a Shat_{a rho} *)
+   z[a_, b_] := ConstantArray[0, {a, b}];
+
+   sMat = ArrayFlatten[{
+      {4 Outer[sh, ns, ns, 1], z[n, n], z[n, nr]},
+      {z[n, n], z[n, n], 2 Sqrt[2] shNR},
+      {z[nr, n], 2 Sqrt[2] d Transpose[shNR], z[nr, nr]}}];
+
+   ph = Exp[2 Pi I (# - c/24)] & /@ weights;
+   tMat = ArrayFlatten[{
+      {z[n, n], DiagonalMatrix[ph[[1 ;; n]]], z[n, nr]},
+      {DiagonalMatrix[ph[[1 ;; n]]], z[n, n], z[n, nr]},
+      {z[nr, n], z[nr, n], DiagonalMatrix[ph[[2 n + 1 ;;]]]}}];
+
+   (* diagonal fermionic theory: Z[sigma] = chi . Z[sigma] . Conjugate[chi] *)
+   zMats = <|
+     "NS"  -> ArrayFlatten[{{IdentityMatrix[n], z[n, n], z[n, nr]},
+                {z[n, n], z[n, n], z[n, nr]}, {z[nr, n], z[nr, n], z[nr, nr]}}],
+     "NS~" -> ArrayFlatten[{{z[n, n], z[n, n], z[n, nr]},
+                {z[n, n], IdentityMatrix[n], z[n, nr]}, {z[nr, n], z[nr, n], z[nr, nr]}}],
+     "R"   -> ArrayFlatten[{{z[n, n], z[n, n], z[n, nr]},
+                {z[n, n], z[n, n], z[n, nr]}, {z[nr, n], z[nr, n], DiagonalMatrix[1/d]}}]|>;
+
+   <|
+    "irreps" -> <|
+       "labels"  -> labels,
+       "index"   -> AssociationThread[labels -> Range[Length[labels]]],
+       "weights" -> weights,
+       "sectors" -> (First /@ labels)|>,
+    "S" -> sMat,
+    "T" -> tMat,
+    "Z" -> zMats,
+    "modules" -> <|                                       (* local operators: NS sector *)
+       "labels"         -> ({#, #} & /@ ns),
+       "index"          -> AssociationThread[({#, #} & /@ ns) -> Range[n]],
+       "weights"        -> ({#, #} & /@ (SVirWeight[m, #] & /@ ns)),
+       "multiplicities" -> ConstantArray[1, n]|>,
+    "fixed"   -> Select[rr, SVirWeight[m, #] == c/24 &],
+    "c"       -> c,
+    "theory"  -> "SM(" <> ToString[m] <> ")",
+    "algebra" -> "SVir(" <> ToString[InputForm[c]] <> ")",
+    "conventions" -> "chi_i(-1/tau) = S_ij chi_j(tau), chi_i(tau+1) = T_ij chi_j(tau). \
+NS = Tr_NS, NS~ = Tr_NS (-1)^F with the ground state even, R = full graded Ramond \
+irrep (\"Full\"). Z[sigma] = chi.Z[sigma].Conjugate[chi]."
+   |>];
+
+(* character values at tau = i t in the SVirModularData basis, for checks *)
+charVector[m_, t_?NumericQ, nmax_] := Module[{q = Exp[-2. Pi t]},
+   With[{a = SVirCharacter[m, Last[#], nmax, "Output" -> "List",
+         "Grading" -> If[First[#] === "NS~", "Tilde", "Full"]]},
+      a["Coefficients"] . (q^(a["Offset"] + Range[0, Length[a["Coefficients"]] - 1]/2))
+     ] & /@ SVirModularData[m]["irreps"]["labels"]];
+
 (* ---------- self test ---------- *)
 
 (* Rocha-Caridi character of Virasoro M(p,p'), integer levels 0..n *)
@@ -355,7 +446,18 @@ SVirSelfTest[n_Integer : 20] := Module[{vir, sv},
         bs = SVirCharacter[10, #, n, "Output" -> "List"] & /@ {{1, 1}, {1, 3}, {1, 5}};
         a = 2 SVirCharacter[10, {1, 1}, n] + SVirCharacter[10, {1, 5}, n];
         res = SVirDecompose[{a}, bs];
-        res["K"] === {{2, 0, 1}} && res["Rows"][[1, "Status"]] === "OK"]
+        res["K"] === {{2, 0, 1}} && res["Rows"][[1, "Status"]] === "OK"],
+    (* modular data, checked against the q-series themselves *)
+    "S chi(t) = chi(1/t) numerically (m = 3, 10)" ->
+      AllTrue[{3, 10}, Max[Abs[charVector[#, 1/1.3, 40] -
+           N[SVirModularData[#]["S"]] . charVector[#, 1.3, 40]]] < 10^-8 &],
+    "S.S = 1 (m = 3, 10)" ->
+      AllTrue[{3, 10}, With[{s = N[SVirModularData[#]["S"]]},
+          Max[Abs[s . s - IdentityMatrix[Length[s]]]] < 10^-10] &],
+    "S^T Z[NS~] S = Z[R],  T^T Z[NS] T* = Z[NS~]  (m = 10)" ->
+      With[{md = SVirModularData[10]},
+        Max[Abs[N[Transpose[md["S"]] . md["Z"]["NS~"] . md["S"] - md["Z"]["R"]]]] < 10^-10 &&
+        Max[Abs[N[Transpose[md["T"]] . md["Z"]["NS"] . Conjugate[md["T"]] - md["Z"]["NS~"]]]] < 10^-10]
    |>];
 
 End[];
