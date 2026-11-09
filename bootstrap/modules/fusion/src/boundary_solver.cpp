@@ -15,6 +15,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
+#include <functional>
 #include <map>
 #include <memory>
 #include <set>
@@ -38,9 +39,12 @@
        R = (1 + r)/2,   T = (1 - r)/2.
    Only computed after disentangling, where the signs are known (see the note
    printed with the boundaries). */
-#define TRANS_NUM  35
-// #define TRANS_NUM  17
+#ifndef TRANS_NUM
+#define TRANS_NUM  62
+#endif
+#ifndef TRANS_DEN
 #define TRANS_DEN  1
+#endif
 
 /* 1: every Ishibashi state in I must appear, |b^i| > 0 ("= 0 iff i not in I").
    0: |b^i| >= 0 for i in I, so boundaries using a subset of I are kept too
@@ -496,6 +500,18 @@ static void dfs(search_t* e, size_t d)
  * member k (the vacuum column of Psi is an eigenvector of every n^j), and the NIM-rep
  * budget below as an equality. An infeasible LP prunes the node. The PF identity also
  * bounds every overlap: n^j_kl g_l <= d_j g_k - (what k already owes), so x^j <= d_j.
+ * Since the vacuum has one Ishibashi state, that eigenvector is unique and positive
+ * (the NIM-rep is irreducible), so every overlap has p^0 > 0: one sign at label 0.
+ *
+ * Quadratic NIM-rep condition. Verlinde also gives n^j n^j' = sum_r N_jj'^r n^r, whose
+ * (k,k) entry is sum_r N_jj'^r x_k^r = sum_l n^j_kl n^j'_kl >= x_k^j x_k^j'. Candidates
+ * violating it for some j, j' are in no family and are not searched.
+ *
+ * Symmetries. Label permutations s with S_{s(i)s(j)} = S_ij and m_{s(i)} = m_i map
+ * families to families. A family whose earliest member (in the first-member order)
+ * is k has an image containing s(k); if s(k) comes earlier, that first-member branch
+ * is skipped, and the skipped families are recovered afterwards as images of the
+ * ones found (dis_expand), so the list is the same as without symmetries.
  *
  * NIM-rep budgets. In a family complete on its support, n^j = Psi diag(S_ij/S_0i)
  * Psi^T with Psi orthogonal, so (n^j)^2 = sum_r N_jj^r n^r (Verlinde) and, on the
@@ -507,9 +523,13 @@ static void dfs(search_t* e, size_t d)
  */
 
 #define DISENTANGLE        1
-#define SUBSET_FAMILIES    0         /* 0: search only families complete for all of I (faster) */
+#ifndef SUBSET_FAMILIES
+#define SUBSET_FAMILIES    1         /* 0: search only families complete for all of I (much faster) */
+#endif
 #define MAX_FAMILIES_SHOWN 10
+#ifndef SEARCH_NODE_LIMIT
 #define SEARCH_NODE_LIMIT  20000000  /* per run; a warning is printed if hit */
+#endif
 #define DIS_TOL            1e-7      /* numeric tolerance in the search; families are verified exactly */
 #define ZERO_TOL           1e-9      /* residuals below this (relative) are taken as 0 in the search */
 #define PROGRESS_SECONDS   2.0       /* minimum time between progress lines */
@@ -641,10 +661,17 @@ struct dis_t {
     std::vector<double> dj;            /* quantum dimensions S_j0 / S_00 */
     std::vector<double> g;             /* g = vacuum coefficient of each candidate */
     std::vector<char>   pf_ok;         /* x^j <= d_j for all j (else in no complete family) */
-    slong               lp_prunes, lp_rows, lp_calls;
+    slong               lp_prunes, lp_rows, lp_calls, cov_prunes;
     int                 use_caps;
 
     std::vector<family_t> found;
+
+    /* symmetries: label permutations s with S_{s(i) s(j)} = S_ij and m_{s(i)} = m_i
+       (exact), and the induced permutation of the candidates (-1: image not a candidate) */
+    std::vector<std::vector<slong>> sym, symc;
+    std::vector<size_t> stab;          /* symmetries mapping the current pattern to itself */
+    slong      sym_skipped, sym_images;
+
     slong      checked, accepted, refinements, nodes, open_subset;
     int        truncated;
     slong      patterns_done, npatterns;
@@ -1097,17 +1124,39 @@ static int dis_find_affine(dis_t& D, const target_t& T, slong c, std::vector<std
     std::vector<double> Minv(f * f);
     for (slong a = 0; a < f; a++) for (slong b = 0; b < f; b++) Minv[a * f + b] = G[a * 2 * f + f + b];
 
-    for (ulong mask = 0; mask < (1ul << Tw.size()); mask++) {
-        std::vector<double> base(n, 0.0);
-        for (slong i = 0; i < n; i++) {
-            if (T.kind[i] == 2) continue;
-            double p = T.cen[i];
-            if (T.kind[i] == 1) {
-                size_t k = std::find(Tw.begin(), Tw.end(), i) - Tw.begin();
-                p += ((mask >> k) & 1) ? -T.rad[i] : T.rad[i];
-            }
-            if (p != 0.0) for (slong j = 0; j < n; j++) base[j] += p * D.Sd[i * n + j];
+    /* range of sum_a A_ja t_a over the box of t, for every component j */
+    std::vector<double> rlo(n, 0.0), rhi(n, 0.0);
+    for (slong j = 0; j < n; j++)
+        for (slong a = 0; a < f; a++) {
+            double w = A[j * f + a], tl = T.cen[Fi[a]] - T.rad[Fi[a]], th = T.cen[Fi[a]] + T.rad[Fi[a]];
+            rlo[j] += std::min(w * tl, w * th);
+            rhi[j] += std::max(w * tl, w * th);
         }
+    /* base for the all-plus signs; the sign patterns are then visited in Gray-code
+       order, so each step changes one sign and updates base in O(n) */
+    std::vector<double> base(n, 0.0);
+    for (slong i = 0; i < n; i++) {
+        if (T.kind[i] == 2) continue;
+        double p = T.cen[i] + (T.kind[i] == 1 ? T.rad[i] : 0.0);
+        if (p != 0.0) for (slong j = 0; j < n; j++) base[j] += p * D.Sd[i * n + j];
+    }
+    for (ulong g = 0; g < (1ul << Tw.size()); g++) {
+        if (g > 0) {
+            const int k = __builtin_ctzl(g);
+            const ulong mask = g ^ (g >> 1);
+            const slong i = Tw[k];
+            const double dlt = (((mask >> k) & 1) ? -2.0 : 2.0) * T.rad[i];
+            for (slong j = 0; j < n; j++) base[j] += dlt * D.Sd[i * n + j];
+        }
+        /* every component must be able to land on an integer in its range */
+        int bad = 0;
+        for (slong j = 0; j < n && !bad; j++) {
+            slong l = FLINT_MAX(0, (slong) std::ceil(base[j] + rlo[j] - DIS_TOL));
+            slong h = (slong) std::floor(base[j] + rhi[j] + DIS_TOL);
+            h = FLINT_MIN(h, j == 0 ? 0 : FLINT_MIN(B, T.nmax[j]));
+            bad = (l > h);
+        }
+        if (bad) continue;
         std::vector<slong> lo(f), hi(f);
         double points = 1.0;
         int empty = 0;
@@ -1246,6 +1295,13 @@ static void dis_refine(dis_t& D, const dframe& F, const dframe& Fn, const dstate
     }
     slong c = 0;
     for (slong j = 0; j < n; j++) c += e->sols[s.cand][j] * e->sols[v.cand][j];
+    /* Vacuum sign. With one vacuum Ishibashi state, the vacuum column of Psi is the
+       Perron-Frobenius eigenvector of the irreducible NIM-rep of a family complete on
+       its support, so b^0 has one sign on every member and p^0 > 0 for every pair.
+       Only in the search proper (not in the closure test or the exact replay). */
+    const int pos0 = D.use_caps && !forced && D.mult[0] == 1 && T.kind[0] == 1;
+    target_t Tf;
+    if (pos0) { Tf = T; Tf.kind[0] = 0; Tf.cen[0] += Tf.rad[0]; Tf.rad[0] = 0.0; }
     /* two candidates before any other member: the answer depends on them alone */
     const int raw = s.nh.empty() && v.nh.empty();
     const std::pair<slong, slong> key(FLINT_MIN(s.cand, v.cand), FLINT_MAX(s.cand, v.cand));
@@ -1253,7 +1309,7 @@ static void dis_refine(dis_t& D, const dframe& F, const dframe& Fn, const dstate
     if (forced) cands.push_back(*forced);
     else if (raw && D.rawpair[D.use_caps].count(key)) cands = D.rawpair[D.use_caps][key];
     else {
-        dis_find(D, T, c, cands);
+        dis_find(D, pos0 ? Tf : T, c, cands);
         if (raw) D.rawpair[D.use_caps][key] = cands;
     }
     if (cands.empty()) return;
@@ -1286,7 +1342,8 @@ static void dis_refine(dis_t& D, const dframe& F, const dframe& Fn, const dstate
                 if (!D.inA[i]) { ok = std::fabs(p) < DIS_TOL; continue; }
                 double dl = p - proj[i];
                 if (T.kind[i] == 0) ok = std::fabs(dl) < DIS_TOL;
-                else if (T.kind[i] == 1) ok = std::fabs(dl * dl - rr[i]) < DIS_TOL * (1.0 + rr[i]);
+                else if (T.kind[i] == 1) ok = std::fabs(dl * dl - rr[i]) < DIS_TOL * (1.0 + rr[i])
+                                              && (i != 0 || !pos0 || dl > 0.0);
                 else ok = dl * dl <= rr[i] + DIS_TOL * (1.0 + rr[i]);
             }
             if (!ok) continue;
@@ -1482,6 +1539,20 @@ static int dis_closed(dis_t& D, dsearch& S)
     return closed;
 }
 
+static int dis_finish(dis_t& D, family_t& fam);
+
+/* already found, up to gauge */
+static int dis_known(dis_t& D, const family_t& fam)
+{
+    for (const family_t& g : D.found) {
+        if (g.mem.size() != fam.mem.size()) continue;
+        std::vector<slong> pi(fam.mem.size());
+        std::vector<char> used(fam.mem.size(), 0);
+        if (dis_iso_rec(fam.mem, fam.N, g.mem, g.N, pi, used, 0)) return 1;
+    }
+    return 0;
+}
+
 static void dis_record(dis_t& D, dsearch& S)
 {
     family_t fam;
@@ -1495,14 +1566,14 @@ static void dis_record(dis_t& D, dsearch& S)
         fam.mem.push_back(std::move(m));
     }
     fam.N = dis_nmatrix(D, fam.mem);
-    for (const family_t& g : D.found) {
-        if (g.mem.size() != fam.mem.size()) continue;
-        std::vector<slong> pi(fam.mem.size());
-        std::vector<char> used(fam.mem.size(), 0);
-        if (dis_iso_rec(fam.mem, fam.N, g.mem, g.N, pi, used, 0)) return;
-    }
+    if (dis_known(D, fam)) return;
     if (fam.kind == 1 && !dis_closed(D, S)) { D.open_subset++; return; }
+    dis_finish(D, fam);
+}
 
+/* exact replay, then store */
+static int dis_finish(dis_t& D, family_t& fam)
+{
     /* exact replay: rebuild every member in the number field with its overlaps
        fixed; this checks all Gram conditions exactly */
     {
@@ -1533,7 +1604,7 @@ static void dis_record(dis_t& D, dsearch& S)
             printf("  [%6.1fs] a %ld-member family failed the exact check and was discarded\n",
                    dis_now() - D.t0, (long) fam.mem.size());
             fflush(stdout);
-            return;
+            return 0;
         }
         fam.frame = fr.back().clone();
     }
@@ -1542,6 +1613,43 @@ static void dis_record(dis_t& D, dsearch& S)
            fam.kind == 2 ? "complete for I" : "complete and closed on a subset of I");
     fflush(stdout);
     D.found.push_back(std::move(fam));
+    return 1;
+}
+
+/* Images of the families found from index `from` on under the symmetries in D.stab,
+   until no new family appears. Images are families (S, I and m are invariant), so
+   only the dedup and the exact replay are run; closedness is invariant too. */
+static void dis_expand(dis_t& D, size_t from)
+{
+    const slong n = D.n;
+    for (size_t f = from; f < D.found.size(); f++) {
+        for (size_t t : D.stab) {
+            const std::vector<slong>& s = D.sym[t];
+            family_t img;
+            img.U.assign(n, 0);
+            for (slong i = 0; i < n; i++) img.U[s[i]] = D.found[f].U[i];
+            img.kind = D.found[f].kind;
+            int ok = 1;
+            for (const member_t& m : D.found[f].mem) {
+                member_t mm;
+                mm.cand = D.symc[t][m.cand];
+                if (mm.cand < 0) { ok = 0; break; }
+                for (const std::vector<slong>& v : m.nh) {
+                    std::vector<slong> w(n, 0);
+                    for (slong j = 0; j < n; j++) w[s[j]] = v[j];
+                    mm.nh.push_back(std::move(w));
+                }
+                img.mem.push_back(std::move(mm));
+            }
+            if (!ok) continue;
+            img.N = dis_nmatrix(D, img.mem);
+            if (dis_known(D, img)) continue;
+            std::vector<char> saveA = D.inA;
+            D.inA = img.U;
+            if (dis_finish(D, img)) D.sym_images++;
+            D.inA = saveA;
+        }
+    }
 }
 
 static int dis_fits(dis_t& D, const std::vector<slong>& Xrem, slong cand)
@@ -1752,7 +1860,27 @@ static void dis_rec(dis_t& D, dsearch& S, const dframe& F, const std::vector<sp_
     /* bring every class up to date and test the completion LP */
     std::vector<sp_t> Pc;
     if (!S.R.empty()) {
-        for (const sp_t& s : P0) dis_catchup(D, S, F, s, Pc);
+        /* Catch up column by column, scarcest first: once every class that can
+           supply component j is up to date, coverage of j is final, and a shortfall
+           prunes the node before the remaining classes are refined. */
+        std::vector<std::vector<sp_t>> res(P0.size());
+        std::vector<char> done(P0.size(), 0);
+        std::vector<slong> cols;
+        for (slong j = 1; j < n; j++) if (S.Xrem[j] > 0) cols.push_back(j);
+        std::stable_sort(cols.begin(), cols.end(), [&](slong a, slong b) { return opts[a] < opts[b]; });
+        for (slong j : cols) {
+            slong c = 0;
+            for (size_t t = 0; t < P0.size(); t++) {
+                if (!D.e->sols[P0[t]->cand][j]) continue;
+                if (!done[t]) { dis_catchup(D, S, F, P0[t], res[t]); done[t] = 1; }
+                for (const sp_t& r : res[t]) c += r->bound * D.e->sols[r->cand][j];
+            }
+            if (c < S.Xrem[j]) { D.cov_prunes++; return; }
+        }
+        for (size_t t = 0; t < P0.size(); t++) {
+            if (!done[t]) dis_catchup(D, S, F, P0[t], res[t]);
+            for (sp_t& r : res[t]) Pc.push_back(std::move(r));
+        }
         if (!dis_completion_lp(D, S, Pc)) { D.lp_prunes++; return; }
     }
     const std::vector<sp_t>& Pu = S.R.empty() ? P0 : Pc;
@@ -1783,6 +1911,12 @@ static void dis_rec(dis_t& D, dsearch& S, const dframe& F, const std::vector<sp_
 
     std::vector<char> dropped(P.size(), 0);
     if (S.R.empty()) D.root_of = (slong) list.size();
+    /* root orbit pruning: a family whose earliest member (in this list) is k has an
+       image under a symmetry s containing s(k); if s(k) comes earlier, the orbit of
+       that family is found from an earlier branch, and recovered by dis_expand */
+    std::map<slong, size_t> rootpos;
+    if (S.R.empty() && !D.stab.empty())
+        for (size_t li = 0; li < list.size(); li++) rootpos.emplace(P[list[li]]->cand, li);
     for (size_t li = 0; li < list.size() && !D.truncated; li++) {
         const size_t k = list[li];
         if (S.R.empty()) D.root_at = (slong) li + 1;
@@ -1797,6 +1931,15 @@ static void dis_rec(dis_t& D, dsearch& S, const dframe& F, const std::vector<sp_
             for (slong j = 0; j < n && enough; j++) enough = (c2[j] >= S.Xrem[j]);
             if (!enough) break;
             if (!dis_knapsack(D, P, dropped, S.Xrem, 0)) break;   /* nothing later completes */
+        }
+        if (!rootpos.empty()) {
+            int earlier = 0;
+            for (size_t t : D.stab) {
+                slong c2 = D.symc[t][P[k]->cand];
+                auto it = c2 < 0 ? rootpos.end() : rootpos.find(c2);
+                if (it != rootpos.end() && it->second < li) { earlier = 1; break; }
+            }
+            if (earlier) { D.sym_skipped++; dropped[k] = 1; continue; }
         }
         const dstate& v = *P[k];
         const std::vector<slong>& xv = D.e->sols[v.cand];
@@ -1893,11 +2036,21 @@ static void dis_pattern(dis_t& D, const std::vector<char>& U)
     for (const sp_t& s : P) total += s->bound;
     if (total < N) return;
 
+    D.stab.clear();
+    for (size_t t = 0; t < D.sym.size(); t++) {
+        int keeps = 1;
+        for (slong i = 0; i < n && keeps; i++) keeps = (U[D.sym[t][i]] == U[i]);
+        if (keeps) D.stab.push_back(t);
+    }
+
     dframe F0 = dis_empty_frame(D);
     dsearch S;
     S.T = N;
     S.Xrem = Xtot;
+    const size_t before = D.found.size();
     dis_rec(D, S, F0, P);
+    dis_expand(D, before);
+    D.stab.clear();
 }
 
 static void disentangle(search_t* e)
@@ -1963,7 +2116,7 @@ static void disentangle(search_t* e)
     }
     printf("  candidates with x^j <= d_j for all j (others are in no complete family): %ld of %ld\n",
            (long) npf, (long) M);
-    D.lp_prunes = D.lp_rows = D.lp_calls = 0;
+    D.lp_prunes = D.lp_rows = D.lp_calls = D.cov_prunes = 0;
 
     /* NIM-rep budgets: N_jj^r by Verlinde (numerically, they are integers) */
     D.use_caps = 1;
@@ -2007,6 +2160,118 @@ static void disentangle(search_t* e)
         D.cnt[a] = FLINT_MAX(1, (slong) std::floor(best + 1e-6));
     }
 
+    /* Quadratic NIM-rep condition. In a family complete on its support,
+           n^j n^j' = sum_r N_jj'^r n^r     (Verlinde),
+       and the (k,k) entry gives  sum_r N_jj'^r x_k^r = sum_l n^j_kl n^j'_kl >= x_k^j x_k^j'
+       (the l = k term; all others are >= 0). A candidate violating it is in no family. */
+    if (D.use_caps) {
+        std::vector<double> Sw(n * n);                  /* S_ri / S_0i */
+        for (slong r = 0; r < n; r++)
+            for (slong i = 0; i < n; i++) Sw[r * n + i] = D.Sd[r * n + i] / D.Sd[i];
+        std::vector<slong> Nf(n * n * n, 0);            /* N_jj'^r, j <= j' */
+        int integral = 1;
+        std::vector<double> t(n);
+        for (slong j = 0; j < n && integral; j++)
+            for (slong k = j; k < n && integral; k++) {
+                for (slong i = 0; i < n; i++) t[i] = D.Sd[j * n + i] * D.Sd[k * n + i];
+                for (slong r = 0; r < n; r++) {
+                    double v = 0.0;
+                    for (slong i = 0; i < n; i++) v += t[i] * Sw[r * n + i];
+                    double z = std::nearbyint(v);
+                    if (std::fabs(v - z) > 1e-6 || z < 0) { integral = 0; break; }
+                    Nf[(j * n + k) * n + r] = (slong) z;
+                }
+            }
+        slong nq = 0, before = 0;
+        for (slong a = 0; a < M && integral; a++) {
+            if (!D.pf_ok[a]) continue;
+            before++;
+            const std::vector<slong>& x = e->sols[a];
+            std::vector<slong> nz;
+            for (slong j = 0; j < n; j++) if (x[j]) nz.push_back(j);
+            int ok = 1;
+            for (size_t u = 0; u < nz.size() && ok; u++)
+                for (size_t w = u; w < nz.size() && ok; w++) {
+                    const slong j = nz[u], k = nz[w];
+                    slong y = 0;
+                    const slong* N = &Nf[(j * n + k) * n];
+                    for (slong r : nz) y += N[r] * x[r];
+                    ok = (y >= x[j] * x[k]);
+                }
+            if (!ok) D.pf_ok[a] = 0;
+            else nq++;
+        }
+        if (integral)
+            printf("  candidates with sum_r N_jj'^r x^r >= x^j x^j' for all j, j' (others are in no family): "
+                   "%ld of %ld\n", (long) nq, (long) before);
+    }
+
+    /* symmetries of (S, m), exactly; used to prune and then expand the search */
+    D.sym_skipped = D.sym_images = 0;
+    {
+        const double tol = 1e-9;
+        std::vector<std::vector<double>> rowkey(n);
+        for (slong i = 0; i < n; i++) {
+            for (slong j = 0; j < n; j++) rowkey[i].push_back(std::nearbyint(D.Sd[i * n + j] * 1e8));
+            std::sort(rowkey[i].begin(), rowkey[i].end());
+        }
+        std::vector<std::vector<slong>> opts(n);
+        for (slong i = 0; i < n; i++)
+            for (slong c = 0; c < n; c++)
+                if (D.mult[c] == D.mult[i] && e->inI[c] == e->inI[i] && rowkey[c] == rowkey[i]
+                    && std::fabs(D.Sd[c * n + c] - D.Sd[i * n + i]) < tol)
+                    opts[i].push_back(c);
+        const size_t LIMIT = 4096;
+        std::vector<slong> sg(n, -1);
+        std::vector<char> usedc(n, 0);
+        std::vector<std::vector<slong>> found;
+        int overflow = 0;
+        std::function<void(slong)> bt = [&](slong k) {
+            if (overflow) return;
+            if (k == n) {
+                if (found.size() >= LIMIT) { overflow = 1; return; }
+                found.push_back(sg);
+                return;
+            }
+            for (slong c : opts[k]) {
+                if (usedc[c]) continue;
+                int ok = 1;
+                for (slong j = 0; j < k && ok; j++) ok = std::fabs(D.Sd[k * n + j] - D.Sd[c * n + sg[j]]) < tol;
+                if (!ok) continue;
+                usedc[c] = 1; sg[k] = c;
+                bt(k + 1);
+                usedc[c] = 0; sg[k] = -1;
+            }
+        };
+        bt(0);
+        std::map<std::vector<slong>, slong> idx;
+        for (slong a = 0; a < M; a++) idx.emplace(e->sols[a], a);
+        for (const std::vector<slong>& s : found) {
+            int id = 1;
+            for (slong i = 0; i < n && id; i++) id = (s[i] == i);
+            if (id) continue;
+            int ok = 1;                                   /* exact check */
+            for (slong i = 0; i < n && ok; i++)
+                for (slong j = i; j < n && ok; j++)
+                    ok = nf_elem_equal(entry(e->S, i, j, e->ctx), entry(e->S, s[i], s[j], e->ctx), e->field);
+            if (!ok) continue;
+            std::vector<slong> sc(M, -1);
+            std::vector<slong> y(n);
+            for (slong a = 0; a < M; a++) {
+                for (slong j = 0; j < n; j++) y[s[j]] = e->sols[a][j];
+                auto it = idx.find(y);
+                if (it != idx.end()) sc[a] = it->second;
+            }
+            D.sym.push_back(s);
+            D.symc.push_back(std::move(sc));
+        }
+        if (overflow) { D.sym.clear(); D.symc.clear(); }
+        printf("  symmetries of S preserving the Ishibashi multiplicities: %s%ld\n",
+               overflow ? "more than " : "", overflow ? (long) LIMIT : (long) D.sym.size() + 1);
+        if (overflow) printf("  (too many to use; searching without them)\n");
+        fflush(stdout);
+    }
+
     /* support patterns: all of I first, then each candidate's support */
     std::vector<std::vector<char>> pats;
     pats.push_back(std::vector<char>(e->inI, e->inI + n));
@@ -2042,6 +2307,10 @@ static void disentangle(search_t* e)
                  "families failing the exact check: %wd%s\n",
                  D.refinements, D.checked, D.accepted, D.nodes, D.rejected,
                  D.truncated ? "  (SEARCH NODE LIMIT HIT: list below may be incomplete)" : "");
+    flint_printf("pruned search nodes: coverage %wd, completion LP %wd\n", D.cov_prunes, D.lp_prunes);
+    if (!D.sym.empty())
+        flint_printf("symmetries: %wd first-member branches skipped, %wd families recovered as images\n",
+                     D.sym_skipped, D.sym_images);
     flint_printf("complete families (up to gauge): %wd for I, %wd closed on a subset of I"
                  " (%wd more on a subset but extendable, not listed)\n",
                  nk[2], nk[1], D.open_subset);
@@ -2112,6 +2381,8 @@ static void disentangle(search_t* e)
                      "invariant, list each label as many times as it has Ishibashi states in the\n"
                      "Ishibashi index input (its diagonal mass-matrix entry Z_ii)\n");
     slong shown = 0;
+    int r_out = 0;                      /* some |r| > 1: TRANS_NUM is not (1,1)- */
+    arb_t bone; arb_init(bone); arb_one(bone);
     for (size_t c = 0; c < ord.size(); c++) {
         if (shown++ >= MAX_FAMILIES_SHOWN) {
             flint_printf("... further complete families not shown\n");
@@ -2166,6 +2437,11 @@ static void disentangle(search_t* e)
                     coord(bden, F, m, iden, 0);
                     arb_div(bnum, bnum, bden, NUM_PREC);           /* r */
                     if (sref < 0) arb_neg(bnum, bnum);
+                    {
+                        arb_t ab; arb_init(ab); arb_abs(ab, bnum);
+                        if (arb_gt(ab, bone)) r_out = 1;
+                        arb_clear(ab);
+                    }
                     arb_add_ui(bden, bnum, 1, NUM_PREC);           /* R = (1 + r)/2 */
                     arb_mul_2exp_si(bden, bden, -1);
                     arb_sub_ui(bnum, bnum, 1, NUM_PREC);           /* T = (1 - r)/2 */
@@ -2183,12 +2459,64 @@ static void disentangle(search_t* e)
             }
         }
     }
+    if (r_out) {
+        flint_printf("\nWARNING: |r| > 1 for some boundary, so label %d is not the exchange-odd part\n"
+                     "of the vacuum module for this input (R and T above are meaningless). Labels\n"
+                     "whose S row equals the vacuum row up to signs (simple currents of order 2):",
+                     TRANS_NUM);
+        for (slong J = 1; J < n; J++) {
+            int same = 1;
+            for (slong j = 0; j < n && same; j++)
+                same = std::fabs(std::fabs(D.Sd[J * n + j]) - D.Sd[j]) < 1e-9;
+            if (same) flint_printf(" %wd", J + INDEX_BASE);
+        }
+        flint_printf("\nIf one of them is (1,1)-, recompile with -DTRANS_NUM=<label> (or edit the macro).\n");
+    }
+    arb_clear(bone);
     arb_clear(bden); arb_clear(bnum); arb_clear(t1); arb_clear(c1); arb_clear(gb);
     fflush(stdout);
 
     for (slong k = 0; k < M * n; k++) nf_elem_clear(D.q + k, e->field);
     flint_free(D.q);
     arb_clear(D.gball);
+}
+
+/* X = S w with w_i = m_i / S_0i on I, exactly. Returns 0 unless X is a
+   nonnegative integer vector. */
+static int trace_target(std::vector<slong>& X, gr_mat_struct* S, const char* inI,
+                        const int* mult, nf_struct* field, gr_ctx_struct* ctx)
+{
+    const slong n = gr_mat_nrows(S, ctx);
+    std::vector<nf_elem_struct> w(n);
+    for (slong i = 0; i < n; i++) {
+        nf_elem_init(&w[i], field);
+        if (!inI[i]) continue;
+        nf_elem_set_si(&w[i], mult[i], field);
+        nf_elem_div(&w[i], &w[i], entry(S, 0, i, ctx), field);
+    }
+    nf_elem_t s, t; nf_elem_init(s, field); nf_elem_init(t, field);
+    fmpq_poly_t p; fmpq_poly_init(p);
+    fmpz_t z; fmpz_init(z);
+    int ok = 1;
+    X.assign(n, 0);
+    for (slong j = 0; j < n && ok; j++) {
+        nf_elem_zero(s, field);
+        for (slong i = 0; i < n; i++) {
+            if (!inI[i]) continue;
+            nf_elem_mul(t, entry(S, j, i, ctx), &w[i], field);
+            nf_elem_add(s, s, t, field);
+        }
+        if (!nf_elem_is_integer(s, field)) { ok = 0; break; }
+        nf_elem_get_fmpq_poly(p, s, field);
+        fmpq_poly_get_coeff_fmpz(z, p, 0);
+        if (fmpz_sgn(z) < 0 || !fmpz_fits_si(z)) ok = 0;
+        else X[j] = fmpz_get_si(z);
+    }
+    fmpz_clear(z);
+    fmpq_poly_clear(p);
+    nf_elem_clear(t, field); nf_elem_clear(s, field);
+    for (slong i = 0; i < n; i++) nf_elem_clear(&w[i], field);
+    return ok;
 }
 
 /*
@@ -2291,6 +2619,27 @@ int solve_boundary_bootstrap(const slong* indices, slong nindices,
                                    field, field_generator, context);
         if (bstatus < 0) break;
         if (bstatus > 0) { flint_printf("empty box, no solutions\n"); status = 0; break; }
+        /* 2b. Trace bound. Members of a family complete on I satisfy
+                  sum_k x_k = S w,  w_i = m_i / S_0i,
+              with every x_k >= 0, so each candidate obeys x <= S w componentwise.
+              Only valid when families complete on a smaller support are not wanted. */
+        if (!SUBSET_FAMILIES) {
+            std::vector<slong> X;
+            int ok = trace_target(X, matrix, inI.data(), mult.data(), field, context);
+            if (!ok || X[0] != nindices) {
+                flint_printf("trace identity S w is not a nonnegative integer vector with "
+                             "component 0 = %wd: no family complete on I exists\n", nindices);
+                status = 0;
+                break;
+            }
+            slong tight = 0;
+            for (slong i = 0; i < n; i++)
+                if (X[i] < e.ub[i]) { e.ub[i] = X[i]; tight++; }
+            for (slong i = 0; i < n; i++)
+                if (e.lb[i] > e.ub[i]) { flint_printf("empty box, no solutions\n"); status = 0; bstatus = 1; break; }
+            if (bstatus) break;
+            flint_printf("trace bound x <= S w tightened %wd of %wd upper bounds\n", tight, n);
+        }
         e.cl = e.lb;
         e.cu = e.ub;
 

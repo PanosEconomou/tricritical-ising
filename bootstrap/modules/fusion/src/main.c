@@ -1,3 +1,7 @@
+#define TRANS_NUM  62       // Potts
+// #define TRANS_NUM  35       // TIM
+// #define TRANS_NUM  17    // COSETS
+
 #include <stdio.h>
 #include <flint/flint.h>
 #include <flint/gr_types.h>
@@ -7,8 +11,8 @@
 #include "interface.h"
 #include "solver.h"
 
-#define S_MATRIX_INPUT_FILE "in/S_A_E.txt"
-#define INDEX_INPUT_FILE "in/I_A_E.txt"
+#define S_MATRIX_INPUT_FILE "in/S_P2.txt"
+#define INDEX_INPUT_FILE "in/I_P2.txt"
 #define OUTPUT_DIR "out/"
 
 int main() {
