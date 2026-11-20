@@ -36,7 +36,8 @@ ModularBootstrapTraces[modularData_,precision_:20] := Module[
     pos = modules["positions"];
 
     X = Array[\[FormalX], Length[pos]];
-    m = st . ReplacePart[modularData["Z"], Thread[pos -> X]] . s // Flatten;
+    m = (st . ReplacePart[modularData["Z"], Thread[pos -> X]] . s) /
+          Lookup[modularData, "units", 1] // Flatten;
 
     (* Coefficient of each variable in the S-transformed mass matrix *)
     coeff = CoefficientArrays[m, X][[2]] // Normal // N[#, precision]& // Chop;
@@ -52,6 +53,7 @@ ModularBootstrapTraces[modularData_,precision_:20] := Module[
     (* Re-express the constraints in that basis *)
     m   = Chop[N[coeff . A, precision]] . X;
     eqn = DeleteDuplicates @ Rationalize @ Chop @ Expand[# >= 0 & /@ m];
+    eqn = DeleteCases[eqn, True];
 
     (* Rescale variables so the system has integer coefficients *)
     multipliers = Min @ Cases[eqn, (a_. * #) >= 0 :> Abs[a]]^-1 & /@ X;
